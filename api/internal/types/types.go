@@ -2,13 +2,13 @@
 package types
 
 type UserDetail struct {
-	Id         int64  `json:"id"`
+	Id         int64  `path:"id,optional"`
 	Name       string `json:"name"`
-	Age        string `json:"age"`
-	Genger     string `json:"genger"`
-	Phone      string `json:"phone"`
-	Address    string `json:"address"`
-	CreateTime int64  `json:"createTime"`
+	Age        string `json:"age,optional"`
+	Genger     string `json:"genger,optional"`
+	Phone      string `json:"phone,optional"`
+	Address    string `json:"address,optional"`
+	CreateTime int64  `json:"createTime,optional"`
 }
 
 type GetUserReq struct {
@@ -17,4 +17,50 @@ type GetUserReq struct {
 
 type GetUserResp struct {
 	UserInfo UserDetail `json:"userInfo"`
+}
+
+type CreateUserReq struct {
+	UserDetail UserDetail `json:"user"`
+}
+
+type CreateUserResp struct {
+	UserDetail UserDetail `json:"user"`
+}
+
+type ListUserReq struct {
+	Page     int64 `json:"page"`
+	PageSize int64 `json:"pageSize"`
+}
+
+type ListUserResp struct {
+	Page     int64        `json:"page"`
+	PageSize int64        `json:"pageSize"`
+	Total    int64        `json:"total"`
+	Users    []UserDetail `json:"users"`
+}
+
+type DeleteUserReq struct {
+	Id int64 `path:"id"`
+}
+
+type DeleteUserResp struct {
+	UserDetail UserDetail `json:"user"`
+}
+
+type UpdateUserReq struct {
+	Id         int64      `path:"id"`
+	UserDetail UserDetail `json:"user"`
+}
+
+type UpdateUserResp struct {
+	UserDetail UserDetail `json:"user"`
+}
+
+type PatchUserReq struct {
+	Id         int64      `path:"id"`
+	UserDetail UserDetail `json:"user"`
+}
+
+type PatchUserResp struct {
+	UserDetail UserDetail `json:"user"`
 }

@@ -1,0 +1,100 @@
+info(
+    title: "用户相关接口"
+    author: "wangxianchao"
+    email: "995166545@qq.com"
+)
+
+type (
+    UserDetail {
+        Id         int64  `path:"id,optional"`
+        Name       string `json:"name"`
+        Age        string `json:"age,optional"`
+        Genger     string `json:"genger,optional"`
+        Phone      string `json:"phone,optional"`
+        Address    string `json:"address,optional"`
+        CreateTime int64  `json:"createTime,optional"`
+    }
+
+    GetUserReq {
+        Id int64 `path:"id"`
+    }
+
+    GetUserResp {
+        UserInfo UserDetail `json:"userInfo"`
+    }
+
+    CreateUserReq {
+        UserDetail UserDetail `json:"user"`
+    }
+
+    CreateUserResp {
+        UserDetail UserDetail `json:"user"`
+    }
+
+    ListUserReq {
+        Page int64 `json:"page"`
+        PageSize int64 `json:"pageSize"`
+    }
+
+    ListUserResp {
+        Page int64 `json:"page"`
+        PageSize int64 `json:"pageSize"`
+        Total int64 `json:"total"`
+        Users []UserDetail `json:"users"`
+    }
+
+    DeleteUserReq {
+        Id int64 `path:"id"`
+    }
+
+    DeleteUserResp {
+        UserDetail UserDetail `json:"user"`
+    }
+
+    UpdateUserReq {
+        Id int64 `path:"id"`
+        UserDetail UserDetail `json:"user"`
+    }
+
+    UpdateUserResp {
+        UserDetail UserDetail `json:"user"`
+    }
+
+    PatchUserReq {
+        Id int64 `path:"id"`
+        UserDetail UserDetail `json:"user"`
+    }
+
+    PatchUserResp {
+        UserDetail UserDetail `json:"user"`
+    }
+)
+
+@server (
+    group: user
+)
+service User {
+    @doc "获取用户信息"
+    @handler GetUser
+    get /user/:id(GetUserReq) returns (GetUserResp)
+
+    @doc "创建用户"
+    @handler CreateUser
+    post /user(CreateUserReq) returns (CreateUserResp)
+
+    @doc "用户列表"
+    @handler ListUser
+    get /user(GetUserReq) returns (ListUserResp)
+
+    @doc "删除用户"
+    @handler DeleteUser
+    delete /user/:id(DeleteUserReq) returns (DeleteUserResp)
+
+    @doc "全量更新用户"
+    @handler UpdateUser
+    put /user/:id (UpdateUserReq) returns (UpdateUserResp)
+
+    @doc "更新用户部分信息"
+    @handler PatchUser
+    patch /user/:id (PatchUserReq) returns (PatchUserResp)
+}

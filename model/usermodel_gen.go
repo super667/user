@@ -26,7 +26,7 @@ type (
 	userModel interface {
 		Insert(ctx context.Context, data *User) (sql.Result, error)
 		FindOne(ctx context.Context, id int64) (*User, error)
-		FindOneByMobile(ctx context.Context, mobile string) (*User, error)
+		FindOneByNumber(ctx context.Context, number string) (*User, error)
 		Update(ctx context.Context, data *User) error
 		Delete(ctx context.Context, id int64) error
 	}
@@ -37,13 +37,21 @@ type (
 	}
 
 	User struct {
-		Id         int64     `db:"id"`
-		Name       string    `db:"name"`     // 用户姓名
-		Gender     int64     `db:"gender"`   // 用户性别
-		Mobile     string    `db:"mobile"`   // 用户电话
-		Password   string    `db:"password"` // 用户密码
-		CreateTime time.Time `db:"create_time"`
-		UpdateTime time.Time `db:"update_time"`
+		Id          int64          `db:"id"`
+		Number      string         `db:"number"`       // 用户编号
+		Name        string         `db:"name"`         // 用户姓名
+		GenderCode  sql.NullInt64  `db:"gender_code"`  // 用户性别
+		Age         sql.NullInt64  `db:"age"`          // 年龄
+		DeptCode    sql.NullString `db:"dept_code"`    // 部门编码
+		DeptName    sql.NullString `db:"dept_name"`    // 部门名称
+		ManagerCode sql.NullString `db:"manager_code"` // 管理者编码
+		ManagerName sql.NullString `db:"manager_name"` // 管理者名称
+		Phone       sql.NullString `db:"phone"`        // 电话号码
+		Email       sql.NullString `db:"email"`        // 邮箱
+		Password    sql.NullString `db:"password"`     // 用户密码
+		CreateTime  time.Time      `db:"create_time"`
+		UpdateTime  time.Time      `db:"update_time"`
+		DeleteTime  sql.NullTime   `db:"delete_time"`
 	}
 )
 
@@ -74,10 +82,10 @@ func (m *defaultUserModel) FindOne(ctx context.Context, id int64) (*User, error)
 	}
 }
 
-func (m *defaultUserModel) FindOneByMobile(ctx context.Context, mobile string) (*User, error) {
+func (m *defaultUserModel) FindOneByNumber(ctx context.Context, number string) (*User, error) {
 	var resp User
-	query := fmt.Sprintf("select %s from %s where `mobile` = ? limit 1", userRows, m.table)
-	err := m.conn.QueryRowCtx(ctx, &resp, query, mobile)
+	query := fmt.Sprintf("select %s from %s where `number` = ? limit 1", userRows, m.table)
+	err := m.conn.QueryRowCtx(ctx, &resp, query, number)
 	switch err {
 	case nil:
 		return &resp, nil
@@ -89,14 +97,14 @@ func (m *defaultUserModel) FindOneByMobile(ctx context.Context, mobile string) (
 }
 
 func (m *defaultUserModel) Insert(ctx context.Context, data *User) (sql.Result, error) {
-	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?)", m.table, userRowsExpectAutoSet)
-	ret, err := m.conn.ExecCtx(ctx, query, data.Name, data.Gender, data.Mobile, data.Password)
+	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, userRowsExpectAutoSet)
+	ret, err := m.conn.ExecCtx(ctx, query, data.Number, data.Name, data.GenderCode, data.Age, data.DeptCode, data.DeptName, data.ManagerCode, data.ManagerName, data.Phone, data.Email, data.Password, data.DeleteTime)
 	return ret, err
 }
 
 func (m *defaultUserModel) Update(ctx context.Context, newData *User) error {
 	query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, userRowsWithPlaceHolder)
-	_, err := m.conn.ExecCtx(ctx, query, newData.Name, newData.Gender, newData.Mobile, newData.Password, newData.Id)
+	_, err := m.conn.ExecCtx(ctx, query, newData.Number, newData.Name, newData.GenderCode, newData.Age, newData.DeptCode, newData.DeptName, newData.ManagerCode, newData.ManagerName, newData.Phone, newData.Email, newData.Password, newData.DeleteTime, newData.Id)
 	return err
 }
 
