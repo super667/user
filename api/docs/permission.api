@@ -1,0 +1,102 @@
+
+import "docs/common.api"
+
+info(
+    title: "权限相关接口"
+    author: "wangxianchao"
+    email: "995166545@qq.com"
+)
+
+type (
+    PermInfo {
+        Name string `json:"name"`
+        Desc string `json:"desc"`
+    }
+
+    PermDetail {
+        Id int64 `json:"id"`
+        CreateTime int64 `json:"createTime"`
+        PermInfo
+    }
+
+    CreatePermReq {
+        PermInfo
+    }
+
+    CreatePermResp {
+        Id int64 `json:"id"`
+    }
+
+    DeletePermReq {
+        Id int64 `json:"id"`
+    }
+
+    DeletePermResp {
+        Id int64 `json:"id"`
+    }
+
+    UpdatePermReq {
+        Id int64 `json:"id"`
+        PermInfo
+    }
+
+    UpdatePermResp {
+        Id int64 `json:"id"`
+    }
+
+    PatchPermReq {
+        Id int64 `json:"id"`
+        PermInfo
+    }
+
+    PatchPermResp {
+        Id int64 `json:"id"`
+    }
+
+    GetPermReq {
+        Id int64 `json:"id"`
+    }
+
+    GetPermResp {
+        PermDetail
+    }
+
+    ListPermReq {
+        ListReq
+    }
+
+    ListPermResp {
+        ListResp
+        Roles []PermDetail `json:"list"`
+    }
+)
+
+
+@server (
+    group: perm
+)
+service User {
+    @doc "获取角色信息"
+    @handler GetPerm
+    get /perm/:id(GetPermReq) returns (GetPermResp)
+
+    @doc "创建角色"
+    @handler CreatePerm
+    post /perm(CreatePermReq) returns (CreatePermResp)
+
+    @doc "角色列表"
+    @handler ListPerm
+    get /perm(ListPermReq) returns (ListPermResp)
+
+    @doc "删除角色"
+    @handler DeletePerm
+    delete /perm/:id(DeletePermReq) returns (DeletePermResp)
+
+    @doc "全量更新角色"
+    @handler UpdatePerm
+    put /perm/:id (UpdatePermReq) returns (UpdatePermResp)
+
+    @doc "更新角色部分信息"
+    @handler PatchPerm
+    patch /perm/:id (PatchPermReq) returns (PatchPermResp)
+}

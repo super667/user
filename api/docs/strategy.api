@@ -1,0 +1,102 @@
+
+import "docs/common.api"
+
+info(
+    title: "策略相关接口"
+    author: "wangxianchao"
+    email: "995166545@qq.com"
+)
+
+type (
+    StrategyInfo {
+        Name string `json:"name"`
+        Desc string `json:"desc"`
+    }
+
+    StrategyDetail {
+        Id int64 `json:"id"`
+        CreateTime int64 `json:"createTime"`
+        StrategyInfo
+    }
+
+    CreateStrategyReq {
+        StrategyInfo
+    }
+
+    CreateStrategyResp {
+        Id int64 `json:"id"`
+    }
+
+    DeleteStrategyReq {
+        Id int64 `json:"id"`
+    }
+
+    DeleteStrategyResp {
+        Id int64 `json:"id"`
+    }
+
+    UpdateStrategyReq {
+        Id int64 `json:"id"`
+        StrategyInfo
+    }
+
+    UpdateStrategyResp {
+        Id int64 `json:"id"`
+    }
+
+    PatchStrategyReq {
+        Id int64 `json:"id"`
+        StrategyInfo
+    }
+
+    PatchStrategyResp {
+        Id int64 `json:"id"`
+    }
+
+    GetStrategyReq {
+        Id int64 `json:"id"`
+    }
+
+    GetStrategyResp {
+        StrategyDetail
+    }
+
+    ListStrategyReq {
+        ListReq
+    }
+
+    ListStrategyResp {
+        ListResp
+        Roles []StrategyDetail `json:"list"`
+    }
+)
+
+
+@server (
+    group: Strategy
+)
+service User {
+    @doc "获取角色信息"
+    @handler GetStrategy
+    get /strategy/:id(GetStrategyReq) returns (GetStrategyResp)
+
+    @doc "创建角色"
+    @handler CreateStrategy
+    post /strategy(CreateStrategyReq) returns (CreateStrategyResp)
+
+    @doc "角色列表"
+    @handler ListStrategy
+    get /strategy(ListStrategyReq) returns (ListStrategyResp)
+
+    @doc "删除角色"
+    @handler DeleteStrategy
+    delete /strategy/:id(DeleteStrategyReq) returns (DeleteStrategyResp)
+
+    @doc "全量更新角色"
+    @handler UpdateStrategy
+    put /strategy/:id (UpdateStrategyReq) returns (UpdateStrategyResp)
+
+    @doc "更新角色部分信息"
+    @handler PatchStrategy
+    patch /strategy/:id (PatchStrategyReq) returns (PatchStrategyResp)
+}
