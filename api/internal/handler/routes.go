@@ -4,6 +4,7 @@ package handler
 import (
 	"net/http"
 
+	role "user/api/internal/handler/role"
 	user "user/api/internal/handler/user"
 	"user/api/internal/svc"
 
@@ -42,6 +43,41 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPatch,
 				Path:    "/user/:id",
 				Handler: user.PatchUserHandler(serverCtx),
+			},
+		},
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/role/:id",
+				Handler: role.GetRoleHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/role",
+				Handler: role.CreateRoleHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/role",
+				Handler: role.ListRoleHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodDelete,
+				Path:    "/role/:id",
+				Handler: role.DeleteRoleHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPut,
+				Path:    "/role/:id",
+				Handler: role.UpdateRoleHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPatch,
+				Path:    "/role/:id",
+				Handler: role.PatchRoleHandler(serverCtx),
 			},
 		},
 	)

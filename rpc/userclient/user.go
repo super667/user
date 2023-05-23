@@ -25,6 +25,8 @@ type (
 	GetUserByNumberResp = user.GetUserByNumberResp
 	ListUserReq         = user.ListUserReq
 	ListUserResp        = user.ListUserResp
+	PatchUserReq        = user.PatchUserReq
+	PatchUserResp       = user.PatchUserResp
 	UpdateUserReq       = user.UpdateUserReq
 	UpdateUserResp      = user.UpdateUserResp
 	UserDetail          = user.UserDetail
@@ -38,6 +40,7 @@ type (
 		CreateUser(ctx context.Context, in *CreateUserReq, opts ...grpc.CallOption) (*CreateUserResp, error)
 		DeleteUser(ctx context.Context, in *DeleteUserReq, opts ...grpc.CallOption) (*DeleteUserResp, error)
 		UpdateUser(ctx context.Context, in *UpdateUserReq, opts ...grpc.CallOption) (*UpdateUserResp, error)
+		PatchUser(ctx context.Context, in *PatchUserReq, opts ...grpc.CallOption) (*PatchUserResp, error)
 		ListUser(ctx context.Context, in *ListUserReq, opts ...grpc.CallOption) (*ListUserResp, error)
 	}
 
@@ -81,6 +84,11 @@ func (m *defaultUser) DeleteUser(ctx context.Context, in *DeleteUserReq, opts ..
 func (m *defaultUser) UpdateUser(ctx context.Context, in *UpdateUserReq, opts ...grpc.CallOption) (*UpdateUserResp, error) {
 	client := user.NewUserClient(m.cli.Conn())
 	return client.UpdateUser(ctx, in, opts...)
+}
+
+func (m *defaultUser) PatchUser(ctx context.Context, in *PatchUserReq, opts ...grpc.CallOption) (*PatchUserResp, error) {
+	client := user.NewUserClient(m.cli.Conn())
+	return client.PatchUser(ctx, in, opts...)
 }
 
 func (m *defaultUser) ListUser(ctx context.Context, in *ListUserReq, opts ...grpc.CallOption) (*ListUserResp, error) {

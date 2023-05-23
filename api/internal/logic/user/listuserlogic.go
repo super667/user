@@ -34,11 +34,13 @@ func (l *ListUserLogic) ListUser(req *types.ListUserReq) (resp *types.ListUserRe
 		return
 	}
 	userInfos := make([]types.UserDetail, 0)
-	copier.Copy(userInfos, res.UserDetail)
+	copier.Copy(&userInfos, res.UserDetail)
 	resp = &types.ListUserResp{
 		Users: userInfos,
 		ListResp: types.ListResp{
-			Total: res.Total,
+			Page:     res.Page,
+			PageSize: res.PageSize,
+			Total:    res.Total,
 		},
 	}
 	return

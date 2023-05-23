@@ -1,0 +1,18 @@
+info(
+    title: "角色相关接口"
+    author: "wangxianchao"
+    email: "995166545@qq.com"
+)
+
+type (
+    ListReq {
+        Page int64 `json:"page,optioanl,default=1"`
+        PageSize int64 `json:"pageSize,optional,default=10"`
+    }
+
+    ListResp {
+        Page int64 `json:"page"`
+        PageSize int64 `json:"pageSize"`
+        Total int64 `json:"total"`
+    }
+)

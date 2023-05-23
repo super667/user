@@ -53,6 +53,11 @@ func (s *UserServer) UpdateUser(ctx context.Context, in *user.UpdateUserReq) (*u
 	return l.UpdateUser(in)
 }
 
+func (s *UserServer) PatchUser(ctx context.Context, in *user.PatchUserReq) (*user.PatchUserResp, error) {
+	l := logic.NewPatchUserLogic(ctx, s.svcCtx)
+	return l.PatchUser(in)
+}
+
 func (s *UserServer) ListUser(ctx context.Context, in *user.ListUserReq) (*user.ListUserResp, error) {
 	l := logic.NewListUserLogic(ctx, s.svcCtx)
 	return l.ListUser(in)

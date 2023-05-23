@@ -80,8 +80,10 @@ message ListUserReq {
 }
 
 message ListUserResp {
-  int64 Total = 1;
-  repeated UserDetail UserDetail = 2;
+  int64 Page = 1;
+  int64 PageSize = 2;
+  int64 Total = 3;
+  repeated UserDetail UserDetail = 4;
 }
 
 message DeleteUserReq {
@@ -101,6 +103,15 @@ message UpdateUserResp {
   int64 Id = 1;
 }
 
+message PatchUserReq {
+  int64 Id = 1;
+  UserInfo UserInfo = 2;
+}
+
+message PatchUserResp {
+  int64 Id = 1;
+}
+
 service User {
   // 用户相关接口
   rpc GetUserById(GetUserByIdReq) returns(GetUserByIdResp);
@@ -109,6 +120,7 @@ service User {
   rpc CreateUser(CreateUserReq) returns(CreateUserResp);
   rpc DeleteUser(DeleteUserReq) returns(DeleteUserResp);
   rpc UpdateUser(UpdateUserReq) returns(UpdateUserResp);
+  rpc PatchUser(PatchUserReq) returns(PatchUserResp);
   rpc ListUser(ListUserReq) returns(ListUserResp);
 }
 

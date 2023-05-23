@@ -1,0 +1,102 @@
+
+import "docs/common.api"
+
+info(
+    title: "角色相关接口"
+    author: "wangxianchao"
+    email: "995166545@qq.com"
+)
+
+type (
+    RoleInfo {
+        Name string `json:"name"`
+        Desc string `json:"desc"`
+    }
+
+    RoleDetail {
+        Id int64 `json:"id"`
+        CreateTime int64 `json:"createTime"`
+        RoleInfo
+    }
+
+    CreateRoleReq {
+        RoleInfo
+    }
+
+    CreateRoleResp {
+        Id int64 `json:"id"`
+    }
+
+    DeleteRoleReq {
+        Id int64 `json:"id"`
+    }
+
+    DeleteRoleResp {
+        Id int64 `json:"id"`
+    }
+
+    UpdateRoleReq {
+        Id int64 `json:"id"`
+        RoleInfo
+    }
+
+    UpdateRoleResp {
+        Id int64 `json:"id"`
+    }
+
+    PatchRoleReq {
+        Id int64 `json:"id"`
+        RoleInfo
+    }
+
+    PatchRoleResp {
+        Id int64 `json:"id"`
+    }
+
+    GetRoleReq {
+        Id int64 `json:"id"`
+    }
+
+    GetRoleResp {
+        RoleDetail
+    }
+
+    ListRoleReq {
+        ListReq
+    }
+
+    ListRoleResp {
+        ListResp
+        Roles []RoleDetail `json:"list"`
+    }
+)
+
+
+@server (
+    group: role
+)
+service User {
+    @doc "获取角色信息"
+    @handler GetRole
+    get /role/:id(GetRoleReq) returns (GetRoleResp)
+
+    @doc "创建角色"
+    @handler CreateRole
+    post /role(CreateRoleReq) returns (CreateRoleResp)
+
+    @doc "角色列表"
+    @handler ListRole
+    get /role(ListRoleReq) returns (ListRoleResp)
+
+    @doc "删除角色"
+    @handler DeleteRole
+    delete /role/:id(DeleteRoleReq) returns (DeleteRoleResp)
+
+    @doc "全量更新角色"
+    @handler UpdateRole
+    put /role/:id (UpdateRoleReq) returns (UpdateRoleResp)
+
+    @doc "更新角色部分信息"
+    @handler PatchRole
+    patch /role/:id (PatchRoleReq) returns (PatchRoleResp)
+}

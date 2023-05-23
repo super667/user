@@ -2,6 +2,8 @@ package user
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
+	"user/rpc/userclient"
 
 	"user/api/internal/svc"
 	"user/api/internal/types"
@@ -24,7 +26,15 @@ func NewPatchUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *PatchUs
 }
 
 func (l *PatchUserLogic) PatchUser(req *types.PatchUserReq) (resp *types.PatchUserResp, err error) {
-	// todo: add your logic here and delete this line
+	var updateInfo = &userclient.UserInfo{}
+	copier.Copy(updateInfo, req)
+	_, err = l.svcCtx.UserRpc.PatchUser(l.ctx, &userclient.PatchUserReq{
+		Id:       req.Id,
+		UserInfo: updateInfo,
+	})
+	if err != nil {
+		return
+	}
 
 	return
 }

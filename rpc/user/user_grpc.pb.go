@@ -25,6 +25,7 @@ const (
 	User_CreateUser_FullMethodName      = "/userclient.User/CreateUser"
 	User_DeleteUser_FullMethodName      = "/userclient.User/DeleteUser"
 	User_UpdateUser_FullMethodName      = "/userclient.User/UpdateUser"
+	User_PatchUser_FullMethodName       = "/userclient.User/PatchUser"
 	User_ListUser_FullMethodName        = "/userclient.User/ListUser"
 )
 
@@ -39,6 +40,7 @@ type UserClient interface {
 	CreateUser(ctx context.Context, in *CreateUserReq, opts ...grpc.CallOption) (*CreateUserResp, error)
 	DeleteUser(ctx context.Context, in *DeleteUserReq, opts ...grpc.CallOption) (*DeleteUserResp, error)
 	UpdateUser(ctx context.Context, in *UpdateUserReq, opts ...grpc.CallOption) (*UpdateUserResp, error)
+	PatchUser(ctx context.Context, in *PatchUserReq, opts ...grpc.CallOption) (*PatchUserResp, error)
 	ListUser(ctx context.Context, in *ListUserReq, opts ...grpc.CallOption) (*ListUserResp, error)
 }
 
@@ -104,6 +106,15 @@ func (c *userClient) UpdateUser(ctx context.Context, in *UpdateUserReq, opts ...
 	return out, nil
 }
 
+func (c *userClient) PatchUser(ctx context.Context, in *PatchUserReq, opts ...grpc.CallOption) (*PatchUserResp, error) {
+	out := new(PatchUserResp)
+	err := c.cc.Invoke(ctx, User_PatchUser_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userClient) ListUser(ctx context.Context, in *ListUserReq, opts ...grpc.CallOption) (*ListUserResp, error) {
 	out := new(ListUserResp)
 	err := c.cc.Invoke(ctx, User_ListUser_FullMethodName, in, out, opts...)
@@ -124,6 +135,7 @@ type UserServer interface {
 	CreateUser(context.Context, *CreateUserReq) (*CreateUserResp, error)
 	DeleteUser(context.Context, *DeleteUserReq) (*DeleteUserResp, error)
 	UpdateUser(context.Context, *UpdateUserReq) (*UpdateUserResp, error)
+	PatchUser(context.Context, *PatchUserReq) (*PatchUserResp, error)
 	ListUser(context.Context, *ListUserReq) (*ListUserResp, error)
 	mustEmbedUnimplementedUserServer()
 }
@@ -149,6 +161,9 @@ func (UnimplementedUserServer) DeleteUser(context.Context, *DeleteUserReq) (*Del
 }
 func (UnimplementedUserServer) UpdateUser(context.Context, *UpdateUserReq) (*UpdateUserResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
+}
+func (UnimplementedUserServer) PatchUser(context.Context, *PatchUserReq) (*PatchUserResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PatchUser not implemented")
 }
 func (UnimplementedUserServer) ListUser(context.Context, *ListUserReq) (*ListUserResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListUser not implemented")
@@ -274,6 +289,24 @@ func _User_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_PatchUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PatchUserReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).PatchUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_PatchUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).PatchUser(ctx, req.(*PatchUserReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _User_ListUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListUserReq)
 	if err := dec(in); err != nil {
@@ -322,6 +355,10 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateUser",
 			Handler:    _User_UpdateUser_Handler,
+		},
+		{
+			MethodName: "PatchUser",
+			Handler:    _User_PatchUser_Handler,
 		},
 		{
 			MethodName: "ListUser",

@@ -31,7 +31,7 @@ func (l *ListUserLogic) ListUser(in *user.ListUserReq) (*user.ListUserResp, erro
 		return resp, err
 	}
 	userDetails := make([]*user.UserDetail, 0)
-	err = copier.Copy(userDetails, res)
+	err = copier.Copy(&userDetails, res)
 	if err != nil {
 		return resp, err
 	}
@@ -40,5 +40,10 @@ func (l *ListUserLogic) ListUser(in *user.ListUserReq) (*user.ListUserResp, erro
 	if err != nil {
 		return resp, err
 	}
-	return &user.ListUserResp{Total: total, UserDetail: userDetails}, nil
+	return &user.ListUserResp{
+		Page:       in.Page,
+		PageSize:   in.PageSize,
+		Total:      total,
+		UserDetail: userDetails,
+	}, nil
 }

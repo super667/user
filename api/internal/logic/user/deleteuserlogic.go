@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"user/rpc/userclient"
 
 	"user/api/internal/svc"
 	"user/api/internal/types"
@@ -24,7 +25,11 @@ func NewDeleteUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Delete
 }
 
 func (l *DeleteUserLogic) DeleteUser(req *types.DeleteUserReq) (resp *types.DeleteUserResp, err error) {
-	// todo: add your logic here and delete this line
-
+	_, err = l.svcCtx.UserRpc.DeleteUser(l.ctx, &userclient.DeleteUserReq{
+		Id: req.Id,
+	})
+	if err != nil {
+		return
+	}
 	return
 }

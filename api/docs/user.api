@@ -1,3 +1,6 @@
+import "docs/common.api"
+
+
 info(
     title: "用户相关接口"
     author: "wangxianchao"
@@ -5,27 +8,17 @@ info(
 )
 
 type (
-    ListReq {
-        Page int64 `json:"page,optioanl,default=1"`
-        PageSize int64 `json:"pageSize,optional,default=10"`
-    }
-
-    ListResp {
-        Page int64 `json:"page"`
-        PageSize int64 `json:"pageSize"`
-        Total int64 `json:"total"`
-    }
-)
-
-
-type (
     UserBaseInfo {
         Number     string `json:"number"`
         Name       string `json:"name"`
-        Age        string `json:"age,optional"`
-        GenderCode int64 `json:"genderCode"`
+        Age        int `json:"age,optional"`
+        GenderCode int64 `json:"genderCode,optional"`
         Phone      string `json:"phone,optional"`
-        Address    string `json:"address,optional"`
+        Email    string `json:"email,optional"`
+        DeptCode string `json:"deptCode,optional"`
+        DeptName string `json:"deptName,optional"`
+        ManagerCode string `json:"managerCode,optional"`
+        ManagerName string `json:"managerName,optional"`
     }
 
     UserDetail {
@@ -40,7 +33,7 @@ type (
     }
 
     GetUserResp {
-        UserDetail UserDetail `json:"data"`
+        UserDetail
     }
 
     CreateUserReq {
