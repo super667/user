@@ -2,6 +2,8 @@ package user
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
+	"user/rpc/userclient"
 
 	"user/api/internal/svc"
 	"user/api/internal/types"
@@ -24,7 +26,15 @@ func NewCreateUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Create
 }
 
 func (l *CreateUserLogic) CreateUser(req *types.CreateUserReq) (resp *types.CreateUserResp, err error) {
-	// todo: add your logic here and delete this line
+	var u = &userclient.CreateUserReq{
+		UserInfo: &userclient.UserInfo{},
+	}
+	copier.Copy(u.UserInfo, req)
+	res, err := l.svcCtx.UserRpc.CreateUser(l.ctx, u)
+	if err != nil {
+		return
+	}
+	resp = &types.CreateUserResp{Id: res.Id}
 
 	return
 }

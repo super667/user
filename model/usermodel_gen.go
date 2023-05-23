@@ -37,21 +37,21 @@ type (
 	}
 
 	User struct {
-		Id          int64          `db:"id"`
-		Number      string         `db:"number"`       // 用户编号
-		Name        string         `db:"name"`         // 用户姓名
-		GenderCode  sql.NullInt64  `db:"gender_code"`  // 用户性别
-		Age         sql.NullInt64  `db:"age"`          // 年龄
-		DeptCode    sql.NullString `db:"dept_code"`    // 部门编码
-		DeptName    sql.NullString `db:"dept_name"`    // 部门名称
-		ManagerCode sql.NullString `db:"manager_code"` // 管理者编码
-		ManagerName sql.NullString `db:"manager_name"` // 管理者名称
-		Phone       sql.NullString `db:"phone"`        // 电话号码
-		Email       sql.NullString `db:"email"`        // 邮箱
-		Password    sql.NullString `db:"password"`     // 用户密码
-		CreateTime  time.Time      `db:"create_time"`
-		UpdateTime  time.Time      `db:"update_time"`
-		DeleteTime  sql.NullTime   `db:"delete_time"`
+		Id          int64        `db:"id"`
+		Number      string       `db:"number"`       // 用户编号
+		Name        string       `db:"name"`         // 用户姓名
+		GenderCode  int64        `db:"gender_code"`  // 用户性别
+		Age         int64        `db:"age"`          // 年龄
+		DeptCode    string       `db:"dept_code"`    // 部门编码
+		DeptName    string       `db:"dept_name"`    // 部门名称
+		ManagerCode string       `db:"manager_code"` // 管理者编码
+		ManagerName string       `db:"manager_name"` // 管理者名称
+		Phone       string       `db:"phone"`        // 电话号码
+		Email       string       `db:"email"`        // 邮箱
+		Password    string       `db:"password"`     // 用户密码
+		CreateTime  time.Time    `db:"create_time"`
+		UpdateTime  time.Time    `db:"update_time"`
+		DeleteTime  sql.NullTime `db:"delete_time"`
 	}
 )
 

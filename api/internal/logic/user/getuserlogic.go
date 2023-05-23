@@ -2,6 +2,8 @@ package user
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
+	"user/rpc/userclient"
 
 	"user/api/internal/svc"
 	"user/api/internal/types"
@@ -24,7 +26,14 @@ func NewGetUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUserLo
 }
 
 func (l *GetUserLogic) GetUser(req *types.GetUserReq) (resp *types.GetUserResp, err error) {
-	// todo: add your logic here and delete this line
-
+	res, err := l.svcCtx.UserRpc.GetUserById(l.ctx, &userclient.GetUserByIdReq{
+		Id: req.Id,
+	})
+	if err != nil {
+		return resp, err
+	}
+	var userDetail types.UserDetail
+	copier.Copy(&userDetail, res.UserDetail)
+	resp = &types.GetUserResp{UserDetail: userDetail}
 	return
 }

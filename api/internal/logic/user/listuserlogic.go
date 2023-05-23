@@ -2,6 +2,8 @@ package user
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
+	"user/rpc/userclient"
 
 	"user/api/internal/svc"
 	"user/api/internal/types"
@@ -23,8 +25,21 @@ func NewListUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ListUser
 	}
 }
 
-func (l *ListUserLogic) ListUser(req *types.GetUserReq) (resp *types.ListUserResp, err error) {
-	// todo: add your logic here and delete this line
-
+func (l *ListUserLogic) ListUser(req *types.ListUserReq) (resp *types.ListUserResp, err error) {
+	res, err := l.svcCtx.UserRpc.ListUser(l.ctx, &userclient.ListUserReq{
+		Page:     req.Page,
+		PageSize: req.PageSize,
+	})
+	if err != nil {
+		return
+	}
+	userInfos := make([]types.UserDetail, 0)
+	copier.Copy(userInfos, res.UserDetail)
+	resp = &types.ListUserResp{
+		Users: userInfos,
+		ListResp: types.ListResp{
+			Total: res.Total,
+		},
+	}
 	return
 }

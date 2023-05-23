@@ -5,14 +5,34 @@ info(
 )
 
 type (
-    UserDetail {
-        Id         int64  `path:"id,optional"`
+    ListReq {
+        Page int64 `json:"page,optioanl,default=1"`
+        PageSize int64 `json:"pageSize,optional,default=10"`
+    }
+
+    ListResp {
+        Page int64 `json:"page"`
+        PageSize int64 `json:"pageSize"`
+        Total int64 `json:"total"`
+    }
+)
+
+
+type (
+    UserBaseInfo {
+        Number     string `json:"number"`
         Name       string `json:"name"`
         Age        string `json:"age,optional"`
-        Genger     string `json:"genger,optional"`
+        GenderCode int64 `json:"genderCode"`
         Phone      string `json:"phone,optional"`
         Address    string `json:"address,optional"`
+    }
+
+    UserDetail {
+        Id int64 `json:"id"`
+        Genger     string `json:"genger,optional"`
         CreateTime int64  `json:"createTime,optional"`
+        UserBaseInfo
     }
 
     GetUserReq {
@@ -20,27 +40,24 @@ type (
     }
 
     GetUserResp {
-        UserInfo UserDetail `json:"userInfo"`
+        UserDetail UserDetail `json:"data"`
     }
 
     CreateUserReq {
-        UserDetail UserDetail `json:"user"`
+        UserBaseInfo
     }
 
     CreateUserResp {
-        UserDetail UserDetail `json:"user"`
+        Id int64 `json:"id"`
     }
 
     ListUserReq {
-        Page int64 `json:"page"`
-        PageSize int64 `json:"pageSize"`
+        ListReq
     }
 
     ListUserResp {
-        Page int64 `json:"page"`
-        PageSize int64 `json:"pageSize"`
-        Total int64 `json:"total"`
-        Users []UserDetail `json:"users"`
+        ListResp
+        Users []UserDetail `json:"list"`
     }
 
     DeleteUserReq {
@@ -48,25 +65,25 @@ type (
     }
 
     DeleteUserResp {
-        UserDetail UserDetail `json:"user"`
+        Id int64 `json:"id"`
     }
 
     UpdateUserReq {
         Id int64 `path:"id"`
-        UserDetail UserDetail `json:"user"`
+        UserBaseInfo
     }
 
     UpdateUserResp {
-        UserDetail UserDetail `json:"user"`
+        Id int64 `json:"id"`
     }
 
     PatchUserReq {
         Id int64 `path:"id"`
-        UserDetail UserDetail `json:"user"`
+        UserBaseInfo
     }
 
     PatchUserResp {
-        UserDetail UserDetail `json:"user"`
+        Id int64 `json:"id"`
     }
 )
 
@@ -84,7 +101,7 @@ service User {
 
     @doc "用户列表"
     @handler ListUser
-    get /user(GetUserReq) returns (ListUserResp)
+    get /user(ListUserReq) returns (ListUserResp)
 
     @doc "删除用户"
     @handler DeleteUser

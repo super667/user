@@ -1,3 +1,114 @@
 syntax = "proto3";
 
-package template;
+package userclient;
+
+option go_package = "./user";
+
+// ========= 用户相关接口 ==========
+
+enum Gender {
+  Unknown = 0;
+  Male = 1;
+  Female = 2;
+}
+message UserInfo {
+  string number = 1;
+  string name = 2;
+  int32 age = 3;
+  Gender GenderCode = 4;
+  string Phone = 5;
+  string Email = 6;
+  string DeptCode = 7;
+  string DeptName = 8;
+  string ManagerCode = 9;
+  string ManagerName = 10;
+}
+
+message UserDetail {
+  int64 Id = 1;
+  string Number = 2;
+  string Name = 3;
+  int32 Age = 4;
+  Gender GenderCode = 5;
+  string Phone = 6;
+  string Email = 7;
+  string DeptCode = 8;
+  string DeptName = 9;
+  string ManagerCode = 10;
+  string ManagerName = 11;
+  int64 CreateTime = 12;
+}
+
+
+message GetUserByIdReq {
+  int64 Id = 1;
+}
+
+message GetUserByIdResp {
+  UserDetail UserDetail = 1;
+}
+
+
+message GetUserByNumberReq {
+  string Number = 1;
+}
+
+message GetUserByNumberResp {
+  UserDetail UserDetail = 1;
+}
+
+
+message GetUserByNameReq {
+  string Name = 1;
+}
+
+message GetUserByNameResp {
+  UserDetail UserDetail = 1;
+}
+
+message CreateUserReq {
+  UserInfo UserInfo = 1;
+}
+
+message CreateUserResp {
+  int64 Id = 1;
+}
+
+message ListUserReq {
+  int64 Page = 1;
+  int64 PageSize = 2;
+}
+
+message ListUserResp {
+  int64 Total = 1;
+  repeated UserDetail UserDetail = 2;
+}
+
+message DeleteUserReq {
+  int64 Id = 1;
+}
+
+message DeleteUserResp {
+  int64 Id = 1;
+}
+
+message UpdateUserReq {
+  int64 Id = 1;
+  UserInfo UserInfo = 2;
+}
+
+message UpdateUserResp {
+  int64 Id = 1;
+}
+
+service User {
+  // 用户相关接口
+  rpc GetUserById(GetUserByIdReq) returns(GetUserByIdResp);
+  rpc GetUserByNumber(GetUserByNumberReq) returns(GetUserByNumberResp);
+  rpc GetUserByName(GetUserByNameReq) returns(GetUserByNameResp);
+  rpc CreateUser(CreateUserReq) returns(CreateUserResp);
+  rpc DeleteUser(DeleteUserReq) returns(DeleteUserResp);
+  rpc UpdateUser(UpdateUserReq) returns(UpdateUserResp);
+  rpc ListUser(ListUserReq) returns(ListUserResp);
+}
+
