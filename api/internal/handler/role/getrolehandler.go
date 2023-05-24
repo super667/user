@@ -1,12 +1,12 @@
 package role
 
 import (
-	"net/http"
-
 	"github.com/zeromicro/go-zero/rest/httpx"
+	"net/http"
 	"user/api/internal/logic/role"
 	"user/api/internal/svc"
 	"user/api/internal/types"
+	"user/api/response"
 )
 
 func GetRoleHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
@@ -19,10 +19,6 @@ func GetRoleHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := role.NewGetRoleLogic(r.Context(), svcCtx)
 		resp, err := l.GetRole(&req)
-		if err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
-		} else {
-			httpx.OkJsonCtx(r.Context(), w, resp)
-		}
+		response.Response(w, resp, err)
 	}
 }

@@ -1,8 +1,7 @@
 syntax = "proto3";
-
 package userclient;
-
 option go_package = "./user";
+
 
 // ========= 用户相关接口 ==========
 
@@ -111,6 +110,257 @@ message PatchUserReq {
 message PatchUserResp {
   int64 Id = 1;
 }
+// ===============================
+
+// =============角色相关==================
+
+message RoleInfo {
+  string Name = 1;
+  string Desc = 2;
+}
+
+message RoleDetail {
+  int64 Id = 1;
+  string Name = 2;
+  string Desc = 3;
+  int64 CreateTime  = 4;
+}
+
+message CreateRoleReq {
+  RoleInfo RoleInfo = 1;
+}
+
+message CreateRoleResp {
+  int64 Id = 1;
+}
+
+message ListRoleReq {
+  int64 Page = 1;
+  int64 PageSize = 2;
+}
+
+message ListRoleResp {
+  int64 Page = 1;
+  int64 PageSize = 2;
+  int64 Total = 3;
+  repeated RoleDetail RoleDetail = 4;
+}
+
+message DeleteRoleReq {
+  int64 Id = 1;
+}
+
+message DeleteRoleResp {
+  int64 Id = 1;
+}
+
+message UpdateRoleReq {
+  int64 Id = 1;
+  UserInfo UserInfo = 2;
+}
+
+message UpdateRoleResp {
+  int64 Id = 1;
+}
+
+message PatchRoleReq {
+  int64 Id = 1;
+  RoleInfo RoleInfo = 2;
+}
+
+message PatchRoleResp {
+  int64 Id = 1;
+}
+
+// =============权限相关==================
+
+message PermInfo {
+  string Name = 1;
+  string Desc = 2;
+}
+
+message PermDetail {
+  int64 Id = 1;
+  string Name = 2;
+  string Desc = 3;
+  int64 CreateTime  = 4;
+}
+
+message CreatePermReq {
+  RoleInfo RoleInfo = 1;
+}
+
+message CreatePermResp {
+  int64 Id = 1;
+}
+
+message ListPermReq {
+  int64 Page = 1;
+  int64 PageSize = 2;
+}
+
+message ListPermResp {
+  int64 Page = 1;
+  int64 PageSize = 2;
+  int64 Total = 3;
+  repeated RoleDetail RoleDetail = 4;
+}
+
+message DeletePermReq {
+  int64 Id = 1;
+}
+
+message DeletePermResp {
+  int64 Id = 1;
+}
+
+message UpdatePermReq {
+  int64 Id = 1;
+  PermInfo PermInfo = 2;
+}
+
+message UpdatePermResp {
+  int64 Id = 1;
+}
+
+message PatchPermReq {
+  int64 Id = 1;
+  PermInfo PermInfo = 2;
+}
+
+message PatchPermResp {
+  int64 Id = 1;
+}
+
+// =============权限策略相关==================
+
+message StrategyInfo {
+  string Subject = 1;
+  string SubjectType = 2;
+  string Object = 3;
+  string Perm = 4;
+}
+
+message StrategyDetail {
+  int64 Id = 1;
+  string Subject = 2;
+  string SubjectName = 3;
+  string SubjectType = 4;
+  string SubjectTypeName = 5;
+  string Object = 6;
+  string ObjectName = 7;
+  string Perm = 8;
+  string PermName = 9;
+  int64 CreateTime  = 10;
+}
+
+message CreateStrategyReq {
+  StrategyInfo StrategyInfo = 1;
+}
+
+message CreateStrategyResp {
+  int64 Id = 1;
+}
+
+message ListStrategyReq {
+  int64 Page = 1;
+  int64 PageSize = 2;
+}
+
+message ListStrategyResp {
+  int64 Page = 1;
+  int64 PageSize = 2;
+  int64 Total = 3;
+  repeated StrategyDetail StrategyDetail = 4;
+}
+
+message DeleteStrategyReq {
+  int64 Id = 1;
+}
+
+message DeleteStrategyResp {
+  int64 Id = 1;
+}
+
+message UpdateStrategyReq {
+  int64 Id = 1;
+  StrategyInfo StrategyInfo = 2;
+}
+
+message UpdateStrategyResp {
+  int64 Id = 1;
+}
+
+message PatchStrategyReq {
+  int64 Id = 1;
+  StrategyInfo StrategyInfo = 2;
+}
+
+message PatchStrategyResp {
+  int64 Id = 1;
+}
+
+// =============角色分配相关==================
+
+message UserRoleInfo {
+  int64 UserId = 1;
+  int64 RoleId = 2;
+}
+
+message UserRoleDetail {
+  int64 Id = 1;
+  int64 UserId = 2;
+  int64 RoleId = 3;
+  int64 CreateTime  = 4;
+}
+
+message CreateUserRoleReq {
+  UserRoleInfo UserRoleInfo = 1;
+}
+
+message CreateUserRoleResp {
+  int64 Id = 1;
+}
+
+message ListUserRoleReq {
+  int64 Page = 1;
+  int64 PageSize = 2;
+}
+
+message ListUserRoleResp {
+  int64 Page = 1;
+  int64 PageSize = 2;
+  int64 Total = 3;
+  repeated UserRoleDetail UserRoleDetail = 4;
+}
+
+message DeleteUserRoleReq {
+  int64 Id = 1;
+}
+
+message DeleteUserRoleResp {
+  int64 Id = 1;
+}
+
+message UpdateUserRoleReq {
+  int64 Id = 1;
+  UserRoleInfo UserRoleInfo = 2;
+}
+
+message UpdateUserRoleResp {
+  int64 Id = 1;
+}
+
+message PatchUserRoleReq {
+  int64 Id = 1;
+  UserRoleInfo UserRoleInfo = 2;
+}
+
+message PatchUserRoleResp {
+  int64 Id = 1;
+}
+
+
 
 service User {
   // 用户相关接口
@@ -122,5 +372,39 @@ service User {
   rpc UpdateUser(UpdateUserReq) returns(UpdateUserResp);
   rpc PatchUser(PatchUserReq) returns(PatchUserResp);
   rpc ListUser(ListUserReq) returns(ListUserResp);
+
+  // 角色相关接口
+
+  rpc CreateRole(CreateRoleReq) returns(CreateRoleResp);
+  rpc DeleteRole(DeleteRoleReq) returns(DeleteRoleResp);
+  rpc UpdateRole(UpdateRoleReq) returns(UpdateRoleResp);
+  rpc PatchRole(PatchRoleReq) returns(PatchRoleResp);
+  rpc ListRole(ListRoleReq) returns(ListRoleResp);
+
+  // 权限相关接口
+
+  rpc CreatePerm(CreatePermReq) returns(CreatePermResp);
+  rpc DeletePerm(DeletePermReq) returns(DeletePermResp);
+  rpc UpdatePerm(UpdatePermReq) returns(UpdatePermResp);
+  rpc PatchPerm(PatchPermReq) returns(PatchPermResp);
+  rpc ListPerm(ListPermReq) returns(ListPermResp);
+
+
+  // 策略相关接口
+
+  rpc CreateStrategy(CreateStrategyReq) returns(CreateStrategyResp);
+  rpc DeleteStrategy(DeleteStrategyReq) returns(DeleteStrategyResp);
+  rpc UpdateStrategy(UpdateStrategyReq) returns(UpdateStrategyResp);
+  rpc PatchStrategy(PatchStrategyReq) returns(PatchStrategyResp);
+  rpc ListStrategy(ListStrategyReq) returns(ListStrategyResp);
+
+  // 角色分配接口
+
+  rpc CreateUserRole(CreateUserRoleReq) returns(CreateUserRoleResp);
+  rpc DeleteUserRole(DeleteUserRoleReq) returns(DeleteUserRoleResp);
+  rpc UpdateUserRole(UpdateUserRoleReq) returns(UpdateUserRoleResp);
+  rpc PatchUserRole(PatchUserRoleReq) returns(PatchUserRoleResp);
+  rpc ListUserRole(ListUserRoleReq) returns(ListUserRoleResp);
+
 }
 

@@ -62,3 +62,103 @@ func (s *UserServer) ListUser(ctx context.Context, in *user.ListUserReq) (*user.
 	l := logic.NewListUserLogic(ctx, s.svcCtx)
 	return l.ListUser(in)
 }
+
+func (s *UserServer) CreateRole(ctx context.Context, in *user.CreateRoleReq) (*user.CreateRoleResp, error) {
+	l := logic.NewCreateRoleLogic(ctx, s.svcCtx)
+	return l.CreateRole(in)
+}
+
+func (s *UserServer) DeleteRole(ctx context.Context, in *user.DeleteRoleReq) (*user.DeleteRoleResp, error) {
+	l := logic.NewDeleteRoleLogic(ctx, s.svcCtx)
+	return l.DeleteRole(in)
+}
+
+func (s *UserServer) UpdateRole(ctx context.Context, in *user.UpdateRoleReq) (*user.UpdateRoleResp, error) {
+	l := logic.NewUpdateRoleLogic(ctx, s.svcCtx)
+	return l.UpdateRole(in)
+}
+
+func (s *UserServer) PatchRole(ctx context.Context, in *user.PatchRoleReq) (*user.PatchRoleResp, error) {
+	l := logic.NewPatchRoleLogic(ctx, s.svcCtx)
+	return l.PatchRole(in)
+}
+
+func (s *UserServer) ListRole(ctx context.Context, in *user.ListRoleReq) (*user.ListRoleResp, error) {
+	l := logic.NewListRoleLogic(ctx, s.svcCtx)
+	return l.ListRole(in)
+}
+
+func (s *UserServer) CreatePerm(ctx context.Context, in *user.CreatePermReq) (*user.CreatePermResp, error) {
+	l := logic.NewCreatePermLogic(ctx, s.svcCtx)
+	return l.CreatePerm(in)
+}
+
+func (s *UserServer) DeletePerm(ctx context.Context, in *user.DeletePermReq) (*user.DeletePermResp, error) {
+	l := logic.NewDeletePermLogic(ctx, s.svcCtx)
+	return l.DeletePerm(in)
+}
+
+func (s *UserServer) UpdatePerm(ctx context.Context, in *user.UpdatePermReq) (*user.UpdatePermResp, error) {
+	l := logic.NewUpdatePermLogic(ctx, s.svcCtx)
+	return l.UpdatePerm(in)
+}
+
+func (s *UserServer) PatchPerm(ctx context.Context, in *user.PatchPermReq) (*user.PatchPermResp, error) {
+	l := logic.NewPatchPermLogic(ctx, s.svcCtx)
+	return l.PatchPerm(in)
+}
+
+func (s *UserServer) ListPerm(ctx context.Context, in *user.ListPermReq) (*user.ListPermResp, error) {
+	l := logic.NewListPermLogic(ctx, s.svcCtx)
+	return l.ListPerm(in)
+}
+
+func (s *UserServer) CreateStrategy(ctx context.Context, in *user.CreateStrategyReq) (*user.CreateStrategyResp, error) {
+	l := logic.NewCreateStrategyLogic(ctx, s.svcCtx)
+	return l.CreateStrategy(in)
+}
+
+func (s *UserServer) DeleteStrategy(ctx context.Context, in *user.DeleteStrategyReq) (*user.DeleteStrategyResp, error) {
+	l := logic.NewDeleteStrategyLogic(ctx, s.svcCtx)
+	return l.DeleteStrategy(in)
+}
+
+func (s *UserServer) UpdateStrategy(ctx context.Context, in *user.UpdateStrategyReq) (*user.UpdateStrategyResp, error) {
+	l := logic.NewUpdateStrategyLogic(ctx, s.svcCtx)
+	return l.UpdateStrategy(in)
+}
+
+func (s *UserServer) PatchStrategy(ctx context.Context, in *user.PatchStrategyReq) (*user.PatchStrategyResp, error) {
+	l := logic.NewPatchStrategyLogic(ctx, s.svcCtx)
+	return l.PatchStrategy(in)
+}
+
+func (s *UserServer) ListStrategy(ctx context.Context, in *user.ListStrategyReq) (*user.ListStrategyResp, error) {
+	l := logic.NewListStrategyLogic(ctx, s.svcCtx)
+	return l.ListStrategy(in)
+}
+
+func (s *UserServer) CreateUserRole(ctx context.Context, in *user.CreateUserRoleReq) (*user.CreateUserRoleResp, error) {
+	l := logic.NewCreateUserRoleLogic(ctx, s.svcCtx)
+	return l.CreateUserRole(in)
+}
+
+func (s *UserServer) DeleteUserRole(ctx context.Context, in *user.DeleteUserRoleReq) (*user.DeleteUserRoleResp, error) {
+	l := logic.NewDeleteUserRoleLogic(ctx, s.svcCtx)
+	return l.DeleteUserRole(in)
+}
+
+func (s *UserServer) UpdateUserRole(ctx context.Context, in *user.UpdateUserRoleReq) (*user.UpdateUserRoleResp, error) {
+	l := logic.NewUpdateUserRoleLogic(ctx, s.svcCtx)
+	return l.UpdateUserRole(in)
+}
+
+func (s *UserServer) PatchUserRole(ctx context.Context, in *user.PatchUserRoleReq) (*user.PatchUserRoleResp, error) {
+	l := logic.NewPatchUserRoleLogic(ctx, s.svcCtx)
+	return l.PatchUserRole(in)
+}
+
+func (s *UserServer) ListUserRole(ctx context.Context, in *user.ListUserRoleReq) (*user.ListUserRoleResp, error) {
+	l := logic.NewListUserRoleLogic(ctx, s.svcCtx)
+	return l.ListUserRole(in)
+}

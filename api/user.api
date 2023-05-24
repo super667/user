@@ -1,2 +1,5 @@
 import "docs/user.api"
 import "docs/role.api"
+import "docs/permission.api"
+import "docs/strategy.api"
+import "docs/userrole.api"

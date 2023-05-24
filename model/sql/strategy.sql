@@ -1,9 +1,13 @@
 CREATE TABLE `strategy` (
 `id` bigint unsigned NOT NULL AUTO_INCREMENT,
 `subject`         varchar(1024) NOT NULL DEFAULT '' COMMENT '权限赋予的主体',
+`subject_name`         varchar(1024) NOT NULL DEFAULT '' COMMENT '权限赋予的主体名称',
 `subject_type`         varchar(1024) NOT NULL DEFAULT '' COMMENT '主体类型',
+`subject_type_name`         varchar(1024) NOT NULL DEFAULT '' COMMENT '主体类型名称',
 `object`         varchar(1024) NOT NULL DEFAULT '' COMMENT '资源',
+`object_name`         varchar(1024) NOT NULL DEFAULT '' COMMENT '资源名称',
 `perm`          varchar(255) NOT NULL DEFAULT '' COMMENT '权限点',
+`perm_name`          varchar(255) NOT NULL DEFAULT '' COMMENT '权限点名称',
 `create_time`   datetime NULL DEFAULT CURRENT_TIMESTAMP,
 `update_time`   datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 `delete_time`   datetime NULL,

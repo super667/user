@@ -9,14 +9,20 @@ info(
 
 type (
     StrategyInfo {
-        Name string `json:"name"`
-        Desc string `json:"desc"`
+        Subject string `json:"subject"`
+        SubjectType string `json:"subjectType"`
+        Object string `json:"object"`
+        Perm string `json:"perm"`
     }
 
     StrategyDetail {
         Id int64 `json:"id"`
-        CreateTime int64 `json:"createTime"`
         StrategyInfo
+        SubjectName string `json:"subjectName"`
+        SubjectTypeName string `json:"subjectTypeName"`
+        ObjectName string `json:"objectName"`
+        PermName string `json:"permName"`
+        CreateTime int64 `json:"createTime"`
     }
 
     CreateStrategyReq {
@@ -73,7 +79,7 @@ type (
 
 
 @server (
-    group: Strategy
+    group: strategy
 )
 service User {
     @doc "获取角色信息"

@@ -144,3 +144,195 @@ type ListRoleResp struct {
 	ListResp
 	Roles []RoleDetail `json:"list"`
 }
+
+type PermInfo struct {
+	Name string `json:"name"`
+	Desc string `json:"desc"`
+}
+
+type PermDetail struct {
+	Id         int64 `json:"id"`
+	CreateTime int64 `json:"createTime"`
+	PermInfo
+}
+
+type CreatePermReq struct {
+	PermInfo
+}
+
+type CreatePermResp struct {
+	Id int64 `json:"id"`
+}
+
+type DeletePermReq struct {
+	Id int64 `json:"id"`
+}
+
+type DeletePermResp struct {
+	Id int64 `json:"id"`
+}
+
+type UpdatePermReq struct {
+	Id int64 `json:"id"`
+	PermInfo
+}
+
+type UpdatePermResp struct {
+	Id int64 `json:"id"`
+}
+
+type PatchPermReq struct {
+	Id int64 `json:"id"`
+	PermInfo
+}
+
+type PatchPermResp struct {
+	Id int64 `json:"id"`
+}
+
+type GetPermReq struct {
+	Id int64 `json:"id"`
+}
+
+type GetPermResp struct {
+	PermDetail
+}
+
+type ListPermReq struct {
+	ListReq
+}
+
+type ListPermResp struct {
+	ListResp
+	Roles []PermDetail `json:"list"`
+}
+
+type StrategyInfo struct {
+	Subject     string `json:"subject"`
+	SubjectType string `json:"subjectType"`
+	Object      string `json:"object"`
+	Perm        string `json:"perm"`
+}
+
+type StrategyDetail struct {
+	Id int64 `json:"id"`
+	StrategyInfo
+	SubjectName     string `json:"subjectName"`
+	SubjectTypeName string `json:"subjectTypeName"`
+	ObjectName      string `json:"objectName"`
+	PermName        string `json:"permName"`
+	CreateTime      int64  `json:"createTime"`
+}
+
+type CreateStrategyReq struct {
+	StrategyInfo
+}
+
+type CreateStrategyResp struct {
+	Id int64 `json:"id"`
+}
+
+type DeleteStrategyReq struct {
+	Id int64 `json:"id"`
+}
+
+type DeleteStrategyResp struct {
+	Id int64 `json:"id"`
+}
+
+type UpdateStrategyReq struct {
+	Id int64 `json:"id"`
+	StrategyInfo
+}
+
+type UpdateStrategyResp struct {
+	Id int64 `json:"id"`
+}
+
+type PatchStrategyReq struct {
+	Id int64 `json:"id"`
+	StrategyInfo
+}
+
+type PatchStrategyResp struct {
+	Id int64 `json:"id"`
+}
+
+type GetStrategyReq struct {
+	Id int64 `json:"id"`
+}
+
+type GetStrategyResp struct {
+	StrategyDetail
+}
+
+type ListStrategyReq struct {
+	ListReq
+}
+
+type ListStrategyResp struct {
+	ListResp
+	Roles []StrategyDetail `json:"list"`
+}
+
+type UserRoleInfo struct {
+	UserId int64 `json:"userId"`
+	RoleId int64 `json:"roleId"`
+}
+
+type UserRoleDetail struct {
+	Id         int64 `json:"id"`
+	CreateTime int64 `json:"createTime"`
+	UserRoleInfo
+}
+
+type CreateUserRoleReq struct {
+	UserRoleInfo
+}
+
+type CreateUserRoleResp struct {
+	Id int64 `json:"id"`
+}
+
+type DeleteUserRoleReq struct {
+	Id int64 `json:"id"`
+}
+
+type DeleteUserRoleResp struct {
+	Id int64 `json:"id"`
+}
+
+type UpdateUserRoleReq struct {
+	Id int64 `json:"id"`
+	UserRoleInfo
+}
+
+type UpdateUserRoleResp struct {
+	Id int64 `json:"id"`
+}
+
+type PatchUserRoleReq struct {
+	Id int64 `json:"id"`
+	UserRoleInfo
+}
+
+type PatchUserRoleResp struct {
+	Id int64 `json:"id"`
+}
+
+type GetUserRoleReq struct {
+	Id int64 `json:"id"`
+}
+
+type GetUserRoleResp struct {
+	UserRoleDetail
+}
+
+type ListUserRoleReq struct {
+	ListReq
+}
+
+type ListUserRoleResp struct {
+	ListResp
+	Roles []UserRoleDetail `json:"list"`
+}

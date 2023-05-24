@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+
+option go_package = "user/rpc/role";
+package user;
+
+

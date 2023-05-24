@@ -1,0 +1,98 @@
+
+import "docs/common.api"
+
+info(
+    title: "角色分配接口"
+    author: "wangxianchao"
+    email: "995166545@qq.com"
+)
+
+type (
+    UserRoleInfo {
+        UserId int64 `json:"userId"`
+        RoleId int64 `json:"roleId"`
+    }
+
+    UserRoleDetail {
+        Id int64 `json:"id"`
+        CreateTime int64 `json:"createTime"`
+        UserRoleInfo
+    }
+
+    CreateUserRoleReq {
+        UserRoleInfo
+    }
+
+    CreateUserRoleResp {
+        Id int64 `json:"id"`
+    }
+
+    DeleteUserRoleReq {
+        Id int64 `json:"id"`
+    }
+
+    DeleteUserRoleResp {
+        Id int64 `json:"id"`
+    }
+
+    UpdateUserRoleReq {
+        Id int64 `json:"id"`
+        UserRoleInfo
+    }
+
+    UpdateUserRoleResp {
+        Id int64 `json:"id"`
+    }
+
+    PatchUserRoleReq {
+        Id int64 `json:"id"`
+        UserRoleInfo
+    }
+
+    PatchUserRoleResp {
+        Id int64 `json:"id"`
+    }
+
+    GetUserRoleReq {
+        Id int64 `json:"id"`
+    }
+
+    GetUserRoleResp {
+        UserRoleDetail
+    }
+
+    ListUserRoleReq {
+        ListReq
+    }
+
+    ListUserRoleResp {
+        ListResp
+        Roles []UserRoleDetail `json:"list"`
+    }
+)
+
+
+@server (
+    group: userrole
+)
+service User {
+    @doc "获取角色分配信息"
+    @handler GetUserRole
+    get /user_role/:id(GetUserRoleReq) returns (GetUserRoleResp)
+
+    @doc "分配角色"
+    @handler CreateUserRole
+    post /user_role(CreateUserRoleReq) returns (CreateUserRoleResp)
+
+    @doc "获取角色分配列表"
+    @handler ListUserRole
+    get /user_role(ListUserRoleReq) returns (ListUserRoleResp)
+
+    @doc "删除角色"
+    @handler DeleteUserRole
+    delete /user_role/:id(DeleteUserRoleReq) returns (DeleteUserRoleResp)
+
+    @doc "全量更新角色"
+    @handler UpdateUserRole
+    put /user_role/:id (UpdateUserRoleReq) returns (UpdateUserRoleResp)
+}
