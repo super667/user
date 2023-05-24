@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v3.19.4
-// source: user.proto
+// source: rpc/user.proto
 
 package user
 
@@ -27,21 +27,25 @@ const (
 	User_UpdateUser_FullMethodName      = "/userclient.User/UpdateUser"
 	User_PatchUser_FullMethodName       = "/userclient.User/PatchUser"
 	User_ListUser_FullMethodName        = "/userclient.User/ListUser"
+	User_GetRoleById_FullMethodName     = "/userclient.User/GetRoleById"
 	User_CreateRole_FullMethodName      = "/userclient.User/CreateRole"
 	User_DeleteRole_FullMethodName      = "/userclient.User/DeleteRole"
 	User_UpdateRole_FullMethodName      = "/userclient.User/UpdateRole"
 	User_PatchRole_FullMethodName       = "/userclient.User/PatchRole"
 	User_ListRole_FullMethodName        = "/userclient.User/ListRole"
+	User_GetPermById_FullMethodName     = "/userclient.User/GetPermById"
 	User_CreatePerm_FullMethodName      = "/userclient.User/CreatePerm"
 	User_DeletePerm_FullMethodName      = "/userclient.User/DeletePerm"
 	User_UpdatePerm_FullMethodName      = "/userclient.User/UpdatePerm"
 	User_PatchPerm_FullMethodName       = "/userclient.User/PatchPerm"
 	User_ListPerm_FullMethodName        = "/userclient.User/ListPerm"
+	User_GetStrategyById_FullMethodName = "/userclient.User/GetStrategyById"
 	User_CreateStrategy_FullMethodName  = "/userclient.User/CreateStrategy"
 	User_DeleteStrategy_FullMethodName  = "/userclient.User/DeleteStrategy"
 	User_UpdateStrategy_FullMethodName  = "/userclient.User/UpdateStrategy"
 	User_PatchStrategy_FullMethodName   = "/userclient.User/PatchStrategy"
 	User_ListStrategy_FullMethodName    = "/userclient.User/ListStrategy"
+	User_GetUserRoleById_FullMethodName = "/userclient.User/GetUserRoleById"
 	User_CreateUserRole_FullMethodName  = "/userclient.User/CreateUserRole"
 	User_DeleteUserRole_FullMethodName  = "/userclient.User/DeleteUserRole"
 	User_UpdateUserRole_FullMethodName  = "/userclient.User/UpdateUserRole"
@@ -62,21 +66,25 @@ type UserClient interface {
 	UpdateUser(ctx context.Context, in *UpdateUserReq, opts ...grpc.CallOption) (*UpdateUserResp, error)
 	PatchUser(ctx context.Context, in *PatchUserReq, opts ...grpc.CallOption) (*PatchUserResp, error)
 	ListUser(ctx context.Context, in *ListUserReq, opts ...grpc.CallOption) (*ListUserResp, error)
+	GetRoleById(ctx context.Context, in *GetRoleByIdReq, opts ...grpc.CallOption) (*GetRoleByIdResp, error)
 	CreateRole(ctx context.Context, in *CreateRoleReq, opts ...grpc.CallOption) (*CreateRoleResp, error)
 	DeleteRole(ctx context.Context, in *DeleteRoleReq, opts ...grpc.CallOption) (*DeleteRoleResp, error)
 	UpdateRole(ctx context.Context, in *UpdateRoleReq, opts ...grpc.CallOption) (*UpdateRoleResp, error)
 	PatchRole(ctx context.Context, in *PatchRoleReq, opts ...grpc.CallOption) (*PatchRoleResp, error)
 	ListRole(ctx context.Context, in *ListRoleReq, opts ...grpc.CallOption) (*ListRoleResp, error)
+	GetPermById(ctx context.Context, in *GetPermByIdReq, opts ...grpc.CallOption) (*GetPermByIdResp, error)
 	CreatePerm(ctx context.Context, in *CreatePermReq, opts ...grpc.CallOption) (*CreatePermResp, error)
 	DeletePerm(ctx context.Context, in *DeletePermReq, opts ...grpc.CallOption) (*DeletePermResp, error)
 	UpdatePerm(ctx context.Context, in *UpdatePermReq, opts ...grpc.CallOption) (*UpdatePermResp, error)
 	PatchPerm(ctx context.Context, in *PatchPermReq, opts ...grpc.CallOption) (*PatchPermResp, error)
 	ListPerm(ctx context.Context, in *ListPermReq, opts ...grpc.CallOption) (*ListPermResp, error)
+	GetStrategyById(ctx context.Context, in *GetStrategyByIdReq, opts ...grpc.CallOption) (*GetStrategyByIdResp, error)
 	CreateStrategy(ctx context.Context, in *CreateStrategyReq, opts ...grpc.CallOption) (*CreateStrategyResp, error)
 	DeleteStrategy(ctx context.Context, in *DeleteStrategyReq, opts ...grpc.CallOption) (*DeleteStrategyResp, error)
 	UpdateStrategy(ctx context.Context, in *UpdateStrategyReq, opts ...grpc.CallOption) (*UpdateStrategyResp, error)
 	PatchStrategy(ctx context.Context, in *PatchStrategyReq, opts ...grpc.CallOption) (*PatchStrategyResp, error)
 	ListStrategy(ctx context.Context, in *ListStrategyReq, opts ...grpc.CallOption) (*ListStrategyResp, error)
+	GetUserRoleById(ctx context.Context, in *GetUserRoleByIdReq, opts ...grpc.CallOption) (*GetUserRoleByIdResp, error)
 	CreateUserRole(ctx context.Context, in *CreateUserRoleReq, opts ...grpc.CallOption) (*CreateUserRoleResp, error)
 	DeleteUserRole(ctx context.Context, in *DeleteUserRoleReq, opts ...grpc.CallOption) (*DeleteUserRoleResp, error)
 	UpdateUserRole(ctx context.Context, in *UpdateUserRoleReq, opts ...grpc.CallOption) (*UpdateUserRoleResp, error)
@@ -164,6 +172,15 @@ func (c *userClient) ListUser(ctx context.Context, in *ListUserReq, opts ...grpc
 	return out, nil
 }
 
+func (c *userClient) GetRoleById(ctx context.Context, in *GetRoleByIdReq, opts ...grpc.CallOption) (*GetRoleByIdResp, error) {
+	out := new(GetRoleByIdResp)
+	err := c.cc.Invoke(ctx, User_GetRoleById_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userClient) CreateRole(ctx context.Context, in *CreateRoleReq, opts ...grpc.CallOption) (*CreateRoleResp, error) {
 	out := new(CreateRoleResp)
 	err := c.cc.Invoke(ctx, User_CreateRole_FullMethodName, in, out, opts...)
@@ -203,6 +220,15 @@ func (c *userClient) PatchRole(ctx context.Context, in *PatchRoleReq, opts ...gr
 func (c *userClient) ListRole(ctx context.Context, in *ListRoleReq, opts ...grpc.CallOption) (*ListRoleResp, error) {
 	out := new(ListRoleResp)
 	err := c.cc.Invoke(ctx, User_ListRole_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) GetPermById(ctx context.Context, in *GetPermByIdReq, opts ...grpc.CallOption) (*GetPermByIdResp, error) {
+	out := new(GetPermByIdResp)
+	err := c.cc.Invoke(ctx, User_GetPermById_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -254,6 +280,15 @@ func (c *userClient) ListPerm(ctx context.Context, in *ListPermReq, opts ...grpc
 	return out, nil
 }
 
+func (c *userClient) GetStrategyById(ctx context.Context, in *GetStrategyByIdReq, opts ...grpc.CallOption) (*GetStrategyByIdResp, error) {
+	out := new(GetStrategyByIdResp)
+	err := c.cc.Invoke(ctx, User_GetStrategyById_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userClient) CreateStrategy(ctx context.Context, in *CreateStrategyReq, opts ...grpc.CallOption) (*CreateStrategyResp, error) {
 	out := new(CreateStrategyResp)
 	err := c.cc.Invoke(ctx, User_CreateStrategy_FullMethodName, in, out, opts...)
@@ -293,6 +328,15 @@ func (c *userClient) PatchStrategy(ctx context.Context, in *PatchStrategyReq, op
 func (c *userClient) ListStrategy(ctx context.Context, in *ListStrategyReq, opts ...grpc.CallOption) (*ListStrategyResp, error) {
 	out := new(ListStrategyResp)
 	err := c.cc.Invoke(ctx, User_ListStrategy_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) GetUserRoleById(ctx context.Context, in *GetUserRoleByIdReq, opts ...grpc.CallOption) (*GetUserRoleByIdResp, error) {
+	out := new(GetUserRoleByIdResp)
+	err := c.cc.Invoke(ctx, User_GetUserRoleById_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -357,21 +401,25 @@ type UserServer interface {
 	UpdateUser(context.Context, *UpdateUserReq) (*UpdateUserResp, error)
 	PatchUser(context.Context, *PatchUserReq) (*PatchUserResp, error)
 	ListUser(context.Context, *ListUserReq) (*ListUserResp, error)
+	GetRoleById(context.Context, *GetRoleByIdReq) (*GetRoleByIdResp, error)
 	CreateRole(context.Context, *CreateRoleReq) (*CreateRoleResp, error)
 	DeleteRole(context.Context, *DeleteRoleReq) (*DeleteRoleResp, error)
 	UpdateRole(context.Context, *UpdateRoleReq) (*UpdateRoleResp, error)
 	PatchRole(context.Context, *PatchRoleReq) (*PatchRoleResp, error)
 	ListRole(context.Context, *ListRoleReq) (*ListRoleResp, error)
+	GetPermById(context.Context, *GetPermByIdReq) (*GetPermByIdResp, error)
 	CreatePerm(context.Context, *CreatePermReq) (*CreatePermResp, error)
 	DeletePerm(context.Context, *DeletePermReq) (*DeletePermResp, error)
 	UpdatePerm(context.Context, *UpdatePermReq) (*UpdatePermResp, error)
 	PatchPerm(context.Context, *PatchPermReq) (*PatchPermResp, error)
 	ListPerm(context.Context, *ListPermReq) (*ListPermResp, error)
+	GetStrategyById(context.Context, *GetStrategyByIdReq) (*GetStrategyByIdResp, error)
 	CreateStrategy(context.Context, *CreateStrategyReq) (*CreateStrategyResp, error)
 	DeleteStrategy(context.Context, *DeleteStrategyReq) (*DeleteStrategyResp, error)
 	UpdateStrategy(context.Context, *UpdateStrategyReq) (*UpdateStrategyResp, error)
 	PatchStrategy(context.Context, *PatchStrategyReq) (*PatchStrategyResp, error)
 	ListStrategy(context.Context, *ListStrategyReq) (*ListStrategyResp, error)
+	GetUserRoleById(context.Context, *GetUserRoleByIdReq) (*GetUserRoleByIdResp, error)
 	CreateUserRole(context.Context, *CreateUserRoleReq) (*CreateUserRoleResp, error)
 	DeleteUserRole(context.Context, *DeleteUserRoleReq) (*DeleteUserRoleResp, error)
 	UpdateUserRole(context.Context, *UpdateUserRoleReq) (*UpdateUserRoleResp, error)
@@ -408,6 +456,9 @@ func (UnimplementedUserServer) PatchUser(context.Context, *PatchUserReq) (*Patch
 func (UnimplementedUserServer) ListUser(context.Context, *ListUserReq) (*ListUserResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListUser not implemented")
 }
+func (UnimplementedUserServer) GetRoleById(context.Context, *GetRoleByIdReq) (*GetRoleByIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRoleById not implemented")
+}
 func (UnimplementedUserServer) CreateRole(context.Context, *CreateRoleReq) (*CreateRoleResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateRole not implemented")
 }
@@ -422,6 +473,9 @@ func (UnimplementedUserServer) PatchRole(context.Context, *PatchRoleReq) (*Patch
 }
 func (UnimplementedUserServer) ListRole(context.Context, *ListRoleReq) (*ListRoleResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListRole not implemented")
+}
+func (UnimplementedUserServer) GetPermById(context.Context, *GetPermByIdReq) (*GetPermByIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPermById not implemented")
 }
 func (UnimplementedUserServer) CreatePerm(context.Context, *CreatePermReq) (*CreatePermResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreatePerm not implemented")
@@ -438,6 +492,9 @@ func (UnimplementedUserServer) PatchPerm(context.Context, *PatchPermReq) (*Patch
 func (UnimplementedUserServer) ListPerm(context.Context, *ListPermReq) (*ListPermResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPerm not implemented")
 }
+func (UnimplementedUserServer) GetStrategyById(context.Context, *GetStrategyByIdReq) (*GetStrategyByIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetStrategyById not implemented")
+}
 func (UnimplementedUserServer) CreateStrategy(context.Context, *CreateStrategyReq) (*CreateStrategyResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateStrategy not implemented")
 }
@@ -452,6 +509,9 @@ func (UnimplementedUserServer) PatchStrategy(context.Context, *PatchStrategyReq)
 }
 func (UnimplementedUserServer) ListStrategy(context.Context, *ListStrategyReq) (*ListStrategyResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListStrategy not implemented")
+}
+func (UnimplementedUserServer) GetUserRoleById(context.Context, *GetUserRoleByIdReq) (*GetUserRoleByIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserRoleById not implemented")
 }
 func (UnimplementedUserServer) CreateUserRole(context.Context, *CreateUserRoleReq) (*CreateUserRoleResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUserRole not implemented")
@@ -625,6 +685,24 @@ func _User_ListUser_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_GetRoleById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRoleByIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).GetRoleById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_GetRoleById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).GetRoleById(ctx, req.(*GetRoleByIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _User_CreateRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateRoleReq)
 	if err := dec(in); err != nil {
@@ -711,6 +789,24 @@ func _User_ListRole_Handler(srv interface{}, ctx context.Context, dec func(inter
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServer).ListRole(ctx, req.(*ListRoleReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_GetPermById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPermByIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).GetPermById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_GetPermById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).GetPermById(ctx, req.(*GetPermByIdReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -805,6 +901,24 @@ func _User_ListPerm_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_GetStrategyById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetStrategyByIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).GetStrategyById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_GetStrategyById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).GetStrategyById(ctx, req.(*GetStrategyByIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _User_CreateStrategy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateStrategyReq)
 	if err := dec(in); err != nil {
@@ -891,6 +1005,24 @@ func _User_ListStrategy_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServer).ListStrategy(ctx, req.(*ListStrategyReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_GetUserRoleById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserRoleByIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).GetUserRoleById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_GetUserRoleById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).GetUserRoleById(ctx, req.(*GetUserRoleByIdReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1025,6 +1157,10 @@ var User_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _User_ListUser_Handler,
 		},
 		{
+			MethodName: "GetRoleById",
+			Handler:    _User_GetRoleById_Handler,
+		},
+		{
 			MethodName: "CreateRole",
 			Handler:    _User_CreateRole_Handler,
 		},
@@ -1043,6 +1179,10 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListRole",
 			Handler:    _User_ListRole_Handler,
+		},
+		{
+			MethodName: "GetPermById",
+			Handler:    _User_GetPermById_Handler,
 		},
 		{
 			MethodName: "CreatePerm",
@@ -1065,6 +1205,10 @@ var User_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _User_ListPerm_Handler,
 		},
 		{
+			MethodName: "GetStrategyById",
+			Handler:    _User_GetStrategyById_Handler,
+		},
+		{
 			MethodName: "CreateStrategy",
 			Handler:    _User_CreateStrategy_Handler,
 		},
@@ -1083,6 +1227,10 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListStrategy",
 			Handler:    _User_ListStrategy_Handler,
+		},
+		{
+			MethodName: "GetUserRoleById",
+			Handler:    _User_GetUserRoleById_Handler,
 		},
 		{
 			MethodName: "CreateUserRole",
@@ -1106,5 +1254,5 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "user.proto",
+	Metadata: "rpc/user.proto",
 }

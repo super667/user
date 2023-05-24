@@ -37,8 +37,9 @@ type (
 
 	Permission struct {
 		Id         int64        `db:"id"`
-		Perm       string       `db:"perm"` // 权限点
-		Desc       string       `db:"desc"` // 权限点描述
+		Resource   string       `db:"resource"` // 权限点
+		Perm       string       `db:"perm"`     // 权限
+		Desc       string       `db:"desc"`     // 权限点描述
 		CreateTime time.Time    `db:"create_time"`
 		UpdateTime time.Time    `db:"update_time"`
 		DeleteTime sql.NullTime `db:"delete_time"`
@@ -73,14 +74,14 @@ func (m *defaultPermissionModel) FindOne(ctx context.Context, id int64) (*Permis
 }
 
 func (m *defaultPermissionModel) Insert(ctx context.Context, data *Permission) (sql.Result, error) {
-	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?)", m.table, permissionRowsExpectAutoSet)
-	ret, err := m.conn.ExecCtx(ctx, query, data.Perm, data.Desc, data.DeleteTime)
+	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?)", m.table, permissionRowsExpectAutoSet)
+	ret, err := m.conn.ExecCtx(ctx, query, data.Resource, data.Perm, data.Desc, data.DeleteTime)
 	return ret, err
 }
 
 func (m *defaultPermissionModel) Update(ctx context.Context, data *Permission) error {
 	query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, permissionRowsWithPlaceHolder)
-	_, err := m.conn.ExecCtx(ctx, query, data.Perm, data.Desc, data.DeleteTime, data.Id)
+	_, err := m.conn.ExecCtx(ctx, query, data.Resource, data.Perm, data.Desc, data.DeleteTime, data.Id)
 	return err
 }
 

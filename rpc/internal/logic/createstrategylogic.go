@@ -2,6 +2,8 @@ package logic
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
+	"user/model"
 
 	"user/rpc/internal/svc"
 	"user/rpc/user"
@@ -24,7 +26,22 @@ func NewCreateStrategyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Cr
 }
 
 func (l *CreateStrategyLogic) CreateStrategy(in *user.CreateStrategyReq) (*user.CreateStrategyResp, error) {
-	// todo: add your logic here and delete this line
+	resp := &user.CreateStrategyResp{}
+	strategyInfo := &model.Strategy{}
+	err := copier.Copy(strategyInfo, in.StrategyInfo)
+	if err != nil {
+		l.Logger.Error(err)
+		return resp, err
+	}
+	insertRes, err := l.svcCtx.StrategyModel.Insert(l.ctx, strategyInfo)
+	if err != nil {
+		return resp, err
+	}
+	lastId, err := insertRes.LastInsertId()
+	if err != nil {
+		return resp, err
+	}
+	resp.Id = lastId
 
-	return &user.CreateStrategyResp{}, nil
+	return resp, nil
 }

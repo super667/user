@@ -2,6 +2,8 @@ package perm
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
+	"user/rpc/userclient"
 
 	"user/api/internal/svc"
 	"user/api/internal/types"
@@ -24,7 +26,14 @@ func NewGetPermLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetPermLo
 }
 
 func (l *GetPermLogic) GetPerm(req *types.GetPermReq) (resp *types.GetPermResp, err error) {
-	// todo: add your logic here and delete this line
-
+	res, err := l.svcCtx.UserRpc.GetPermById(l.ctx, &userclient.GetPermByIdReq{
+		Id: req.Id,
+	})
+	if err != nil {
+		return resp, err
+	}
+	var permDetail types.PermDetail
+	copier.Copy(&permDetail, res.PermDetail)
+	resp = &types.GetPermResp{PermDetail: permDetail}
 	return
 }

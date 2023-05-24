@@ -24,7 +24,9 @@ func NewDeletePermLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Delete
 }
 
 func (l *DeletePermLogic) DeletePerm(in *user.DeletePermReq) (*user.DeletePermResp, error) {
-	// todo: add your logic here and delete this line
-
+	err := l.svcCtx.PermModel.Delete(l.ctx, in.Id)
+	if err != nil {
+		return &user.DeletePermResp{}, err
+	}
 	return &user.DeletePermResp{}, nil
 }

@@ -2,6 +2,8 @@ package logic
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
+	"user/model"
 
 	"user/rpc/internal/svc"
 	"user/rpc/user"
@@ -24,7 +26,13 @@ func NewPatchStrategyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Pat
 }
 
 func (l *PatchStrategyLogic) PatchStrategy(in *user.PatchStrategyReq) (*user.PatchStrategyResp, error) {
-	// todo: add your logic here and delete this line
+	var strategyInfo model.Strategy
+	copier.Copy(&strategyInfo, in.StrategyInfo)
+	strategyInfo.Id = in.Id
+	err := l.svcCtx.StrategyModel.PartialUpdate(l.ctx, &strategyInfo)
+	if err != nil {
+		return &user.PatchStrategyResp{}, err
+	}
 
 	return &user.PatchStrategyResp{}, nil
 }

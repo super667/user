@@ -2,6 +2,7 @@ package perm
 
 import (
 	"context"
+	"user/rpc/userclient"
 
 	"user/api/internal/svc"
 	"user/api/internal/types"
@@ -24,7 +25,12 @@ func NewDeletePermLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Delete
 }
 
 func (l *DeletePermLogic) DeletePerm(req *types.DeletePermReq) (resp *types.DeletePermResp, err error) {
-	// todo: add your logic here and delete this line
+	_, err = l.svcCtx.UserRpc.DeletePerm(l.ctx, &userclient.DeletePermReq{
+		Id: req.Id,
+	})
+	if err != nil {
+		return
+	}
 
 	return
 }

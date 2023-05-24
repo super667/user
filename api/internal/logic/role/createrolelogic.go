@@ -2,6 +2,8 @@ package role
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
+	"user/rpc/userclient"
 
 	"user/api/internal/svc"
 	"user/api/internal/types"
@@ -24,7 +26,15 @@ func NewCreateRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Create
 }
 
 func (l *CreateRoleLogic) CreateRole(req *types.CreateRoleReq) (resp *types.CreateRoleResp, err error) {
-	// todo: add your logic here and delete this line
+	var u = &userclient.CreateRoleReq{
+		RoleInfo: &userclient.RoleInfo{},
+	}
+	copier.Copy(u.RoleInfo, req)
+	res, err := l.svcCtx.UserRpc.CreateRole(l.ctx, u)
+	if err != nil {
+		return
+	}
+	resp = &types.CreateRoleResp{Id: res.Id}
 
 	return
 }

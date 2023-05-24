@@ -54,7 +54,7 @@ type (
     }
 
     GetUserRoleReq {
-        Id int64 `json:"id"`
+        Id int64 `path:"id"`
     }
 
     GetUserRoleResp {
@@ -67,7 +67,7 @@ type (
 
     ListUserRoleResp {
         ListResp
-        Roles []UserRoleDetail `json:"list"`
+        UserRoles []UserRoleDetail `json:"list"`
     }
 )
 

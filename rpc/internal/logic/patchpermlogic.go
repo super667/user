@@ -2,6 +2,8 @@ package logic
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
+	"user/model"
 
 	"user/rpc/internal/svc"
 	"user/rpc/user"
@@ -24,7 +26,13 @@ func NewPatchPermLogic(ctx context.Context, svcCtx *svc.ServiceContext) *PatchPe
 }
 
 func (l *PatchPermLogic) PatchPerm(in *user.PatchPermReq) (*user.PatchPermResp, error) {
-	// todo: add your logic here and delete this line
+	var permInfo model.Permission
+	copier.Copy(&permInfo, in.PermInfo)
+	permInfo.Id = in.Id
+	err := l.svcCtx.PermModel.PartialUpdate(l.ctx, &permInfo)
+	if err != nil {
+		return &user.PatchPermResp{}, err
+	}
 
 	return &user.PatchPermResp{}, nil
 }

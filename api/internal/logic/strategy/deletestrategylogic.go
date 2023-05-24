@@ -2,6 +2,7 @@ package strategy
 
 import (
 	"context"
+	"user/rpc/userclient"
 
 	"user/api/internal/svc"
 	"user/api/internal/types"
@@ -24,7 +25,12 @@ func NewDeleteStrategyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *De
 }
 
 func (l *DeleteStrategyLogic) DeleteStrategy(req *types.DeleteStrategyReq) (resp *types.DeleteStrategyResp, err error) {
-	// todo: add your logic here and delete this line
+	_, err = l.svcCtx.UserRpc.DeleteStrategy(l.ctx, &userclient.DeleteStrategyReq{
+		Id: req.Id,
+	})
+	if err != nil {
+		return
+	}
 
 	return
 }

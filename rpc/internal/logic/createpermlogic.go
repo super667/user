@@ -2,6 +2,8 @@ package logic
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
+	"user/model"
 
 	"user/rpc/internal/svc"
 	"user/rpc/user"
@@ -24,7 +26,22 @@ func NewCreatePermLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Create
 }
 
 func (l *CreatePermLogic) CreatePerm(in *user.CreatePermReq) (*user.CreatePermResp, error) {
-	// todo: add your logic here and delete this line
+	resp := &user.CreatePermResp{}
+	permInfo := &model.Permission{}
+	err := copier.Copy(permInfo, in.PermInfo)
+	if err != nil {
+		l.Logger.Error(err)
+		return resp, err
+	}
+	insertRes, err := l.svcCtx.PermModel.Insert(l.ctx, permInfo)
+	if err != nil {
+		return resp, err
+	}
+	lastId, err := insertRes.LastInsertId()
+	if err != nil {
+		return resp, err
+	}
+	resp.Id = lastId
 
-	return &user.CreatePermResp{}, nil
+	return resp, nil
 }

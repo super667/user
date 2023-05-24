@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
 
 	"user/rpc/internal/svc"
 	"user/rpc/user"
@@ -24,7 +25,25 @@ func NewListPermLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ListPerm
 }
 
 func (l *ListPermLogic) ListPerm(in *user.ListPermReq) (*user.ListPermResp, error) {
-	// todo: add your logic here and delete this line
+	resp := &user.ListPermResp{}
+	res, err := l.svcCtx.PermModel.FindManyByPage(l.ctx, in.Page, in.PageSize)
+	if err != nil {
+		return resp, err
+	}
+	permDetails := make([]*user.PermDetail, 0)
+	err = copier.Copy(&permDetails, res)
+	if err != nil {
+		return resp, err
+	}
 
-	return &user.ListPermResp{}, nil
+	total, err := l.svcCtx.PermModel.Count(l.ctx)
+	if err != nil {
+		return resp, err
+	}
+	return &user.ListPermResp{
+		Page:       in.Page,
+		PageSize:   in.PageSize,
+		Total:      total,
+		PermDetail: permDetails,
+	}, nil
 }

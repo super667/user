@@ -2,6 +2,8 @@ package userrole
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
+	"user/rpc/userclient"
 
 	"user/api/internal/svc"
 	"user/api/internal/types"
@@ -24,7 +26,22 @@ func NewListUserRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *List
 }
 
 func (l *ListUserRoleLogic) ListUserRole(req *types.ListUserRoleReq) (resp *types.ListUserRoleResp, err error) {
-	// todo: add your logic here and delete this line
-
+	res, err := l.svcCtx.UserRpc.ListUserRole(l.ctx, &userclient.ListUserRoleReq{
+		Page:     req.Page,
+		PageSize: req.PageSize,
+	})
+	if err != nil {
+		return
+	}
+	userRoleDetails := make([]types.UserRoleDetail, 0)
+	copier.Copy(&userRoleDetails, res.UserRoleDetail)
+	resp = &types.ListUserRoleResp{
+		UserRoles: userRoleDetails,
+		ListResp: types.ListResp{
+			Page:     res.Page,
+			PageSize: res.PageSize,
+			Total:    res.Total,
+		},
+	}
 	return
 }

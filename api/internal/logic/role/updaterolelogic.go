@@ -2,6 +2,8 @@ package role
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
+	"user/rpc/userclient"
 
 	"user/api/internal/svc"
 	"user/api/internal/types"
@@ -24,7 +26,14 @@ func NewUpdateRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Update
 }
 
 func (l *UpdateRoleLogic) UpdateRole(req *types.UpdateRoleReq) (resp *types.UpdateRoleResp, err error) {
-	// todo: add your logic here and delete this line
-
+	var updateInfo = &userclient.RoleInfo{}
+	copier.Copy(updateInfo, req)
+	_, err = l.svcCtx.UserRpc.UpdateRole(l.ctx, &userclient.UpdateRoleReq{
+		Id:       req.Id,
+		RoleInfo: updateInfo,
+	})
+	if err != nil {
+		return
+	}
 	return
 }

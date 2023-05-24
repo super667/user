@@ -2,6 +2,8 @@ package perm
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
+	"user/rpc/userclient"
 
 	"user/api/internal/svc"
 	"user/api/internal/types"
@@ -24,7 +26,14 @@ func NewUpdatePermLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Update
 }
 
 func (l *UpdatePermLogic) UpdatePerm(req *types.UpdatePermReq) (resp *types.UpdatePermResp, err error) {
-	// todo: add your logic here and delete this line
-
+	var updateInfo = &userclient.PermInfo{}
+	copier.Copy(updateInfo, req)
+	_, err = l.svcCtx.UserRpc.UpdatePerm(l.ctx, &userclient.UpdatePermReq{
+		Id:       req.Id,
+		PermInfo: updateInfo,
+	})
+	if err != nil {
+		return
+	}
 	return
 }

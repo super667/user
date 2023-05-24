@@ -2,6 +2,8 @@ package strategy
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
+	"user/rpc/userclient"
 
 	"user/api/internal/svc"
 	"user/api/internal/types"
@@ -24,7 +26,14 @@ func NewGetStrategyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetSt
 }
 
 func (l *GetStrategyLogic) GetStrategy(req *types.GetStrategyReq) (resp *types.GetStrategyResp, err error) {
-	// todo: add your logic here and delete this line
-
+	res, err := l.svcCtx.UserRpc.GetStrategyById(l.ctx, &userclient.GetStrategyByIdReq{
+		Id: req.Id,
+	})
+	if err != nil {
+		return resp, err
+	}
+	var strategyDetail types.StrategyDetail
+	copier.Copy(&strategyDetail, res.StrategyDetail)
+	resp = &types.GetStrategyResp{StrategyDetail: strategyDetail}
 	return
 }

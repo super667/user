@@ -63,6 +63,11 @@ func (s *UserServer) ListUser(ctx context.Context, in *user.ListUserReq) (*user.
 	return l.ListUser(in)
 }
 
+func (s *UserServer) GetRoleById(ctx context.Context, in *user.GetRoleByIdReq) (*user.GetRoleByIdResp, error) {
+	l := logic.NewGetRoleByIdLogic(ctx, s.svcCtx)
+	return l.GetRoleById(in)
+}
+
 func (s *UserServer) CreateRole(ctx context.Context, in *user.CreateRoleReq) (*user.CreateRoleResp, error) {
 	l := logic.NewCreateRoleLogic(ctx, s.svcCtx)
 	return l.CreateRole(in)
@@ -86,6 +91,11 @@ func (s *UserServer) PatchRole(ctx context.Context, in *user.PatchRoleReq) (*use
 func (s *UserServer) ListRole(ctx context.Context, in *user.ListRoleReq) (*user.ListRoleResp, error) {
 	l := logic.NewListRoleLogic(ctx, s.svcCtx)
 	return l.ListRole(in)
+}
+
+func (s *UserServer) GetPermById(ctx context.Context, in *user.GetPermByIdReq) (*user.GetPermByIdResp, error) {
+	l := logic.NewGetPermByIdLogic(ctx, s.svcCtx)
+	return l.GetPermById(in)
 }
 
 func (s *UserServer) CreatePerm(ctx context.Context, in *user.CreatePermReq) (*user.CreatePermResp, error) {
@@ -113,6 +123,11 @@ func (s *UserServer) ListPerm(ctx context.Context, in *user.ListPermReq) (*user.
 	return l.ListPerm(in)
 }
 
+func (s *UserServer) GetStrategyById(ctx context.Context, in *user.GetStrategyByIdReq) (*user.GetStrategyByIdResp, error) {
+	l := logic.NewGetStrategyByIdLogic(ctx, s.svcCtx)
+	return l.GetStrategyById(in)
+}
+
 func (s *UserServer) CreateStrategy(ctx context.Context, in *user.CreateStrategyReq) (*user.CreateStrategyResp, error) {
 	l := logic.NewCreateStrategyLogic(ctx, s.svcCtx)
 	return l.CreateStrategy(in)
@@ -136,6 +151,11 @@ func (s *UserServer) PatchStrategy(ctx context.Context, in *user.PatchStrategyRe
 func (s *UserServer) ListStrategy(ctx context.Context, in *user.ListStrategyReq) (*user.ListStrategyResp, error) {
 	l := logic.NewListStrategyLogic(ctx, s.svcCtx)
 	return l.ListStrategy(in)
+}
+
+func (s *UserServer) GetUserRoleById(ctx context.Context, in *user.GetUserRoleByIdReq) (*user.GetUserRoleByIdResp, error) {
+	l := logic.NewGetUserRoleByIdLogic(ctx, s.svcCtx)
+	return l.GetUserRoleById(in)
 }
 
 func (s *UserServer) CreateUserRole(ctx context.Context, in *user.CreateUserRoleReq) (*user.CreateUserRoleResp, error) {

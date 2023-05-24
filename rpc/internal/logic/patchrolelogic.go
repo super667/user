@@ -2,6 +2,8 @@ package logic
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
+	"user/model"
 
 	"user/rpc/internal/svc"
 	"user/rpc/user"
@@ -24,7 +26,12 @@ func NewPatchRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *PatchRo
 }
 
 func (l *PatchRoleLogic) PatchRole(in *user.PatchRoleReq) (*user.PatchRoleResp, error) {
-	// todo: add your logic here and delete this line
-
+	var roleInfo model.Role
+	copier.Copy(&roleInfo, in.RoleInfo)
+	roleInfo.Id = in.Id
+	err := l.svcCtx.RoleModel.PartialUpdate(l.ctx, &roleInfo)
+	if err != nil {
+		return &user.PatchRoleResp{}, err
+	}
 	return &user.PatchRoleResp{}, nil
 }

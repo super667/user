@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
 
 	"user/rpc/internal/svc"
 	"user/rpc/user"
@@ -24,7 +25,26 @@ func NewListRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ListRole
 }
 
 func (l *ListRoleLogic) ListRole(in *user.ListRoleReq) (*user.ListRoleResp, error) {
-	// todo: add your logic here and delete this line
+	resp := &user.ListRoleResp{}
+	res, err := l.svcCtx.PermModel.FindManyByPage(l.ctx, in.Page, in.PageSize)
+	if err != nil {
+		return resp, err
+	}
+	roleDetails := make([]*user.RoleDetail, 0)
+	err = copier.Copy(&roleDetails, res)
+	if err != nil {
+		return resp, err
+	}
 
-	return &user.ListRoleResp{}, nil
+	total, err := l.svcCtx.RoleModel.Count(l.ctx)
+	if err != nil {
+		return resp, err
+	}
+
+	return &user.ListRoleResp{
+		Page:       in.Page,
+		PageSize:   in.PageSize,
+		Total:      total,
+		RoleDetail: roleDetails,
+	}, nil
 }

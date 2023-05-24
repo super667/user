@@ -41,8 +41,8 @@ type (
 		SubjectName     string       `db:"subject_name"`      // 权限赋予的主体名称
 		SubjectType     string       `db:"subject_type"`      // 主体类型
 		SubjectTypeName string       `db:"subject_type_name"` // 主体类型名称
-		Object          string       `db:"object"`            // 资源
-		ObjectName      string       `db:"object_name"`       // 资源名称
+		Resource        string       `db:"resource"`          // 资源
+		ResourceName    string       `db:"resource_name"`     // 资源名称
 		Perm            string       `db:"perm"`              // 权限点
 		PermName        string       `db:"perm_name"`         // 权限点名称
 		CreateTime      time.Time    `db:"create_time"`
@@ -80,13 +80,13 @@ func (m *defaultStrategyModel) FindOne(ctx context.Context, id int64) (*Strategy
 
 func (m *defaultStrategyModel) Insert(ctx context.Context, data *Strategy) (sql.Result, error) {
 	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, strategyRowsExpectAutoSet)
-	ret, err := m.conn.ExecCtx(ctx, query, data.Subject, data.SubjectName, data.SubjectType, data.SubjectTypeName, data.Object, data.ObjectName, data.Perm, data.PermName, data.DeleteTime)
+	ret, err := m.conn.ExecCtx(ctx, query, data.Subject, data.SubjectName, data.SubjectType, data.SubjectTypeName, data.Resource, data.ResourceName, data.Perm, data.PermName, data.DeleteTime)
 	return ret, err
 }
 
 func (m *defaultStrategyModel) Update(ctx context.Context, data *Strategy) error {
 	query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, strategyRowsWithPlaceHolder)
-	_, err := m.conn.ExecCtx(ctx, query, data.Subject, data.SubjectName, data.SubjectType, data.SubjectTypeName, data.Object, data.ObjectName, data.Perm, data.PermName, data.DeleteTime, data.Id)
+	_, err := m.conn.ExecCtx(ctx, query, data.Subject, data.SubjectName, data.SubjectType, data.SubjectTypeName, data.Resource, data.ResourceName, data.Perm, data.PermName, data.DeleteTime, data.Id)
 	return err
 }
 

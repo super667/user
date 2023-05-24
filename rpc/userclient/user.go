@@ -33,12 +33,20 @@ type (
 	DeleteUserResp      = user.DeleteUserResp
 	DeleteUserRoleReq   = user.DeleteUserRoleReq
 	DeleteUserRoleResp  = user.DeleteUserRoleResp
+	GetPermByIdReq      = user.GetPermByIdReq
+	GetPermByIdResp     = user.GetPermByIdResp
+	GetRoleByIdReq      = user.GetRoleByIdReq
+	GetRoleByIdResp     = user.GetRoleByIdResp
+	GetStrategyByIdReq  = user.GetStrategyByIdReq
+	GetStrategyByIdResp = user.GetStrategyByIdResp
 	GetUserByIdReq      = user.GetUserByIdReq
 	GetUserByIdResp     = user.GetUserByIdResp
 	GetUserByNameReq    = user.GetUserByNameReq
 	GetUserByNameResp   = user.GetUserByNameResp
 	GetUserByNumberReq  = user.GetUserByNumberReq
 	GetUserByNumberResp = user.GetUserByNumberResp
+	GetUserRoleByIdReq  = user.GetUserRoleByIdReq
+	GetUserRoleByIdResp = user.GetUserRoleByIdResp
 	ListPermReq         = user.ListPermReq
 	ListPermResp        = user.ListPermResp
 	ListRoleReq         = user.ListRoleReq
@@ -90,21 +98,25 @@ type (
 		UpdateUser(ctx context.Context, in *UpdateUserReq, opts ...grpc.CallOption) (*UpdateUserResp, error)
 		PatchUser(ctx context.Context, in *PatchUserReq, opts ...grpc.CallOption) (*PatchUserResp, error)
 		ListUser(ctx context.Context, in *ListUserReq, opts ...grpc.CallOption) (*ListUserResp, error)
+		GetRoleById(ctx context.Context, in *GetRoleByIdReq, opts ...grpc.CallOption) (*GetRoleByIdResp, error)
 		CreateRole(ctx context.Context, in *CreateRoleReq, opts ...grpc.CallOption) (*CreateRoleResp, error)
 		DeleteRole(ctx context.Context, in *DeleteRoleReq, opts ...grpc.CallOption) (*DeleteRoleResp, error)
 		UpdateRole(ctx context.Context, in *UpdateRoleReq, opts ...grpc.CallOption) (*UpdateRoleResp, error)
 		PatchRole(ctx context.Context, in *PatchRoleReq, opts ...grpc.CallOption) (*PatchRoleResp, error)
 		ListRole(ctx context.Context, in *ListRoleReq, opts ...grpc.CallOption) (*ListRoleResp, error)
+		GetPermById(ctx context.Context, in *GetPermByIdReq, opts ...grpc.CallOption) (*GetPermByIdResp, error)
 		CreatePerm(ctx context.Context, in *CreatePermReq, opts ...grpc.CallOption) (*CreatePermResp, error)
 		DeletePerm(ctx context.Context, in *DeletePermReq, opts ...grpc.CallOption) (*DeletePermResp, error)
 		UpdatePerm(ctx context.Context, in *UpdatePermReq, opts ...grpc.CallOption) (*UpdatePermResp, error)
 		PatchPerm(ctx context.Context, in *PatchPermReq, opts ...grpc.CallOption) (*PatchPermResp, error)
 		ListPerm(ctx context.Context, in *ListPermReq, opts ...grpc.CallOption) (*ListPermResp, error)
+		GetStrategyById(ctx context.Context, in *GetStrategyByIdReq, opts ...grpc.CallOption) (*GetStrategyByIdResp, error)
 		CreateStrategy(ctx context.Context, in *CreateStrategyReq, opts ...grpc.CallOption) (*CreateStrategyResp, error)
 		DeleteStrategy(ctx context.Context, in *DeleteStrategyReq, opts ...grpc.CallOption) (*DeleteStrategyResp, error)
 		UpdateStrategy(ctx context.Context, in *UpdateStrategyReq, opts ...grpc.CallOption) (*UpdateStrategyResp, error)
 		PatchStrategy(ctx context.Context, in *PatchStrategyReq, opts ...grpc.CallOption) (*PatchStrategyResp, error)
 		ListStrategy(ctx context.Context, in *ListStrategyReq, opts ...grpc.CallOption) (*ListStrategyResp, error)
+		GetUserRoleById(ctx context.Context, in *GetUserRoleByIdReq, opts ...grpc.CallOption) (*GetUserRoleByIdResp, error)
 		CreateUserRole(ctx context.Context, in *CreateUserRoleReq, opts ...grpc.CallOption) (*CreateUserRoleResp, error)
 		DeleteUserRole(ctx context.Context, in *DeleteUserRoleReq, opts ...grpc.CallOption) (*DeleteUserRoleResp, error)
 		UpdateUserRole(ctx context.Context, in *UpdateUserRoleReq, opts ...grpc.CallOption) (*UpdateUserRoleResp, error)
@@ -164,6 +176,11 @@ func (m *defaultUser) ListUser(ctx context.Context, in *ListUserReq, opts ...grp
 	return client.ListUser(ctx, in, opts...)
 }
 
+func (m *defaultUser) GetRoleById(ctx context.Context, in *GetRoleByIdReq, opts ...grpc.CallOption) (*GetRoleByIdResp, error) {
+	client := user.NewUserClient(m.cli.Conn())
+	return client.GetRoleById(ctx, in, opts...)
+}
+
 func (m *defaultUser) CreateRole(ctx context.Context, in *CreateRoleReq, opts ...grpc.CallOption) (*CreateRoleResp, error) {
 	client := user.NewUserClient(m.cli.Conn())
 	return client.CreateRole(ctx, in, opts...)
@@ -187,6 +204,11 @@ func (m *defaultUser) PatchRole(ctx context.Context, in *PatchRoleReq, opts ...g
 func (m *defaultUser) ListRole(ctx context.Context, in *ListRoleReq, opts ...grpc.CallOption) (*ListRoleResp, error) {
 	client := user.NewUserClient(m.cli.Conn())
 	return client.ListRole(ctx, in, opts...)
+}
+
+func (m *defaultUser) GetPermById(ctx context.Context, in *GetPermByIdReq, opts ...grpc.CallOption) (*GetPermByIdResp, error) {
+	client := user.NewUserClient(m.cli.Conn())
+	return client.GetPermById(ctx, in, opts...)
 }
 
 func (m *defaultUser) CreatePerm(ctx context.Context, in *CreatePermReq, opts ...grpc.CallOption) (*CreatePermResp, error) {
@@ -214,6 +236,11 @@ func (m *defaultUser) ListPerm(ctx context.Context, in *ListPermReq, opts ...grp
 	return client.ListPerm(ctx, in, opts...)
 }
 
+func (m *defaultUser) GetStrategyById(ctx context.Context, in *GetStrategyByIdReq, opts ...grpc.CallOption) (*GetStrategyByIdResp, error) {
+	client := user.NewUserClient(m.cli.Conn())
+	return client.GetStrategyById(ctx, in, opts...)
+}
+
 func (m *defaultUser) CreateStrategy(ctx context.Context, in *CreateStrategyReq, opts ...grpc.CallOption) (*CreateStrategyResp, error) {
 	client := user.NewUserClient(m.cli.Conn())
 	return client.CreateStrategy(ctx, in, opts...)
@@ -237,6 +264,11 @@ func (m *defaultUser) PatchStrategy(ctx context.Context, in *PatchStrategyReq, o
 func (m *defaultUser) ListStrategy(ctx context.Context, in *ListStrategyReq, opts ...grpc.CallOption) (*ListStrategyResp, error) {
 	client := user.NewUserClient(m.cli.Conn())
 	return client.ListStrategy(ctx, in, opts...)
+}
+
+func (m *defaultUser) GetUserRoleById(ctx context.Context, in *GetUserRoleByIdReq, opts ...grpc.CallOption) (*GetUserRoleByIdResp, error) {
+	client := user.NewUserClient(m.cli.Conn())
+	return client.GetUserRoleById(ctx, in, opts...)
 }
 
 func (m *defaultUser) CreateUserRole(ctx context.Context, in *CreateUserRoleReq, opts ...grpc.CallOption) (*CreateUserRoleResp, error) {

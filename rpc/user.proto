@@ -134,6 +134,14 @@ message CreateRoleResp {
   int64 Id = 1;
 }
 
+message GetRoleByIdReq {
+  int64 Id = 1;
+}
+
+message GetRoleByIdResp {
+  RoleDetail RoleDetail = 1;
+}
+
 message ListRoleReq {
   int64 Page = 1;
   int64 PageSize = 2;
@@ -156,7 +164,7 @@ message DeleteRoleResp {
 
 message UpdateRoleReq {
   int64 Id = 1;
-  UserInfo UserInfo = 2;
+  RoleInfo RoleInfo = 2;
 }
 
 message UpdateRoleResp {
@@ -175,23 +183,33 @@ message PatchRoleResp {
 // =============权限相关==================
 
 message PermInfo {
-  string Name = 1;
-  string Desc = 2;
+  string Resource = 1;
+  string Perm = 2;
+  string Desc = 3;
 }
 
 message PermDetail {
   int64 Id = 1;
-  string Name = 2;
-  string Desc = 3;
-  int64 CreateTime  = 4;
+  string Resource = 2;
+  string Perm = 3;
+  string Desc = 4;
+  int64 CreateTime  = 5;
 }
 
 message CreatePermReq {
-  RoleInfo RoleInfo = 1;
+  PermInfo PermInfo = 1;
 }
 
 message CreatePermResp {
   int64 Id = 1;
+}
+
+message GetPermByIdReq {
+  int64 Id = 1;
+}
+
+message GetPermByIdResp {
+  PermDetail PermDetail = 1;
 }
 
 message ListPermReq {
@@ -203,7 +221,7 @@ message ListPermResp {
   int64 Page = 1;
   int64 PageSize = 2;
   int64 Total = 3;
-  repeated RoleDetail RoleDetail = 4;
+  repeated PermDetail PermDetail = 4;
 }
 
 message DeletePermReq {
@@ -237,7 +255,7 @@ message PatchPermResp {
 message StrategyInfo {
   string Subject = 1;
   string SubjectType = 2;
-  string Object = 3;
+  string resource = 3;
   string Perm = 4;
 }
 
@@ -247,8 +265,8 @@ message StrategyDetail {
   string SubjectName = 3;
   string SubjectType = 4;
   string SubjectTypeName = 5;
-  string Object = 6;
-  string ObjectName = 7;
+  string resource = 6;
+  string resourceName = 7;
   string Perm = 8;
   string PermName = 9;
   int64 CreateTime  = 10;
@@ -260,6 +278,14 @@ message CreateStrategyReq {
 
 message CreateStrategyResp {
   int64 Id = 1;
+}
+
+message GetStrategyByIdReq {
+  int64 Id = 1;
+}
+
+message GetStrategyByIdResp {
+  StrategyDetail StrategyDetail = 1;
 }
 
 message ListStrategyReq {
@@ -322,6 +348,14 @@ message CreateUserRoleResp {
   int64 Id = 1;
 }
 
+message GetUserRoleByIdReq {
+  int64 Id = 1;
+}
+
+message GetUserRoleByIdResp {
+  UserRoleDetail UserRoleDetail = 1;
+}
+
 message ListUserRoleReq {
   int64 Page = 1;
   int64 PageSize = 2;
@@ -375,6 +409,7 @@ service User {
 
   // 角色相关接口
 
+  rpc GetRoleById(GetRoleByIdReq) returns(GetRoleByIdResp);
   rpc CreateRole(CreateRoleReq) returns(CreateRoleResp);
   rpc DeleteRole(DeleteRoleReq) returns(DeleteRoleResp);
   rpc UpdateRole(UpdateRoleReq) returns(UpdateRoleResp);
@@ -383,6 +418,7 @@ service User {
 
   // 权限相关接口
 
+  rpc GetPermById(GetPermByIdReq) returns(GetPermByIdResp);
   rpc CreatePerm(CreatePermReq) returns(CreatePermResp);
   rpc DeletePerm(DeletePermReq) returns(DeletePermResp);
   rpc UpdatePerm(UpdatePermReq) returns(UpdatePermResp);
@@ -392,6 +428,7 @@ service User {
 
   // 策略相关接口
 
+  rpc GetStrategyById(GetStrategyByIdReq) returns(GetStrategyByIdResp);
   rpc CreateStrategy(CreateStrategyReq) returns(CreateStrategyResp);
   rpc DeleteStrategy(DeleteStrategyReq) returns(DeleteStrategyResp);
   rpc UpdateStrategy(UpdateStrategyReq) returns(UpdateStrategyResp);
@@ -400,6 +437,7 @@ service User {
 
   // 角色分配接口
 
+  rpc GetUserRoleById(GetUserRoleByIdReq) returns(GetUserRoleByIdResp);
   rpc CreateUserRole(CreateUserRoleReq) returns(CreateUserRoleResp);
   rpc DeleteUserRole(DeleteUserRoleReq) returns(DeleteUserRoleResp);
   rpc UpdateUserRole(UpdateUserRoleReq) returns(UpdateUserRoleResp);

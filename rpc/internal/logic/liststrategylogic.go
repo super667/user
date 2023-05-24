@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
 
 	"user/rpc/internal/svc"
 	"user/rpc/user"
@@ -24,7 +25,28 @@ func NewListStrategyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *List
 }
 
 func (l *ListStrategyLogic) ListStrategy(in *user.ListStrategyReq) (*user.ListStrategyResp, error) {
-	// todo: add your logic here and delete this line
+	resp := &user.ListStrategyResp{}
+	res, err := l.svcCtx.PermModel.FindManyByPage(l.ctx, in.Page, in.PageSize)
+	if err != nil {
+		return resp, err
+	}
+	strategyDetails := make([]*user.StrategyDetail, 0)
+	err = copier.Copy(&strategyDetails, res)
+	if err != nil {
+		return resp, err
+	}
+
+	total, err := l.svcCtx.StrategyModel.Count(l.ctx)
+	if err != nil {
+		return resp, err
+	}
+
+	return &user.ListStrategyResp{
+		Page:           in.Page,
+		PageSize:       in.PageSize,
+		Total:          total,
+		StrategyDetail: strategyDetails,
+	}, nil
 
 	return &user.ListStrategyResp{}, nil
 }

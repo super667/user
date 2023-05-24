@@ -11,7 +11,7 @@ type (
     StrategyInfo {
         Subject string `json:"subject"`
         SubjectType string `json:"subjectType"`
-        Object string `json:"object"`
+        Resource string `json:"resource"`
         Perm string `json:"perm"`
     }
 
@@ -20,7 +20,7 @@ type (
         StrategyInfo
         SubjectName string `json:"subjectName"`
         SubjectTypeName string `json:"subjectTypeName"`
-        ObjectName string `json:"objectName"`
+        ResourceName string `json:"resourceName"`
         PermName string `json:"permName"`
         CreateTime int64 `json:"createTime"`
     }
@@ -60,7 +60,7 @@ type (
     }
 
     GetStrategyReq {
-        Id int64 `json:"id"`
+        Id int64 `path:"id"`
     }
 
     GetStrategyResp {
@@ -73,7 +73,7 @@ type (
 
     ListStrategyResp {
         ListResp
-        Roles []StrategyDetail `json:"list"`
+        Strategys []StrategyDetail `json:"list"`
     }
 )
 

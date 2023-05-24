@@ -129,7 +129,7 @@ type PatchRoleResp struct {
 }
 
 type GetRoleReq struct {
-	Id int64 `json:"id"`
+	Id int64 `path:"id"`
 }
 
 type GetRoleResp struct {
@@ -146,8 +146,9 @@ type ListRoleResp struct {
 }
 
 type PermInfo struct {
-	Name string `json:"name"`
-	Desc string `json:"desc"`
+	Resource string `json:"resource"`
+	Perm     string `json:"perm"`
+	Desc     string `json:"desc"`
 }
 
 type PermDetail struct {
@@ -191,7 +192,7 @@ type PatchPermResp struct {
 }
 
 type GetPermReq struct {
-	Id int64 `json:"id"`
+	Id int64 `path:"id"`
 }
 
 type GetPermResp struct {
@@ -204,13 +205,13 @@ type ListPermReq struct {
 
 type ListPermResp struct {
 	ListResp
-	Roles []PermDetail `json:"list"`
+	Perms []PermDetail `json:"list"`
 }
 
 type StrategyInfo struct {
 	Subject     string `json:"subject"`
 	SubjectType string `json:"subjectType"`
-	Object      string `json:"object"`
+	Resource    string `json:"resource"`
 	Perm        string `json:"perm"`
 }
 
@@ -219,7 +220,7 @@ type StrategyDetail struct {
 	StrategyInfo
 	SubjectName     string `json:"subjectName"`
 	SubjectTypeName string `json:"subjectTypeName"`
-	ObjectName      string `json:"objectName"`
+	ResourceName    string `json:"resourceName"`
 	PermName        string `json:"permName"`
 	CreateTime      int64  `json:"createTime"`
 }
@@ -259,7 +260,7 @@ type PatchStrategyResp struct {
 }
 
 type GetStrategyReq struct {
-	Id int64 `json:"id"`
+	Id int64 `path:"id"`
 }
 
 type GetStrategyResp struct {
@@ -272,7 +273,7 @@ type ListStrategyReq struct {
 
 type ListStrategyResp struct {
 	ListResp
-	Roles []StrategyDetail `json:"list"`
+	Strategys []StrategyDetail `json:"list"`
 }
 
 type UserRoleInfo struct {
@@ -321,7 +322,7 @@ type PatchUserRoleResp struct {
 }
 
 type GetUserRoleReq struct {
-	Id int64 `json:"id"`
+	Id int64 `path:"id"`
 }
 
 type GetUserRoleResp struct {
@@ -334,5 +335,5 @@ type ListUserRoleReq struct {
 
 type ListUserRoleResp struct {
 	ListResp
-	Roles []UserRoleDetail `json:"list"`
+	UserRoles []UserRoleDetail `json:"list"`
 }

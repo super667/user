@@ -54,7 +54,7 @@ type (
     }
 
     GetRoleReq {
-        Id int64 `json:"id"`
+        Id int64 `path:"id"`
     }
 
     GetRoleResp {

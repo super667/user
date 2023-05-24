@@ -2,6 +2,7 @@ package role
 
 import (
 	"context"
+	"user/rpc/userclient"
 
 	"user/api/internal/svc"
 	"user/api/internal/types"
@@ -24,7 +25,12 @@ func NewDeleteRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Delete
 }
 
 func (l *DeleteRoleLogic) DeleteRole(req *types.DeleteRoleReq) (resp *types.DeleteRoleResp, err error) {
-	// todo: add your logic here and delete this line
+	_, err = l.svcCtx.UserRpc.DeleteRole(l.ctx, &userclient.DeleteRoleReq{
+		Id: req.Id,
+	})
+	if err != nil {
+		return
+	}
 
 	return
 }
