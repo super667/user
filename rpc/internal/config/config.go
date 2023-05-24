@@ -8,4 +8,6 @@ type Config struct {
 	MySql struct {
 		DataSource string `json:"DataSource"`
 	}
+
+	Salt string
 }

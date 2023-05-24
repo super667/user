@@ -7,3 +7,8 @@ UserRpc:
     Hosts:
       - 121.5.70.40:2379
     Key: user.rpc
+
+
+Auth:
+  AccessSecret: uOvKLmVfztaXGpNYd4Z0I1SiT7MweJhl
+  AccessExpire: 86400

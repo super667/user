@@ -16,6 +16,7 @@ type (
 		Count(ctx context.Context) (int64, error)
 		FindManyByPage(ctx context.Context, page, pageSize int64) ([]*User, error)
 		PartialUpdate(ctx context.Context, newData *User) error
+		GetOne(ctx context.Context, phone string) (*User, error)
 	}
 
 	customUserModel struct {
@@ -59,6 +60,22 @@ func (m *defaultUserModel) FindManyByPage(ctx context.Context, page, pageSize in
 		return nil, err
 	}
 	var userInfos []*User
+	err = m.conn.QueryRowsCtx(ctx, &userInfos, query)
+	if err != nil {
+		return nil, err
+	}
+	return userInfos, nil
+}
+
+func (m *defaultUserModel) GetOne(ctx context.Context, account string) (*User, error) {
+	rowBuilder := squirrel.Select(userRows).From(m.table)
+	rowBuilder = rowBuilder.Where(squirrel.Or{squirrel.Eq{"phone": account}, squirrel.Eq{"name": account}}).
+		Where(squirrel.Eq{"delete_time": nil})
+	query, _, err := rowBuilder.ToSql()
+	if err != nil {
+		return nil, err
+	}
+	var userInfos *User
 	err = m.conn.QueryRowsCtx(ctx, &userInfos, query)
 	if err != nil {
 		return nil, err

@@ -82,6 +82,7 @@ type (
 
 @server (
     group: user
+    jwt: Auth
 )
 service User {
     @doc "获取用户信息"

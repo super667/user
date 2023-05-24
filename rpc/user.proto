@@ -394,9 +394,43 @@ message PatchUserRoleResp {
   int64 Id = 1;
 }
 
+// ==============用户认证相关================
 
+// 用户登录
+message LoginReq {
+  string Name = 1;
+  string Password = 2;
+}
+message LoginResp {
+  int64 Id = 1;
+  string Name = 2;
+  int64 GenderCode = 3;
+  string Phone = 4;
+}
+// 用户登录
+
+// 用户注册
+message RegisterReq {
+  string Name = 1;
+  int64 GenderCode = 2;
+  string Phone = 3;
+  string Password = 4;
+}
+message RegisterResp {
+  int64 Id = 1;
+  string Name = 2;
+  int64 GenderCode = 3;
+  string Phone = 4;
+}
+// 用户注册
 
 service User {
+
+  // 用户认证相关
+
+  rpc Login(LoginReq) returns(LoginResp);
+  rpc Register(RegisterReq) returns(RegisterResp);
+
   // 用户相关接口
   rpc GetUserById(GetUserByIdReq) returns(GetUserByIdResp);
   rpc GetUserByNumber(GetUserByNumberReq) returns(GetUserByNumberResp);

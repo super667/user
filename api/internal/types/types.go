@@ -337,3 +337,36 @@ type ListUserRoleResp struct {
 	ListResp
 	UserRoles []UserRoleDetail `json:"list"`
 }
+
+type WeComLoginReq struct {
+	Code string `json:"code"`
+}
+
+type WeComLoginResp struct {
+	AccessToken  string `json:"accessToken"`
+	AccessExpire int64  `json:"accessExpire"`
+}
+
+type LoginReq struct {
+	Name     string `json:"name"`
+	Password string `json:"password"`
+}
+
+type LoginResp struct {
+	AccessToken  string `json:"accessToken"`
+	AccessExpire int64  `json:"accessExpire"`
+}
+
+type RegisterReq struct {
+	Name       string `json:"name"`
+	GenderCode int64  `json:"GenderCode"`
+	Phone      string `json:"phone"`
+	Password   string `json:"password"`
+}
+
+type RegisterResp struct {
+	Id         int64  `json:"id"`
+	Name       string `json:"name"`
+	GenderCode int64  `json:"GenderCode"`
+	Phone      string `json:"phone"`
+}

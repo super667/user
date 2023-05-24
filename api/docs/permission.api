@@ -75,6 +75,7 @@ type (
 
 @server (
     group: perm
+    jwt: Auth
 )
 service User {
     @doc "获取角色信息"

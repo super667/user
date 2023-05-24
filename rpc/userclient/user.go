@@ -57,6 +57,8 @@ type (
 	ListUserResp        = user.ListUserResp
 	ListUserRoleReq     = user.ListUserRoleReq
 	ListUserRoleResp    = user.ListUserRoleResp
+	LoginReq            = user.LoginReq
+	LoginResp           = user.LoginResp
 	PatchPermReq        = user.PatchPermReq
 	PatchPermResp       = user.PatchPermResp
 	PatchRoleReq        = user.PatchRoleReq
@@ -69,6 +71,8 @@ type (
 	PatchUserRoleResp   = user.PatchUserRoleResp
 	PermDetail          = user.PermDetail
 	PermInfo            = user.PermInfo
+	RegisterReq         = user.RegisterReq
+	RegisterResp        = user.RegisterResp
 	RoleDetail          = user.RoleDetail
 	RoleInfo            = user.RoleInfo
 	StrategyDetail      = user.StrategyDetail
@@ -89,6 +93,8 @@ type (
 	UserRoleInfo        = user.UserRoleInfo
 
 	User interface {
+		Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
+		Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error)
 		// 用户相关接口
 		GetUserById(ctx context.Context, in *GetUserByIdReq, opts ...grpc.CallOption) (*GetUserByIdResp, error)
 		GetUserByNumber(ctx context.Context, in *GetUserByNumberReq, opts ...grpc.CallOption) (*GetUserByNumberResp, error)
@@ -133,6 +139,16 @@ func NewUser(cli zrpc.Client) User {
 	return &defaultUser{
 		cli: cli,
 	}
+}
+
+func (m *defaultUser) Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error) {
+	client := user.NewUserClient(m.cli.Conn())
+	return client.Login(ctx, in, opts...)
+}
+
+func (m *defaultUser) Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error) {
+	client := user.NewUserClient(m.cli.Conn())
+	return client.Register(ctx, in, opts...)
 }
 
 // 用户相关接口

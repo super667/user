@@ -74,6 +74,7 @@ type (
 
 @server (
     group: userrole
+    jwt: Auth
 )
 service User {
     @doc "获取角色分配信息"
