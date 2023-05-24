@@ -3,10 +3,10 @@ package role
 import (
 	"context"
 	"github.com/jinzhu/copier"
-	"user/rpc/userclient"
+	"github.com/super667/user/rpc/userclient"
 
-	"user/api/internal/svc"
-	"user/api/internal/types"
+	"github.com/super667/user/api/internal/svc"
+	"github.com/super667/user/api/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

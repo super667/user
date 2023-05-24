@@ -1,13 +1,13 @@
 package user
 
 import (
+	"github.com/super667/user/api/response"
 	"net/http"
-	"user/api/response"
 
+	"github.com/super667/user/api/internal/logic/user"
+	"github.com/super667/user/api/internal/svc"
+	"github.com/super667/user/api/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"
-	"user/api/internal/logic/user"
-	"user/api/internal/svc"
-	"user/api/internal/types"
 )
 
 func ListUserHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {

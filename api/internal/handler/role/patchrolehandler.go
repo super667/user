@@ -1,12 +1,12 @@
 package role
 
 import (
+	"github.com/super667/user/api/internal/logic/role"
+	"github.com/super667/user/api/internal/svc"
+	"github.com/super667/user/api/internal/types"
+	"github.com/super667/user/api/response"
 	"github.com/zeromicro/go-zero/rest/httpx"
 	"net/http"
-	"user/api/internal/logic/role"
-	"user/api/internal/svc"
-	"user/api/internal/types"
-	"user/api/response"
 )
 
 func PatchRoleHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {

@@ -1,12 +1,12 @@
 package userrole
 
 import (
+	"github.com/super667/user/api/internal/logic/userrole"
+	"github.com/super667/user/api/internal/svc"
+	"github.com/super667/user/api/internal/types"
+	"github.com/super667/user/api/response"
 	"github.com/zeromicro/go-zero/rest/httpx"
 	"net/http"
-	"user/api/internal/logic/userrole"
-	"user/api/internal/svc"
-	"user/api/internal/types"
-	"user/api/response"
 )
 
 func UpdateUserRoleHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {

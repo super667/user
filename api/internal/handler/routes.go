@@ -4,12 +4,12 @@ package handler
 import (
 	"net/http"
 
-	perm "user/api/internal/handler/perm"
-	role "user/api/internal/handler/role"
-	strategy "user/api/internal/handler/strategy"
-	user "user/api/internal/handler/user"
-	userrole "user/api/internal/handler/userrole"
-	"user/api/internal/svc"
+	perm "github.com/super667/user/api/internal/handler/perm"
+	role "github.com/super667/user/api/internal/handler/role"
+	strategy "github.com/super667/user/api/internal/handler/strategy"
+	user "github.com/super667/user/api/internal/handler/user"
+	userrole "github.com/super667/user/api/internal/handler/userrole"
+	"github.com/super667/user/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
 )

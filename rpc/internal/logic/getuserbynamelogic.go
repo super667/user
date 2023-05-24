@@ -3,12 +3,12 @@ package logic
 import (
 	"context"
 	"github.com/jinzhu/copier"
+	"github.com/super667/user/common/errorx"
+	"github.com/super667/user/model"
 	"strings"
-	"user/common/errorx"
-	"user/model"
 
-	"user/rpc/internal/svc"
-	"user/rpc/user"
+	"github.com/super667/user/rpc/internal/svc"
+	"github.com/super667/user/rpc/user"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

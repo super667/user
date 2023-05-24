@@ -6,7 +6,7 @@ package userclient
 import (
 	"context"
 
-	"user/rpc/user"
+	"github.com/super667/user/rpc/user"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"

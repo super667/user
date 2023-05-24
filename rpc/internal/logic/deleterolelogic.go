@@ -3,8 +3,8 @@ package logic
 import (
 	"context"
 
-	"user/rpc/internal/svc"
-	"user/rpc/user"
+	"github.com/super667/user/rpc/internal/svc"
+	"github.com/super667/user/rpc/user"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

@@ -4,10 +4,10 @@ import (
 	"flag"
 	"fmt"
 
-	"user/rpc/internal/config"
-	"user/rpc/internal/server"
-	"user/rpc/internal/svc"
-	"user/rpc/user"
+	"github.com/super667/user/rpc/internal/config"
+	"github.com/super667/user/rpc/internal/server"
+	"github.com/super667/user/rpc/internal/svc"
+	"github.com/super667/user/rpc/user"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"
