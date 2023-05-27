@@ -71,16 +71,16 @@ func (m *defaultUserModel) GetOne(ctx context.Context, account string) (*User, e
 	rowBuilder := squirrel.Select(userRows).From(m.table)
 	rowBuilder = rowBuilder.Where(squirrel.Or{squirrel.Eq{"phone": account}, squirrel.Eq{"name": account}}).
 		Where(squirrel.Eq{"delete_time": nil})
-	query, _, err := rowBuilder.ToSql()
+	query, args, err := rowBuilder.ToSql()
 	if err != nil {
 		return nil, err
 	}
-	var userInfos *User
-	err = m.conn.QueryRowsCtx(ctx, &userInfos, query)
+	var resp User
+	err = m.conn.QueryRowCtx(ctx, &resp, query, args...)
 	if err != nil {
 		return nil, err
 	}
-	return userInfos, nil
+	return &resp, nil
 }
 
 func (m *defaultUserModel) PartialUpdate(ctx context.Context, newData *User) error {

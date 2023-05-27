@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	auth "github.com/super667/user/api/internal/handler/auth"
+	menu "github.com/super667/user/api/internal/handler/menu"
 	perm "github.com/super667/user/api/internal/handler/perm"
 	role "github.com/super667/user/api/internal/handler/role"
 	strategy "github.com/super667/user/api/internal/handler/strategy"
@@ -209,5 +210,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: auth.WeComLoginHandler(serverCtx),
 			},
 		},
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/menu",
+				Handler: menu.ListMenuHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 	)
 }

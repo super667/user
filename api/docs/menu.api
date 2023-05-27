@@ -1,0 +1,45 @@
+info(
+    title: "菜单相关接口"
+    author: "wangxianchao"
+    email: "995166545@qq.com"
+)
+
+import "docs/common.api"
+
+type (
+    MenuInfo {
+        AuthName string `json:"authName"`
+        Path string `json:"path"`
+        Order int64 `json:"order"`
+        ParentId int64 `json:"parentId"`
+    }
+
+    MenuDetail {
+        Id int64 `json:"id"`
+        MenuInfo
+        Children []MenuDetail `json:"children"`
+        CreateTime int64 `json:"createTime"`
+    }
+
+    ListMenuReq {
+    }
+
+    ListMenuResp {
+        Menus []MenuDetail `json:"list"`
+    }
+
+)
+
+@server (
+    group: menu
+    jwt: Auth
+)
+service User {
+    @doc "菜单列表"
+    @handler ListMenu
+    get /menu(ListMenuReq) returns (ListMenuResp)
+}
+
+
+
+

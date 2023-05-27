@@ -370,3 +370,24 @@ type RegisterResp struct {
 	GenderCode int64  `json:"GenderCode"`
 	Phone      string `json:"phone"`
 }
+
+type MenuInfo struct {
+	AuthName string `json:"authName"`
+	Path     string `json:"path"`
+	Order    int64  `json:"order"`
+	ParentId int64  `json:"parentId"`
+}
+
+type MenuDetail struct {
+	Id int64 `json:"id"`
+	MenuInfo
+	Children   []MenuDetail `json:"children"`
+	CreateTime int64        `json:"createTime"`
+}
+
+type ListMenuReq struct {
+}
+
+type ListMenuResp struct {
+	Menus []MenuDetail `json:"list"`
+}
