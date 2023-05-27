@@ -28,7 +28,7 @@ type (
     }
 
     DeleteUserRoleReq {
-        Id int64 `json:"id"`
+        Id int64 `path:"id"`
     }
 
     DeleteUserRoleResp {
@@ -36,7 +36,7 @@ type (
     }
 
     UpdateUserRoleReq {
-        Id int64 `json:"id"`
+        Id int64 `path:"id"`
         UserRoleInfo
     }
 
@@ -45,7 +45,7 @@ type (
     }
 
     PatchUserRoleReq {
-        Id int64 `json:"id"`
+        Id int64 `path:"id"`
         UserRoleInfo
     }
 

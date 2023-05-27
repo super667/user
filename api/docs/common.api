@@ -6,8 +6,8 @@ info(
 
 type (
     ListReq {
-        Page int64 `json:"page,optioanl,default=1"`
-        PageSize int64 `json:"pageSize,optional,default=10"`
+        Page int64 `form:"page,optioanl,default=1"`
+        PageSize int64 `form:"pageSize,optional,default=10"`
     }
 
     ListResp {

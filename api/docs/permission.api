@@ -29,7 +29,7 @@ type (
     }
 
     DeletePermReq {
-        Id int64 `json:"id"`
+        Id int64 `path:"id"`
     }
 
     DeletePermResp {
@@ -37,7 +37,7 @@ type (
     }
 
     UpdatePermReq {
-        Id int64 `json:"id"`
+        Id int64 `path:"id"`
         PermInfo
     }
 
@@ -46,7 +46,7 @@ type (
     }
 
     PatchPermReq {
-        Id int64 `json:"id"`
+        Id int64 `path:"id"`
         PermInfo
     }
 

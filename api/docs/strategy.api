@@ -34,7 +34,7 @@ type (
     }
 
     DeleteStrategyReq {
-        Id int64 `json:"id"`
+        Id int64 `path:"id"`
     }
 
     DeleteStrategyResp {
@@ -42,7 +42,7 @@ type (
     }
 
     UpdateStrategyReq {
-        Id int64 `json:"id"`
+        Id int64 `path:"id"`
         StrategyInfo
     }
 
@@ -51,7 +51,7 @@ type (
     }
 
     PatchStrategyReq {
-        Id int64 `json:"id"`
+        Id int64 `path:"id"`
         StrategyInfo
     }
 

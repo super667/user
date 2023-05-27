@@ -73,8 +73,8 @@ type PatchUserResp struct {
 }
 
 type ListReq struct {
-	Page     int64 `json:"page,optioanl,default=1"`
-	PageSize int64 `json:"pageSize,optional,default=10"`
+	Page     int64 `form:"page,optioanl,default=1"`
+	PageSize int64 `form:"pageSize,optional,default=10"`
 }
 
 type ListResp struct {
@@ -103,7 +103,7 @@ type CreateRoleResp struct {
 }
 
 type DeleteRoleReq struct {
-	Id int64 `json:"id"`
+	Id int64 `path:"id"`
 }
 
 type DeleteRoleResp struct {
@@ -111,7 +111,7 @@ type DeleteRoleResp struct {
 }
 
 type UpdateRoleReq struct {
-	Id int64 `json:"id"`
+	Id int64 `path:"id"`
 	RoleInfo
 }
 
@@ -120,7 +120,7 @@ type UpdateRoleResp struct {
 }
 
 type PatchRoleReq struct {
-	Id int64 `json:"id"`
+	Id int64 `path:"id"`
 	RoleInfo
 }
 
@@ -166,7 +166,7 @@ type CreatePermResp struct {
 }
 
 type DeletePermReq struct {
-	Id int64 `json:"id"`
+	Id int64 `path:"id"`
 }
 
 type DeletePermResp struct {
@@ -174,7 +174,7 @@ type DeletePermResp struct {
 }
 
 type UpdatePermReq struct {
-	Id int64 `json:"id"`
+	Id int64 `path:"id"`
 	PermInfo
 }
 
@@ -183,7 +183,7 @@ type UpdatePermResp struct {
 }
 
 type PatchPermReq struct {
-	Id int64 `json:"id"`
+	Id int64 `path:"id"`
 	PermInfo
 }
 
@@ -234,7 +234,7 @@ type CreateStrategyResp struct {
 }
 
 type DeleteStrategyReq struct {
-	Id int64 `json:"id"`
+	Id int64 `path:"id"`
 }
 
 type DeleteStrategyResp struct {
@@ -242,7 +242,7 @@ type DeleteStrategyResp struct {
 }
 
 type UpdateStrategyReq struct {
-	Id int64 `json:"id"`
+	Id int64 `path:"id"`
 	StrategyInfo
 }
 
@@ -251,7 +251,7 @@ type UpdateStrategyResp struct {
 }
 
 type PatchStrategyReq struct {
-	Id int64 `json:"id"`
+	Id int64 `path:"id"`
 	StrategyInfo
 }
 
@@ -296,7 +296,7 @@ type CreateUserRoleResp struct {
 }
 
 type DeleteUserRoleReq struct {
-	Id int64 `json:"id"`
+	Id int64 `path:"id"`
 }
 
 type DeleteUserRoleResp struct {
@@ -304,7 +304,7 @@ type DeleteUserRoleResp struct {
 }
 
 type UpdateUserRoleReq struct {
-	Id int64 `json:"id"`
+	Id int64 `path:"id"`
 	UserRoleInfo
 }
 
@@ -313,7 +313,7 @@ type UpdateUserRoleResp struct {
 }
 
 type PatchUserRoleReq struct {
-	Id int64 `json:"id"`
+	Id int64 `path:"id"`
 	UserRoleInfo
 }
 
