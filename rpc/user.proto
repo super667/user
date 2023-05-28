@@ -74,8 +74,9 @@ message CreateUserResp {
 }
 
 message ListUserReq {
-  int64 Page = 1;
-  int64 PageSize = 2;
+  string Search = 1;
+  int64 Page = 2;
+  int64 PageSize = 3;
 }
 
 message ListUserResp {

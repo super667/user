@@ -73,8 +73,9 @@ type PatchUserResp struct {
 }
 
 type ListReq struct {
-	Page     int64 `form:"page,optioanl,default=1"`
-	PageSize int64 `form:"pageSize,optional,default=10"`
+	Search   string `form:"search,optional"`
+	Page     int64  `form:"page,optional,default=1"`
+	PageSize int64  `form:"pageSize,optional,default=10"`
 }
 
 type ListResp struct {

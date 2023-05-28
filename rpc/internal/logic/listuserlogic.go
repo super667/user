@@ -26,7 +26,7 @@ func NewListUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ListUser
 
 func (l *ListUserLogic) ListUser(in *user.ListUserReq) (*user.ListUserResp, error) {
 	resp := &user.ListUserResp{}
-	res, err := l.svcCtx.UserModel.FindManyByPage(l.ctx, in.Page, in.PageSize)
+	res, err := l.svcCtx.UserModel.FindManyByPage(l.ctx, in.Search, in.Page, in.PageSize)
 	if err != nil {
 		return resp, err
 	}
@@ -36,7 +36,7 @@ func (l *ListUserLogic) ListUser(in *user.ListUserReq) (*user.ListUserResp, erro
 		return resp, err
 	}
 
-	total, err := l.svcCtx.UserModel.Count(l.ctx)
+	total, err := l.svcCtx.UserModel.Count(l.ctx, in.Search)
 	if err != nil {
 		return resp, err
 	}

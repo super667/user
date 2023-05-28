@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/Masterminds/squirrel"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
+	"strings"
 )
 
 var _ UserModel = (*customUserModel)(nil)
@@ -13,8 +14,8 @@ type (
 	// and implement the added methods in customUserModel.
 	UserModel interface {
 		userModel
-		Count(ctx context.Context) (int64, error)
-		FindManyByPage(ctx context.Context, page, pageSize int64) ([]*User, error)
+		Count(ctx context.Context, search string) (int64, error)
+		FindManyByPage(ctx context.Context, search string, page, pageSize int64) ([]*User, error)
 		PartialUpdate(ctx context.Context, newData *User) error
 		GetOne(ctx context.Context, phone string) (*User, error)
 	}
@@ -31,14 +32,17 @@ func NewUserModel(conn sqlx.SqlConn) UserModel {
 	}
 }
 
-func (m *defaultUserModel) Count(ctx context.Context) (int64, error) {
+func (m *defaultUserModel) Count(ctx context.Context, search string) (int64, error) {
 	var count int64
 	rowBuilder := squirrel.Select("count(*)").From(m.tableName()).Where(squirrel.Eq{"delete_time": nil})
-	query, _, err := rowBuilder.ToSql()
+	if strings.TrimSpace(search) != "" {
+		rowBuilder = rowBuilder.Where(squirrel.Like{"name": "%" + search + "%"})
+	}
+	query, args, err := rowBuilder.ToSql()
 	if err != nil {
 		return 0, err
 	}
-	err = m.conn.QueryRow(&count, query)
+	err = m.conn.QueryRow(&count, query, args...)
 	if err != nil {
 		return 0, err
 	}
@@ -46,7 +50,7 @@ func (m *defaultUserModel) Count(ctx context.Context) (int64, error) {
 
 }
 
-func (m *defaultUserModel) FindManyByPage(ctx context.Context, page, pageSize int64) ([]*User, error) {
+func (m *defaultUserModel) FindManyByPage(ctx context.Context, search string, page, pageSize int64) ([]*User, error) {
 	rowBuilder := squirrel.Select(userRows).From(m.table)
 	if page <= 0 {
 		page = 1
@@ -54,13 +58,16 @@ func (m *defaultUserModel) FindManyByPage(ctx context.Context, page, pageSize in
 	if pageSize <= 0 {
 		pageSize = 10
 	}
+	if strings.TrimSpace(search) != "" {
+		rowBuilder = rowBuilder.Where(squirrel.Like{"name": "%" + search + "%"})
+	}
 	rowBuilder = rowBuilder.Offset(uint64((page - 1) * pageSize)).Limit(uint64(pageSize)).Where(squirrel.Eq{"delete_time": nil})
-	query, _, err := rowBuilder.ToSql()
+	query, args, err := rowBuilder.ToSql()
 	if err != nil {
 		return nil, err
 	}
 	var userInfos []*User
-	err = m.conn.QueryRowsCtx(ctx, &userInfos, query)
+	err = m.conn.QueryRowsCtx(ctx, &userInfos, query, args...)
 	if err != nil {
 		return nil, err
 	}

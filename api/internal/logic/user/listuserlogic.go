@@ -26,7 +26,14 @@ func NewListUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ListUser
 }
 
 func (l *ListUserLogic) ListUser(req *types.ListUserReq) (resp *types.ListUserResp, err error) {
+	resp = &types.ListUserResp{
+		ListResp: types.ListResp{
+			Page:     req.Page,
+			PageSize: req.PageSize,
+		},
+	}
 	res, err := l.svcCtx.UserRpc.ListUser(l.ctx, &userclient.ListUserReq{
+		Search:   req.Search,
 		Page:     req.Page,
 		PageSize: req.PageSize,
 	})
@@ -35,13 +42,7 @@ func (l *ListUserLogic) ListUser(req *types.ListUserReq) (resp *types.ListUserRe
 	}
 	userInfos := make([]types.UserDetail, 0)
 	copier.Copy(&userInfos, res.UserDetail)
-	resp = &types.ListUserResp{
-		Users: userInfos,
-		ListResp: types.ListResp{
-			Page:     res.Page,
-			PageSize: res.PageSize,
-			Total:    res.Total,
-		},
-	}
+	resp.Users = userInfos
+	resp.Total = res.Total
 	return
 }
