@@ -18,6 +18,7 @@ type (
 		FindManyByPage(ctx context.Context, search string, page, pageSize int64) ([]*User, error)
 		PartialUpdate(ctx context.Context, newData *User) error
 		GetOne(ctx context.Context, phone string) (*User, error)
+		Exist(ctx context.Context, userDn string) (bool, error)
 	}
 
 	customUserModel struct {
@@ -30,6 +31,33 @@ func NewUserModel(conn sqlx.SqlConn) UserModel {
 	return &customUserModel{
 		defaultUserModel: newUserModel(conn),
 	}
+}
+
+func (m *defaultUserModel) Exist(ctx context.Context, userDn string) (bool, error) {
+	user, err := m.FindOneByUserDn(ctx, userDn)
+	if err != nil {
+		return false, err
+	}
+	if user != nil {
+		return true, nil
+	}
+	return false, nil
+}
+
+func (m *defaultUserModel) FindOneByUserDn(ctx context.Context, name string) (*User, error) {
+	rowBuilder := squirrel.Select(userRows).From(m.table)
+	rowBuilder = rowBuilder.Where(squirrel.Eq{"name": name}).
+		Where(squirrel.Eq{"delete_time": nil})
+	query, args, err := rowBuilder.ToSql()
+	if err != nil {
+		return nil, err
+	}
+	var resp User
+	err = m.conn.QueryRowCtx(ctx, &resp, query, args...)
+	if err != nil {
+		return nil, err
+	}
+	return &resp, nil
 }
 
 func (m *defaultUserModel) Count(ctx context.Context, search string) (int64, error) {
@@ -95,13 +123,10 @@ func (m *defaultUserModel) PartialUpdate(ctx context.Context, newData *User) err
 	if newData.Number != "" {
 		rowBuilder = rowBuilder.Set("number", newData.Number)
 	}
-	if newData.Name != "" {
-		rowBuilder = rowBuilder.Set("name", newData.Name)
+	if newData.UserName != "" {
+		rowBuilder = rowBuilder.Set("name", newData.UserName)
 	}
 
-	if newData.GenderCode != 0 {
-		rowBuilder = rowBuilder.Set("gender_code", newData.GenderCode)
-	}
 	if newData.Age != 0 {
 		rowBuilder = rowBuilder.Set("age", newData.Age)
 	}

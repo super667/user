@@ -37,21 +37,28 @@ type (
 	}
 
 	User struct {
-		Id          int64        `db:"id"`
-		Number      string       `db:"number"`       // 用户编号
-		Name        string       `db:"name"`         // 用户姓名
-		GenderCode  int64        `db:"gender_code"`  // 用户性别
-		Age         int64        `db:"age"`          // 年龄
-		DeptCode    string       `db:"dept_code"`    // 部门编码
-		DeptName    string       `db:"dept_name"`    // 部门名称
-		ManagerCode string       `db:"manager_code"` // 管理者编码
-		ManagerName string       `db:"manager_name"` // 管理者名称
-		Phone       string       `db:"phone"`        // 电话号码
-		Email       string       `db:"email"`        // 邮箱
-		Password    string       `db:"password"`     // 用户密码
-		CreateTime  time.Time    `db:"create_time"`
-		UpdateTime  time.Time    `db:"update_time"`
-		DeleteTime  sql.NullTime `db:"delete_time"`
+		Id           int64        `db:"id"`
+		UserName     string       `db:"user_name"`    // 用户名称
+		NickName     string       `db:"nick_name"`    // 显示名称
+		Number       string       `db:"number"`       // 工号
+		Avatar       string       `db:"avatar"`       // 头像
+		Email        string       `db:"email"`        // 邮箱
+		Phone        string       `db:"phone"`        // 电话号码
+		Address      string       `db:"address"`      // 地址
+		Position     string       `db:"position"`     // 职位
+		Introduction string       `db:"introduction"` // 介绍
+		Status       string       `db:"status"`       // 状态
+		Source       string       `db:"source"`       // 账号来源
+		Age          int64        `db:"age"`          // 年龄
+		DeptCode     string       `db:"dept_code"`    // 部门编码
+		DeptName     string       `db:"dept_name"`    // 部门名称
+		ManagerCode  string       `db:"manager_code"` // 管理者编码
+		ManagerName  string       `db:"manager_name"` // 管理者名称
+		UserDn       string       `db:"user_dn"`      // 用户dn
+		Password     string       `db:"password"`     // 用户密码
+		CreateTime   time.Time    `db:"create_time"`
+		UpdateTime   time.Time    `db:"update_time"`
+		DeleteTime   sql.NullTime `db:"delete_time"`
 	}
 )
 
@@ -97,14 +104,14 @@ func (m *defaultUserModel) FindOneByNumber(ctx context.Context, number string) (
 }
 
 func (m *defaultUserModel) Insert(ctx context.Context, data *User) (sql.Result, error) {
-	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, userRowsExpectAutoSet)
-	ret, err := m.conn.ExecCtx(ctx, query, data.Number, data.Name, data.GenderCode, data.Age, data.DeptCode, data.DeptName, data.ManagerCode, data.ManagerName, data.Phone, data.Email, data.Password, data.DeleteTime)
+	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, userRowsExpectAutoSet)
+	ret, err := m.conn.ExecCtx(ctx, query, data.UserName, data.NickName, data.Number, data.Avatar, data.Email, data.Phone, data.Address, data.Position, data.Introduction, data.Status, data.Source, data.Age, data.DeptCode, data.DeptName, data.ManagerCode, data.ManagerName, data.UserDn, data.Password, data.DeleteTime)
 	return ret, err
 }
 
 func (m *defaultUserModel) Update(ctx context.Context, newData *User) error {
 	query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, userRowsWithPlaceHolder)
-	_, err := m.conn.ExecCtx(ctx, query, newData.Number, newData.Name, newData.GenderCode, newData.Age, newData.DeptCode, newData.DeptName, newData.ManagerCode, newData.ManagerName, newData.Phone, newData.Email, newData.Password, newData.DeleteTime, newData.Id)
+	_, err := m.conn.ExecCtx(ctx, query, newData.UserName, newData.NickName, newData.Number, newData.Avatar, newData.Email, newData.Phone, newData.Address, newData.Position, newData.Introduction, newData.Status, newData.Source, newData.Age, newData.DeptCode, newData.DeptName, newData.ManagerCode, newData.ManagerName, newData.UserDn, newData.Password, newData.DeleteTime, newData.Id)
 	return err
 }
 

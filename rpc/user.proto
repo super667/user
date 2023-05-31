@@ -11,31 +11,46 @@ enum Gender {
   Female = 2;
 }
 message UserInfo {
-  string number = 1;
-  string name = 2;
-  int32 age = 3;
-  Gender GenderCode = 4;
-  string Phone = 5;
-  string Email = 6;
-  string DeptCode = 7;
-  string DeptName = 8;
-  string ManagerCode = 9;
-  string ManagerName = 10;
+  string UserName = 1;
+  string NickName = 2;
+  string Number = 3;
+  string Avatar = 4;
+  string Email = 5;
+  string Phone = 6;
+  string Address = 7;
+  string Position = 8;
+  string Introduction = 9;
+  string Status = 10;
+  string Source = 11;
+  int32  Age = 12;
+  string DeptCode = 13;
+  string DeptName = 14;
+  string ManagerCode = 15;
+  string ManagerName = 16;
+  string Password = 17;
 }
 
 message UserDetail {
   int64 Id = 1;
-  string Number = 2;
-  string Name = 3;
-  int32 Age = 4;
-  Gender GenderCode = 5;
-  string Phone = 6;
-  string Email = 7;
-  string DeptCode = 8;
-  string DeptName = 9;
-  string ManagerCode = 10;
-  string ManagerName = 11;
-  int64 CreateTime = 12;
+  string UserName = 2;
+  string NickName = 3;
+  string Number = 4;
+  string Avatar = 5;
+  string Email = 6;
+  string Phone = 7;
+  string Address = 8;
+  string Position = 9;
+  string Introduction = 10;
+  string Status = 11;
+  string Source = 12;
+  int32  Age = 13;
+  string DeptCode = 14;
+  string DeptName = 15;
+  string ManagerCode = 16;
+  string ManagerName = 17;
+  string Password = 18;
+  string UserDn = 19;
+  int64 CreateTime = 20;
 }
 
 
@@ -425,6 +440,16 @@ message RegisterResp {
 }
 // 用户注册
 
+// 同步ldap用户
+
+message SyncOpenLdapUsersReq {
+  int64 Id = 1;
+}
+
+message SyncOpenLdapUsersResp {
+  string Res = 1;
+}
+
 service User {
 
   // 用户认证相关
@@ -441,6 +466,8 @@ service User {
   rpc UpdateUser(UpdateUserReq) returns(UpdateUserResp);
   rpc PatchUser(PatchUserReq) returns(PatchUserResp);
   rpc ListUser(ListUserReq) returns(ListUserResp);
+
+  rpc SyncOpenLdapUsers(SyncOpenLdapUsersReq) returns(SyncOpenLdapUsersResp);
 
   // 角色相关接口
 

@@ -1,6 +1,7 @@
 package svc
 
 import (
+	"github.com/super667/user/common/ldap"
 	"github.com/super667/user/model"
 	"github.com/super667/user/rpc/internal/config"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
@@ -13,6 +14,7 @@ type ServiceContext struct {
 	PermModel     model.PermissionModel
 	StrategyModel model.StrategyModel
 	UserRoleModel model.UserRoleModel
+	LdapPool      *ldap.Pool
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -24,5 +26,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		PermModel:     model.NewPermissionModel(conn),
 		StrategyModel: model.NewStrategyModel(conn),
 		UserRoleModel: model.NewUserRoleModel(conn),
+		LdapPool:      ldap.NewLdapPool(c.Ldap),
 	}
 }

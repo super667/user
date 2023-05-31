@@ -19,40 +19,41 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	User_Login_FullMethodName           = "/userclient.User/Login"
-	User_Register_FullMethodName        = "/userclient.User/Register"
-	User_GetUserById_FullMethodName     = "/userclient.User/GetUserById"
-	User_GetUserByNumber_FullMethodName = "/userclient.User/GetUserByNumber"
-	User_GetUserByName_FullMethodName   = "/userclient.User/GetUserByName"
-	User_CreateUser_FullMethodName      = "/userclient.User/CreateUser"
-	User_DeleteUser_FullMethodName      = "/userclient.User/DeleteUser"
-	User_UpdateUser_FullMethodName      = "/userclient.User/UpdateUser"
-	User_PatchUser_FullMethodName       = "/userclient.User/PatchUser"
-	User_ListUser_FullMethodName        = "/userclient.User/ListUser"
-	User_GetRoleById_FullMethodName     = "/userclient.User/GetRoleById"
-	User_CreateRole_FullMethodName      = "/userclient.User/CreateRole"
-	User_DeleteRole_FullMethodName      = "/userclient.User/DeleteRole"
-	User_UpdateRole_FullMethodName      = "/userclient.User/UpdateRole"
-	User_PatchRole_FullMethodName       = "/userclient.User/PatchRole"
-	User_ListRole_FullMethodName        = "/userclient.User/ListRole"
-	User_GetPermById_FullMethodName     = "/userclient.User/GetPermById"
-	User_CreatePerm_FullMethodName      = "/userclient.User/CreatePerm"
-	User_DeletePerm_FullMethodName      = "/userclient.User/DeletePerm"
-	User_UpdatePerm_FullMethodName      = "/userclient.User/UpdatePerm"
-	User_PatchPerm_FullMethodName       = "/userclient.User/PatchPerm"
-	User_ListPerm_FullMethodName        = "/userclient.User/ListPerm"
-	User_GetStrategyById_FullMethodName = "/userclient.User/GetStrategyById"
-	User_CreateStrategy_FullMethodName  = "/userclient.User/CreateStrategy"
-	User_DeleteStrategy_FullMethodName  = "/userclient.User/DeleteStrategy"
-	User_UpdateStrategy_FullMethodName  = "/userclient.User/UpdateStrategy"
-	User_PatchStrategy_FullMethodName   = "/userclient.User/PatchStrategy"
-	User_ListStrategy_FullMethodName    = "/userclient.User/ListStrategy"
-	User_GetUserRoleById_FullMethodName = "/userclient.User/GetUserRoleById"
-	User_CreateUserRole_FullMethodName  = "/userclient.User/CreateUserRole"
-	User_DeleteUserRole_FullMethodName  = "/userclient.User/DeleteUserRole"
-	User_UpdateUserRole_FullMethodName  = "/userclient.User/UpdateUserRole"
-	User_PatchUserRole_FullMethodName   = "/userclient.User/PatchUserRole"
-	User_ListUserRole_FullMethodName    = "/userclient.User/ListUserRole"
+	User_Login_FullMethodName             = "/userclient.User/Login"
+	User_Register_FullMethodName          = "/userclient.User/Register"
+	User_GetUserById_FullMethodName       = "/userclient.User/GetUserById"
+	User_GetUserByNumber_FullMethodName   = "/userclient.User/GetUserByNumber"
+	User_GetUserByName_FullMethodName     = "/userclient.User/GetUserByName"
+	User_CreateUser_FullMethodName        = "/userclient.User/CreateUser"
+	User_DeleteUser_FullMethodName        = "/userclient.User/DeleteUser"
+	User_UpdateUser_FullMethodName        = "/userclient.User/UpdateUser"
+	User_PatchUser_FullMethodName         = "/userclient.User/PatchUser"
+	User_ListUser_FullMethodName          = "/userclient.User/ListUser"
+	User_SyncOpenLdapUsers_FullMethodName = "/userclient.User/SyncOpenLdapUsers"
+	User_GetRoleById_FullMethodName       = "/userclient.User/GetRoleById"
+	User_CreateRole_FullMethodName        = "/userclient.User/CreateRole"
+	User_DeleteRole_FullMethodName        = "/userclient.User/DeleteRole"
+	User_UpdateRole_FullMethodName        = "/userclient.User/UpdateRole"
+	User_PatchRole_FullMethodName         = "/userclient.User/PatchRole"
+	User_ListRole_FullMethodName          = "/userclient.User/ListRole"
+	User_GetPermById_FullMethodName       = "/userclient.User/GetPermById"
+	User_CreatePerm_FullMethodName        = "/userclient.User/CreatePerm"
+	User_DeletePerm_FullMethodName        = "/userclient.User/DeletePerm"
+	User_UpdatePerm_FullMethodName        = "/userclient.User/UpdatePerm"
+	User_PatchPerm_FullMethodName         = "/userclient.User/PatchPerm"
+	User_ListPerm_FullMethodName          = "/userclient.User/ListPerm"
+	User_GetStrategyById_FullMethodName   = "/userclient.User/GetStrategyById"
+	User_CreateStrategy_FullMethodName    = "/userclient.User/CreateStrategy"
+	User_DeleteStrategy_FullMethodName    = "/userclient.User/DeleteStrategy"
+	User_UpdateStrategy_FullMethodName    = "/userclient.User/UpdateStrategy"
+	User_PatchStrategy_FullMethodName     = "/userclient.User/PatchStrategy"
+	User_ListStrategy_FullMethodName      = "/userclient.User/ListStrategy"
+	User_GetUserRoleById_FullMethodName   = "/userclient.User/GetUserRoleById"
+	User_CreateUserRole_FullMethodName    = "/userclient.User/CreateUserRole"
+	User_DeleteUserRole_FullMethodName    = "/userclient.User/DeleteUserRole"
+	User_UpdateUserRole_FullMethodName    = "/userclient.User/UpdateUserRole"
+	User_PatchUserRole_FullMethodName     = "/userclient.User/PatchUserRole"
+	User_ListUserRole_FullMethodName      = "/userclient.User/ListUserRole"
 )
 
 // UserClient is the client API for User service.
@@ -70,6 +71,7 @@ type UserClient interface {
 	UpdateUser(ctx context.Context, in *UpdateUserReq, opts ...grpc.CallOption) (*UpdateUserResp, error)
 	PatchUser(ctx context.Context, in *PatchUserReq, opts ...grpc.CallOption) (*PatchUserResp, error)
 	ListUser(ctx context.Context, in *ListUserReq, opts ...grpc.CallOption) (*ListUserResp, error)
+	SyncOpenLdapUsers(ctx context.Context, in *SyncOpenLdapUsersReq, opts ...grpc.CallOption) (*SyncOpenLdapUsersResp, error)
 	GetRoleById(ctx context.Context, in *GetRoleByIdReq, opts ...grpc.CallOption) (*GetRoleByIdResp, error)
 	CreateRole(ctx context.Context, in *CreateRoleReq, opts ...grpc.CallOption) (*CreateRoleResp, error)
 	DeleteRole(ctx context.Context, in *DeleteRoleReq, opts ...grpc.CallOption) (*DeleteRoleResp, error)
@@ -188,6 +190,15 @@ func (c *userClient) PatchUser(ctx context.Context, in *PatchUserReq, opts ...gr
 func (c *userClient) ListUser(ctx context.Context, in *ListUserReq, opts ...grpc.CallOption) (*ListUserResp, error) {
 	out := new(ListUserResp)
 	err := c.cc.Invoke(ctx, User_ListUser_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) SyncOpenLdapUsers(ctx context.Context, in *SyncOpenLdapUsersReq, opts ...grpc.CallOption) (*SyncOpenLdapUsersResp, error) {
+	out := new(SyncOpenLdapUsersResp)
+	err := c.cc.Invoke(ctx, User_SyncOpenLdapUsers_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -425,6 +436,7 @@ type UserServer interface {
 	UpdateUser(context.Context, *UpdateUserReq) (*UpdateUserResp, error)
 	PatchUser(context.Context, *PatchUserReq) (*PatchUserResp, error)
 	ListUser(context.Context, *ListUserReq) (*ListUserResp, error)
+	SyncOpenLdapUsers(context.Context, *SyncOpenLdapUsersReq) (*SyncOpenLdapUsersResp, error)
 	GetRoleById(context.Context, *GetRoleByIdReq) (*GetRoleByIdResp, error)
 	CreateRole(context.Context, *CreateRoleReq) (*CreateRoleResp, error)
 	DeleteRole(context.Context, *DeleteRoleReq) (*DeleteRoleResp, error)
@@ -485,6 +497,9 @@ func (UnimplementedUserServer) PatchUser(context.Context, *PatchUserReq) (*Patch
 }
 func (UnimplementedUserServer) ListUser(context.Context, *ListUserReq) (*ListUserResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListUser not implemented")
+}
+func (UnimplementedUserServer) SyncOpenLdapUsers(context.Context, *SyncOpenLdapUsersReq) (*SyncOpenLdapUsersResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SyncOpenLdapUsers not implemented")
 }
 func (UnimplementedUserServer) GetRoleById(context.Context, *GetRoleByIdReq) (*GetRoleByIdResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRoleById not implemented")
@@ -747,6 +762,24 @@ func _User_ListUser_Handler(srv interface{}, ctx context.Context, dec func(inter
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServer).ListUser(ctx, req.(*ListUserReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_SyncOpenLdapUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SyncOpenLdapUsersReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).SyncOpenLdapUsers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_SyncOpenLdapUsers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).SyncOpenLdapUsers(ctx, req.(*SyncOpenLdapUsersReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1229,6 +1262,10 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListUser",
 			Handler:    _User_ListUser_Handler,
+		},
+		{
+			MethodName: "SyncOpenLdapUsers",
+			Handler:    _User_SyncOpenLdapUsers_Handler,
 		},
 		{
 			MethodName: "GetRoleById",

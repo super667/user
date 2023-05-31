@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"fmt"
 	"github.com/jinzhu/copier"
 	"github.com/super667/user/rpc/userclient"
 
@@ -30,10 +31,12 @@ func (l *GetUserLogic) GetUser(req *types.GetUserReq) (resp *types.GetUserResp, 
 		Id: req.Id,
 	})
 	if err != nil {
+		l.Logger.Error("GetUser", err.Error())
 		return resp, err
 	}
 	var userDetail types.UserDetail
 	copier.Copy(&userDetail, res.UserDetail)
 	resp = &types.GetUserResp{UserDetail: userDetail}
+	fmt.Printf("获取到user:%#v", resp)
 	return
 }

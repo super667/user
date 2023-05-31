@@ -1,6 +1,9 @@
 package config
 
-import "github.com/zeromicro/go-zero/zrpc"
+import (
+	"github.com/super667/user/common/ldap"
+	"github.com/zeromicro/go-zero/zrpc"
+)
 
 type Config struct {
 	zrpc.RpcServerConf
@@ -10,4 +13,6 @@ type Config struct {
 	}
 
 	Salt string
+
+	Ldap ldap.Config
 }

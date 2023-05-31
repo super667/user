@@ -5,12 +5,34 @@ Etcd:
   - 121.5.70.40:2379
   Key: user.rpc
 
+Mode: dev
+
 
 Mysql:
   DataSource: root:chatgpt123@tcp(121.5.70.40:3306)/user?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
 
 Salt: HWVOFkGgPTryzICwd7qnJaZR9KQ2i8xe
 
-LogConf:
+Log:
   Level: debug
 
+
+Ldap:
+  # ldap服务器地址
+  Url: ldap://121.5.70.40:388
+  # ladp最大连接数设置
+  MaxConn: 10
+  # ldap服务器基础DN
+  BaseDn: "dc=superboys,dc=top"
+  # ldap管理员DN
+  AdminDn: "cn=admin,dc=superboys,dc=top"
+  # ldap管理员密码
+  AdminPass: "123456"
+  # ldap用户OU
+  UserDn: "ou=people,dc=superboys,dc=top"
+  # ldap用户初始默认密码
+  UserInitPassword: "123456"
+  # 是否允许更改分组DN
+  UserNameModify: false
+  # 是否允许更改用户DN
+  GroupNameModify: false

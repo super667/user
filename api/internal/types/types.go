@@ -2,22 +2,28 @@
 package types
 
 type UserBaseInfo struct {
-	Number      string `json:"number"`
-	Name        string `json:"name"`
-	Age         int    `json:"age,optional"`
-	GenderCode  int64  `json:"genderCode,optional"`
-	Phone       string `json:"phone,optional"`
-	Email       string `json:"email,optional"`
-	DeptCode    string `json:"deptCode,optional"`
-	DeptName    string `json:"deptName,optional"`
-	ManagerCode string `json:"managerCode,optional"`
-	ManagerName string `json:"managerName,optional"`
+	UserName     string `json:"userName"`
+	NickName     string `json:"nickName"`
+	Number       string `json:"number"`
+	Avatar       string `json:"avatar,optional"`
+	Email        string `json:"email,optional"`
+	Phone        string `json:"phone,optional"`
+	Address      string `json:"address,optional"`
+	Position     string `json:"position,optional"`
+	Introduction string `json:"introduction"`
+	Status       string `json:"status,optional"`
+	Source       string `json:"source,optional"`
+	Age          int    `json:"age,optional"`
+	DeptCode     string `json:"deptCode,optional"`
+	DeptName     string `json:"deptName,optional"`
+	ManagerCode  string `json:"managerCode,optional"`
+	ManagerName  string `json:"managerName,optional"`
+	UserDn       string `json:"userDn,optional"`
 }
 
 type UserDetail struct {
-	Id         int64  `json:"id"`
-	Genger     string `json:"genger,optional"`
-	CreateTime int64  `json:"createTime,optional"`
+	Id         int64 `json:"id"`
+	CreateTime int64 `json:"createTime,optional"`
 	UserBaseInfo
 }
 

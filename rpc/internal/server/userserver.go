@@ -73,6 +73,11 @@ func (s *UserServer) ListUser(ctx context.Context, in *user.ListUserReq) (*user.
 	return l.ListUser(in)
 }
 
+func (s *UserServer) SyncOpenLdapUsers(ctx context.Context, in *user.SyncOpenLdapUsersReq) (*user.SyncOpenLdapUsersResp, error) {
+	l := logic.NewSyncOpenLdapUsersLogic(ctx, s.svcCtx)
+	return l.SyncOpenLdapUsers(in)
+}
+
 func (s *UserServer) GetRoleById(ctx context.Context, in *user.GetRoleByIdReq) (*user.GetRoleByIdResp, error) {
 	l := logic.NewGetRoleByIdLogic(ctx, s.svcCtx)
 	return l.GetRoleById(in)

@@ -35,10 +35,9 @@ func (l *RegisterLogic) Register(in *user.RegisterReq) (*user.RegisterResp, erro
 
 	if err == model.ErrNotFound {
 		newUser := model.User{
-			Name:       in.Name,
-			GenderCode: in.GenderCode,
-			Phone:      in.Phone,
-			Password:   cryptx.PasswordEncrypt(l.svcCtx.Config.Salt, in.Password),
+			UserName: in.Name,
+			Phone:    in.Phone,
+			Password: cryptx.PasswordEncrypt(l.svcCtx.Config.Salt, in.Password),
 		}
 
 		res, err := l.svcCtx.UserModel.Insert(l.ctx, &newUser)
@@ -52,10 +51,9 @@ func (l *RegisterLogic) Register(in *user.RegisterReq) (*user.RegisterResp, erro
 		}
 
 		return &user.RegisterResp{
-			Id:         newUser.Id,
-			Name:       newUser.Name,
-			GenderCode: newUser.GenderCode,
-			Phone:      newUser.Phone,
+			Id:    newUser.Id,
+			Name:  newUser.UserName,
+			Phone: newUser.Phone,
 		}, nil
 
 	}
