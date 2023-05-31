@@ -17,7 +17,7 @@ type (
 
     // 用户登录
     LoginReq {
-        Name   string `json:"name"`
+        UserName   string `json:"userName"`
         Password string `json:"password"`
     }
     LoginResp {
@@ -28,14 +28,13 @@ type (
 
         // 用户注册
     RegisterReq {
-        Name     string `json:"name"`
-        GenderCode   int64  `json:"GenderCode"`
+        UserName     string `json:"userName"`
         Phone   string `json:"phone"`
         Password string `json:"password"`
     }
     RegisterResp {
         Id     int64  `json:"id"`
-        Name   string `json:"name"`
+        UserName   string `json:"userName"`
         GenderCode int64  `json:"GenderCode"`
         Phone string `json:"phone"`
     }

@@ -27,7 +27,7 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 }
 
 func (l *LoginLogic) Login(in *user.LoginReq) (*user.LoginResp, error) {
-	res, err := l.svcCtx.UserModel.GetOne(l.ctx, in.Name)
+	res, err := l.svcCtx.UserModel.GetOne(l.ctx, in.UserName)
 	if err != nil {
 		if err == model.ErrNotFound {
 			return nil, status.Error(100, "用户不存在")
@@ -42,8 +42,8 @@ func (l *LoginLogic) Login(in *user.LoginReq) (*user.LoginResp, error) {
 	}
 
 	return &user.LoginResp{
-		Id:    res.Id,
-		Name:  res.UserName,
-		Phone: res.Phone,
+		Id:       res.Id,
+		UserName: res.UserName,
+		Phone:    res.Phone,
 	}, nil
 }

@@ -10,7 +10,7 @@ type UserBaseInfo struct {
 	Phone        string `json:"phone,optional"`
 	Address      string `json:"address,optional"`
 	Position     string `json:"position,optional"`
-	Introduction string `json:"introduction"`
+	Introduction string `json:"introduction,optional"`
 	Status       string `json:"status,optional"`
 	Source       string `json:"source,optional"`
 	Age          int    `json:"age,optional"`
@@ -355,7 +355,7 @@ type WeComLoginResp struct {
 }
 
 type LoginReq struct {
-	Name     string `json:"name"`
+	UserName string `json:"userName"`
 	Password string `json:"password"`
 }
 
@@ -365,15 +365,14 @@ type LoginResp struct {
 }
 
 type RegisterReq struct {
-	Name       string `json:"name"`
-	GenderCode int64  `json:"GenderCode"`
-	Phone      string `json:"phone"`
-	Password   string `json:"password"`
+	UserName string `json:"userName"`
+	Phone    string `json:"phone"`
+	Password string `json:"password"`
 }
 
 type RegisterResp struct {
 	Id         int64  `json:"id"`
-	Name       string `json:"name"`
+	UserName   string `json:"userName"`
 	GenderCode int64  `json:"GenderCode"`
 	Phone      string `json:"phone"`
 }

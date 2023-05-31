@@ -3,6 +3,7 @@ package logic
 import (
 	"context"
 	"github.com/jinzhu/copier"
+	"github.com/super667/user/common/cryptx"
 	"github.com/super667/user/model"
 
 	"github.com/super667/user/rpc/internal/svc"
@@ -33,6 +34,7 @@ func (l *CreateUserLogic) CreateUser(in *user.CreateUserReq) (*user.CreateUserRe
 		l.Logger.Error(err)
 		return &user.CreateUserResp{}, err
 	}
+	userInfo.Password = cryptx.PasswordEncrypt(l.svcCtx.Config.Salt, "123456")
 	insertRes, err := l.svcCtx.UserModel.Insert(l.ctx, userInfo)
 	if err != nil {
 		return resp, err

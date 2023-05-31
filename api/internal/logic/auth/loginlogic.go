@@ -28,7 +28,7 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 
 func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err error) {
 	res, err := l.svcCtx.UserRpc.Login(l.ctx, &userclient.LoginReq{
-		Name:     req.Name,
+		UserName: req.UserName,
 		Password: req.Password,
 	})
 	if err != nil {
@@ -38,7 +38,7 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err erro
 	now := time.Now().Unix()
 	accessExpire := l.svcCtx.Config.Auth.AccessExpire
 
-	accessToken, err := jwtx.GetToken(l.svcCtx.Config.Auth.AccessSecret, now, accessExpire, res.Name)
+	accessToken, err := jwtx.GetToken(l.svcCtx.Config.Auth.AccessSecret, now, accessExpire, res.UserName)
 	if err != nil {
 		return nil, err
 	}

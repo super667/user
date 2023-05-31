@@ -104,7 +104,7 @@ func (m *defaultUserModel) FindManyByPage(ctx context.Context, search string, pa
 
 func (m *defaultUserModel) GetOne(ctx context.Context, account string) (*User, error) {
 	rowBuilder := squirrel.Select(userRows).From(m.table)
-	rowBuilder = rowBuilder.Where(squirrel.Or{squirrel.Eq{"phone": account}, squirrel.Eq{"name": account}}).
+	rowBuilder = rowBuilder.Where(squirrel.Or{squirrel.Eq{"phone": account}, squirrel.Eq{"user_name": account}}).
 		Where(squirrel.Eq{"delete_time": nil})
 	query, args, err := rowBuilder.ToSql()
 	if err != nil {
@@ -124,7 +124,7 @@ func (m *defaultUserModel) PartialUpdate(ctx context.Context, newData *User) err
 		rowBuilder = rowBuilder.Set("number", newData.Number)
 	}
 	if newData.UserName != "" {
-		rowBuilder = rowBuilder.Set("name", newData.UserName)
+		rowBuilder = rowBuilder.Set("user_name", newData.UserName)
 	}
 
 	if newData.Age != 0 {

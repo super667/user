@@ -3,7 +3,6 @@ package logic
 import (
 	"context"
 	"github.com/jinzhu/copier"
-
 	"github.com/super667/user/rpc/internal/svc"
 	"github.com/super667/user/rpc/user"
 

@@ -26,19 +26,17 @@ func NewRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Register
 
 func (l *RegisterLogic) Register(req *types.RegisterReq) (resp *types.RegisterResp, err error) {
 	res, err := l.svcCtx.UserRpc.Register(l.ctx, &userclient.RegisterReq{
-		Name:       req.Name,
-		GenderCode: req.GenderCode,
-		Phone:      req.Phone,
-		Password:   req.Password,
+		UserName: req.UserName,
+		Phone:    req.Phone,
+		Password: req.Password,
 	})
 	if err != nil {
 		return nil, err
 	}
 
 	return &types.RegisterResp{
-		Id:         res.Id,
-		Name:       res.Name,
-		GenderCode: res.GenderCode,
-		Phone:      res.Phone,
+		Id:       res.Id,
+		UserName: res.UserName,
+		Phone:    res.Phone,
 	}, nil
 }

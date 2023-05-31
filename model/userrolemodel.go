@@ -72,7 +72,7 @@ func (m *defaultUserRoleModel) PartialUpdate(ctx context.Context, newData *UserR
 		rowBuilder = rowBuilder.Set("number", newData.UserId)
 	}
 	if newData.RoleId != 0 {
-		rowBuilder = rowBuilder.Set("name", newData.RoleId)
+		rowBuilder = rowBuilder.Set("user_name", newData.RoleId)
 	}
 
 	rowBuilder = rowBuilder.Where(squirrel.Eq{"id": newData.Id})
