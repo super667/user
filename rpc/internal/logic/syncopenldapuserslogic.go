@@ -54,7 +54,7 @@ func (l *SyncOpenLdapUsersLogic) SyncOpenLdapUsers(in *user.SyncOpenLdapUsersReq
 		}
 	}
 
-	return &user.SyncOpenLdapUsersResp{}, nil
+	return &user.SyncOpenLdapUsersResp{Res: "完成"}, nil
 }
 
 func (l *SyncOpenLdapUsersLogic) addUser(u *model.User) error {
