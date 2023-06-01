@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"github.com/super667/user/common/cryptx"
 	"github.com/super667/user/model"
 
 	"github.com/super667/user/rpc/internal/svc"
@@ -33,10 +34,19 @@ func (l *SyncOpenLdapUsersLogic) SyncOpenLdapUsers(in *user.SyncOpenLdapUsersReq
 
 	for _, user := range ldapUsers {
 		u := &model.User{
-			Number:   user.Number,
-			UserName: user.Name,
-			Phone:    user.Mobile,
-			Email:    user.Mail,
+			UserName:     user.Name,
+			NickName:     user.DisplayName,
+			Email:        user.Mail,
+			Number:       user.Number,
+			Phone:        user.Mobile,
+			Address:      user.PostalAddress,
+			DeptCode:     user.DeptCode,
+			Position:     user.Position,
+			Introduction: user.CN,
+			Source:       "openldap",
+			DeptName:     user.DeptName,
+			UserDn:       user.DN,
+			Password:     cryptx.PasswordEncrypt(l.svcCtx.Config.Salt, l.svcCtx.Config.Ldap.UserInitPassword),
 		}
 		err = l.addUser(u)
 		if err != nil {

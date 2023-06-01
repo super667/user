@@ -21,19 +21,20 @@ type Dept struct {
 }
 
 type User struct {
-	Name             string   `json:"name"`
-	DN               string   `json:"dn"`
-	CN               string   `json:"cn"`
-	SN               string   `json:"sn"`
-	Mobile           string   `json:"mobile"`
-	BusinessCategory string   `json:"businessCategory"` // 业务类别，部门名字
-	DepartmentNumber string   `json:"departmentNumber"` // 部门编号，此处可以存放员工的职位
-	Description      string   `json:"description"`      // 描述
-	DisplayName      string   `json:"displayName"`      // 展示名字，可以是中文名字
-	Mail             string   `json:"mail"`             // 邮箱
-	Number           string   `json:"Number"`           // 员工工号
-	PostalAddress    string   `json:"postalAddress"`    // 家庭住址
-	DepartmentIds    []string `json:"department_ids"`
+	Name          string `json:"name"`
+	DN            string `json:"dn"`
+	CN            string `json:"cn"`
+	SN            string `json:"sn"`
+	Mobile        string `json:"mobile"`
+	DeptCode      string `json:"deptCode"`      // 部门编号，此处可以存放员工的职位
+	Description   string `json:"description"`   // 描述
+	DisplayName   string `json:"displayName"`   // 展示名字，可以是中文名字
+	Mail          string `json:"mail"`          // 邮箱
+	Number        string `json:"Number"`        // 员工工号
+	PostalAddress string `json:"postalAddress"` // 家庭住址
+	DeptName      string `json:"deptName"`
+	Position      string `json:"position"`
+	Password      string `json:"password"`
 }
 
 func NewLdapPool(conf Config) *Pool {
@@ -213,24 +214,23 @@ func (p *Pool) GetAllUsers(ctx context.Context) (ret []*User, err error) {
 				continue
 			}
 			name := strings.Split(strings.Split(v.DN, ",")[0], "=")[1]
-			deptIds, err := p.getUserDeptIds(ctx, v.DN)
+			_, err := p.getUserDeptIds(ctx, v.DN)
 			if err != nil {
 				return ret, err
 			}
 			ret = append(ret, &User{
-				Name:             name,
-				DN:               v.DN,
-				CN:               v.GetAttributeValue("cn"),
-				SN:               v.GetAttributeValue("sn"),
-				Mobile:           v.GetAttributeValue("mobile"),
-				BusinessCategory: v.GetAttributeValue("businessCategory"),
-				DepartmentNumber: v.GetAttributeValue("departmentNumber"),
-				Description:      v.GetAttributeValue("description"),
-				DisplayName:      v.GetAttributeValue("displayName"),
-				Mail:             v.GetAttributeValue("mail"),
-				Number:           v.GetAttributeValue("employeeNumber"),
-				PostalAddress:    v.GetAttributeValue("postalAddress"),
-				DepartmentIds:    deptIds,
+				Name:          name,
+				DN:            v.DN,
+				CN:            v.GetAttributeValue("cn"),
+				SN:            v.GetAttributeValue("sn"),
+				Mobile:        v.GetAttributeValue("mobile"),
+				DeptCode:      v.GetAttributeValue("departmentNumber"),
+				Description:   v.GetAttributeValue("description"),
+				DisplayName:   v.GetAttributeValue("displayName"),
+				Mail:          v.GetAttributeValue("mail"),
+				Number:        v.GetAttributeValue("employeeNumber"),
+				PostalAddress: v.GetAttributeValue("postalAddress"),
+				//DeptName:      deptIds[0],
 			})
 		}
 	}

@@ -18,7 +18,7 @@ type (
 		FindManyByPage(ctx context.Context, search string, page, pageSize int64) ([]*User, error)
 		PartialUpdate(ctx context.Context, newData *User) error
 		GetOne(ctx context.Context, phone string) (*User, error)
-		Exist(ctx context.Context, userDn string) (bool, error)
+		Exist(ctx context.Context, userName string) (bool, error)
 	}
 
 	customUserModel struct {
@@ -33,8 +33,11 @@ func NewUserModel(conn sqlx.SqlConn) UserModel {
 	}
 }
 
-func (m *defaultUserModel) Exist(ctx context.Context, userDn string) (bool, error) {
-	user, err := m.FindOneByUserDn(ctx, userDn)
+func (m *defaultUserModel) Exist(ctx context.Context, userName string) (bool, error) {
+	user, err := m.FindOneByUserName(ctx, userName)
+	if err == ErrNotFound {
+		return false, nil
+	}
 	if err != nil {
 		return false, err
 	}
@@ -44,9 +47,9 @@ func (m *defaultUserModel) Exist(ctx context.Context, userDn string) (bool, erro
 	return false, nil
 }
 
-func (m *defaultUserModel) FindOneByUserDn(ctx context.Context, name string) (*User, error) {
+func (m *defaultUserModel) FindOneByUserName(ctx context.Context, name string) (*User, error) {
 	rowBuilder := squirrel.Select(userRows).From(m.table)
-	rowBuilder = rowBuilder.Where(squirrel.Eq{"name": name}).
+	rowBuilder = rowBuilder.Where(squirrel.Eq{"user_name": name}).
 		Where(squirrel.Eq{"delete_time": nil})
 	query, args, err := rowBuilder.ToSql()
 	if err != nil {
@@ -64,7 +67,7 @@ func (m *defaultUserModel) Count(ctx context.Context, search string) (int64, err
 	var count int64
 	rowBuilder := squirrel.Select("count(*)").From(m.tableName()).Where(squirrel.Eq{"delete_time": nil})
 	if strings.TrimSpace(search) != "" {
-		rowBuilder = rowBuilder.Where(squirrel.Like{"name": "%" + search + "%"})
+		rowBuilder = rowBuilder.Where(squirrel.Like{"nick_name": "%" + search + "%"})
 	}
 	query, args, err := rowBuilder.ToSql()
 	if err != nil {
@@ -87,7 +90,7 @@ func (m *defaultUserModel) FindManyByPage(ctx context.Context, search string, pa
 		pageSize = 10
 	}
 	if strings.TrimSpace(search) != "" {
-		rowBuilder = rowBuilder.Where(squirrel.Like{"name": "%" + search + "%"})
+		rowBuilder = rowBuilder.Where(squirrel.Like{"nick_name": "%" + search + "%"})
 	}
 	rowBuilder = rowBuilder.Offset(uint64((page - 1) * pageSize)).Limit(uint64(pageSize)).Where(squirrel.Eq{"delete_time": nil})
 	query, args, err := rowBuilder.ToSql()
