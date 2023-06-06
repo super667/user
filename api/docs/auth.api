@@ -23,6 +23,7 @@ type (
     LoginResp {
         AccessToken  string `json:"accessToken"`
         AccessExpire int64  `json:"accessExpire"`
+        RefreshToken string `json:"refreshToken"`
     }
         // 用户登录
 
@@ -39,6 +40,14 @@ type (
         Phone string `json:"phone"`
     }
         // 用户注册
+    RefreshTokenReq {
+        
+    }
+    RefreshTokenResp {
+        AccessToken  string `json:"accessToken"`
+        AccessExpire int64  `json:"accessExpire"`
+    }
+
 )
 
 @server (
@@ -53,4 +62,7 @@ service User {
 
     @handler WeComLogin
     post /wecom-token(WeComLoginReq) returns (WeComLoginResp)
+
+    @handler RefreshToken
+    post /refresh-token(RefreshTokenReq) returns(RefreshTokenResp)
 }

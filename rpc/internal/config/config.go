@@ -15,4 +15,10 @@ type Config struct {
 	Salt string
 
 	Ldap ldap.Config
+
+	Auth struct {
+		AccessSecret  string
+		AccessExpire  int64
+		RefreshExpire int64
+	}
 }

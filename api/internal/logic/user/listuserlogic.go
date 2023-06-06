@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"fmt"
 	"github.com/jinzhu/copier"
 	"github.com/super667/user/rpc/userclient"
 
@@ -26,6 +27,7 @@ func NewListUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ListUser
 }
 
 func (l *ListUserLogic) ListUser(req *types.ListUserReq) (resp *types.ListUserResp, err error) {
+	l.Logger.Info(fmt.Sprintf("ListUser: 获取用户列表：%+v", req.ListReq))
 	resp = &types.ListUserResp{
 		ListResp: types.ListResp{
 			Page:     req.Page,

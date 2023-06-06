@@ -362,6 +362,7 @@ type LoginReq struct {
 type LoginResp struct {
 	AccessToken  string `json:"accessToken"`
 	AccessExpire int64  `json:"accessExpire"`
+	RefreshToken string `json:"refreshToken"`
 }
 
 type RegisterReq struct {
@@ -375,6 +376,14 @@ type RegisterResp struct {
 	UserName   string `json:"userName"`
 	GenderCode int64  `json:"GenderCode"`
 	Phone      string `json:"phone"`
+}
+
+type RefreshTokenReq struct {
+}
+
+type RefreshTokenResp struct {
+	AccessToken  string `json:"accessToken"`
+	AccessExpire int64  `json:"accessExpire"`
 }
 
 type MenuInfo struct {

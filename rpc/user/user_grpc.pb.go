@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	User_Login_FullMethodName             = "/userclient.User/Login"
 	User_Register_FullMethodName          = "/userclient.User/Register"
+	User_FreshToken_FullMethodName        = "/userclient.User/FreshToken"
 	User_GetUserById_FullMethodName       = "/userclient.User/GetUserById"
 	User_GetUserByNumber_FullMethodName   = "/userclient.User/GetUserByNumber"
 	User_GetUserByName_FullMethodName     = "/userclient.User/GetUserByName"
@@ -62,6 +63,7 @@ const (
 type UserClient interface {
 	Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
 	Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error)
+	FreshToken(ctx context.Context, in *RefreshTokenReq, opts ...grpc.CallOption) (*RefreshTokenResp, error)
 	// 用户相关接口
 	GetUserById(ctx context.Context, in *GetUserByIdReq, opts ...grpc.CallOption) (*GetUserByIdResp, error)
 	GetUserByNumber(ctx context.Context, in *GetUserByNumberReq, opts ...grpc.CallOption) (*GetUserByNumberResp, error)
@@ -118,6 +120,15 @@ func (c *userClient) Login(ctx context.Context, in *LoginReq, opts ...grpc.CallO
 func (c *userClient) Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error) {
 	out := new(RegisterResp)
 	err := c.cc.Invoke(ctx, User_Register_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) FreshToken(ctx context.Context, in *RefreshTokenReq, opts ...grpc.CallOption) (*RefreshTokenResp, error) {
+	out := new(RefreshTokenResp)
+	err := c.cc.Invoke(ctx, User_FreshToken_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -427,6 +438,7 @@ func (c *userClient) ListUserRole(ctx context.Context, in *ListUserRoleReq, opts
 type UserServer interface {
 	Login(context.Context, *LoginReq) (*LoginResp, error)
 	Register(context.Context, *RegisterReq) (*RegisterResp, error)
+	FreshToken(context.Context, *RefreshTokenReq) (*RefreshTokenResp, error)
 	// 用户相关接口
 	GetUserById(context.Context, *GetUserByIdReq) (*GetUserByIdResp, error)
 	GetUserByNumber(context.Context, *GetUserByNumberReq) (*GetUserByNumberResp, error)
@@ -473,6 +485,9 @@ func (UnimplementedUserServer) Login(context.Context, *LoginReq) (*LoginResp, er
 }
 func (UnimplementedUserServer) Register(context.Context, *RegisterReq) (*RegisterResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
+}
+func (UnimplementedUserServer) FreshToken(context.Context, *RefreshTokenReq) (*RefreshTokenResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FreshToken not implemented")
 }
 func (UnimplementedUserServer) GetUserById(context.Context, *GetUserByIdReq) (*GetUserByIdResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserById not implemented")
@@ -618,6 +633,24 @@ func _User_Register_Handler(srv interface{}, ctx context.Context, dec func(inter
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServer).Register(ctx, req.(*RegisterReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_FreshToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RefreshTokenReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).FreshToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_FreshToken_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).FreshToken(ctx, req.(*RefreshTokenReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1230,6 +1263,10 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Register",
 			Handler:    _User_Register_Handler,
+		},
+		{
+			MethodName: "FreshToken",
+			Handler:    _User_FreshToken_Handler,
 		},
 		{
 			MethodName: "GetUserById",

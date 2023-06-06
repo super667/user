@@ -104,3 +104,35 @@ func (m *defaultStrategyModel) PartialUpdate(ctx context.Context, newData *Strat
 	_, err = m.conn.ExecCtx(ctx, query, args...)
 	return err
 }
+
+func (m *defaultStrategyModel) TranBatchAddStrategy(ctx context.Context, Strategys []*Strategy) (err error) {
+	fn := func(ctx context.Context, session sqlx.Session) error {
+		rowBuilder := squirrel.Insert(m.tableName())
+		for _, s := range Strategys {
+			rowBuilder = rowBuilder.SetMap(
+				squirrel.Eq{
+					"subject":           s.Subject,
+					"subject_name":      s.SubjectName,
+					"subject_type":      s.SubjectType,
+					"subject_type_name": s.SubjectTypeName,
+					"resource":          s.Resource,
+					"resource_name":     s.ResourceName,
+					"perm":              s.Perm,
+					"perm_name":         s.PermName,
+				},
+			)
+			query, args, err := rowBuilder.ToSql()
+			if err != nil {
+				return err
+			}
+			_, err = session.ExecCtx(ctx, query, args...)
+			if err != nil {
+				return err
+			}
+			return nil
+		}
+		return nil
+	}
+	err = m.conn.TransactCtx(ctx, fn)
+	return err
+}

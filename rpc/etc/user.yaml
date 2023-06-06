@@ -36,3 +36,9 @@ Ldap:
   UserNameModify: false
   # 是否允许更改用户DN
   GroupNameModify: false
+
+Telemetry:
+  Name: user-rpc
+  Endpoint: http://121.5.70.40:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger

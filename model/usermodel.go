@@ -163,3 +163,30 @@ func (m *defaultUserModel) PartialUpdate(ctx context.Context, newData *User) err
 	_, err = m.conn.ExecCtx(ctx, query, args...)
 	return err
 }
+
+func (m *defaultUserModel) TranBatchAddUser(ctx context.Context, userList []*User) (err error) {
+	fn := func(ctx context.Context, session sqlx.Session) error {
+		rowBuilder := squirrel.Insert(m.tableName())
+		for _, user := range userList {
+			rowBuilder = rowBuilder.SetMap(
+				squirrel.Eq{
+					"user_name": user.UserName,
+					"nick_name": user.NickName,
+					"number":    user.Number,
+				},
+			)
+			query, args, err := rowBuilder.ToSql()
+			if err != nil {
+				return err
+			}
+			_, err = session.ExecCtx(ctx, query, args...)
+			if err != nil {
+				return err
+			}
+			return nil
+		}
+		return nil
+	}
+	err = m.conn.TransactCtx(ctx, fn)
+	return err
+}

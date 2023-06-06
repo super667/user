@@ -8,10 +8,19 @@ UserRpc:
       - 121.5.70.40:2379
     Key: user.rpc
 
+Mysql:
+  DataSource: root:chatgpt123@tcp(121.5.70.40:3306)/user?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
 
 Auth:
   AccessSecret: uOvKLmVfztaXGpNYd4Z0I1SiT7MweJhl
-  AccessExpire: 86400
+  AccessExpire: 3600
+  RefreshExpire: 172800
 
 Log:
   Level: debug
+
+Telemetry:
+  Name: user-api
+  Endpoint: http://121.5.70.40:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger

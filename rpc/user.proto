@@ -447,12 +447,22 @@ message SyncOpenLdapUsersResp {
   string Res = 1;
 }
 
+message RefreshTokenReq {
+
+}
+
+message RefreshTokenResp {
+  string AccessToken = 1;
+  int64 AccessExpire = 2;
+}
+
 service User {
 
   // 用户认证相关
 
   rpc Login(LoginReq) returns(LoginResp);
   rpc Register(RegisterReq) returns(RegisterResp);
+  rpc FreshToken(RefreshTokenReq) returns(RefreshTokenResp);
 
   // 用户相关接口
   rpc GetUserById(GetUserByIdReq) returns(GetUserByIdResp);
@@ -494,6 +504,7 @@ service User {
   rpc PatchStrategy(PatchStrategyReq) returns(PatchStrategyResp);
   rpc ListStrategy(ListStrategyReq) returns(ListStrategyResp);
 
+
   // 角色分配接口
 
   rpc GetUserRoleById(GetUserRoleByIdReq) returns(GetUserRoleByIdResp);
@@ -502,6 +513,5 @@ service User {
   rpc UpdateUserRole(UpdateUserRoleReq) returns(UpdateUserRoleResp);
   rpc PatchUserRole(PatchUserRoleReq) returns(PatchUserRoleResp);
   rpc ListUserRole(ListUserRoleReq) returns(ListUserRoleResp);
-
 }
 

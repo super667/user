@@ -10,8 +10,13 @@ type Config struct {
 
 	UserRpc zrpc.RpcClientConf
 
+	MySql struct {
+		DataSource string `json:"DataSource"`
+	}
+
 	Auth struct {
-		AccessSecret string
-		AccessExpire int64
+		AccessSecret  string
+		AccessExpire  int64
+		RefreshExpire int64
 	}
 }

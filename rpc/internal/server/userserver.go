@@ -32,6 +32,11 @@ func (s *UserServer) Register(ctx context.Context, in *user.RegisterReq) (*user.
 	return l.Register(in)
 }
 
+func (s *UserServer) FreshToken(ctx context.Context, in *user.RefreshTokenReq) (*user.RefreshTokenResp, error) {
+	l := logic.NewFreshTokenLogic(ctx, s.svcCtx)
+	return l.FreshToken(in)
+}
+
 // 用户相关接口
 func (s *UserServer) GetUserById(ctx context.Context, in *user.GetUserByIdReq) (*user.GetUserByIdResp, error) {
 	l := logic.NewGetUserByIdLogic(ctx, s.svcCtx)

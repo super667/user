@@ -71,6 +71,8 @@ type (
 	PatchUserRoleResp     = user.PatchUserRoleResp
 	PermDetail            = user.PermDetail
 	PermInfo              = user.PermInfo
+	RefreshTokenReq       = user.RefreshTokenReq
+	RefreshTokenResp      = user.RefreshTokenResp
 	RegisterReq           = user.RegisterReq
 	RegisterResp          = user.RegisterResp
 	RoleDetail            = user.RoleDetail
@@ -97,6 +99,7 @@ type (
 	User interface {
 		Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
 		Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error)
+		FreshToken(ctx context.Context, in *RefreshTokenReq, opts ...grpc.CallOption) (*RefreshTokenResp, error)
 		// 用户相关接口
 		GetUserById(ctx context.Context, in *GetUserByIdReq, opts ...grpc.CallOption) (*GetUserByIdResp, error)
 		GetUserByNumber(ctx context.Context, in *GetUserByNumberReq, opts ...grpc.CallOption) (*GetUserByNumberResp, error)
@@ -152,6 +155,11 @@ func (m *defaultUser) Login(ctx context.Context, in *LoginReq, opts ...grpc.Call
 func (m *defaultUser) Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error) {
 	client := user.NewUserClient(m.cli.Conn())
 	return client.Register(ctx, in, opts...)
+}
+
+func (m *defaultUser) FreshToken(ctx context.Context, in *RefreshTokenReq, opts ...grpc.CallOption) (*RefreshTokenResp, error) {
+	client := user.NewUserClient(m.cli.Conn())
+	return client.FreshToken(ctx, in, opts...)
 }
 
 // 用户相关接口

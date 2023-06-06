@@ -18,38 +18,41 @@ import (
 
 func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
-		[]rest.Route{
-			{
-				Method:  http.MethodGet,
-				Path:    "/user/:id",
-				Handler: user.GetUserHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/user",
-				Handler: user.CreateUserHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/user",
-				Handler: user.ListUserHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodDelete,
-				Path:    "/user/:id",
-				Handler: user.DeleteUserHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPut,
-				Path:    "/user/:id",
-				Handler: user.UpdateUserHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPatch,
-				Path:    "/user/:id",
-				Handler: user.PatchUserHandler(serverCtx),
-			},
-		},
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.Email},
+			[]rest.Route{
+				{
+					Method:  http.MethodGet,
+					Path:    "/user/:id",
+					Handler: user.GetUserHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/user",
+					Handler: user.CreateUserHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodGet,
+					Path:    "/user",
+					Handler: user.ListUserHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodDelete,
+					Path:    "/user/:id",
+					Handler: user.DeleteUserHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPut,
+					Path:    "/user/:id",
+					Handler: user.UpdateUserHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPatch,
+					Path:    "/user/:id",
+					Handler: user.PatchUserHandler(serverCtx),
+				},
+			}...,
+		),
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 	)
 
@@ -208,6 +211,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/wecom-token",
 				Handler: auth.WeComLoginHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/refresh-token",
+				Handler: auth.RefreshTokenHandler(serverCtx),
 			},
 		},
 	)
