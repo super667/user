@@ -13,8 +13,9 @@ import (
 type ServiceContext struct {
 	Config config.Config
 
-	UserRpc userclient.User
-	Email   rest.Middleware
+	UserRpc    userclient.User
+	Email      rest.Middleware
+	TokenModel model.TokenModel
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {

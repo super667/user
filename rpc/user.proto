@@ -414,13 +414,13 @@ message PatchUserRoleResp {
 
 // 用户登录
 message LoginReq {
-  string UserName = 1;
+  string Account = 1;
   string Password = 2;
 }
 message LoginResp {
-  int64 Id = 1;
-  string UserName = 2;
-  string Phone = 4;
+  string AccessToken = 1;
+  int64 AccessExpire = 2;
+  string RefreshToken = 3;
 }
 // 用户登录
 

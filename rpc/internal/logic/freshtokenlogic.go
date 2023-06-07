@@ -29,8 +29,8 @@ func NewFreshTokenLogic(ctx context.Context, svcCtx *svc.ServiceContext) *FreshT
 func (l *FreshTokenLogic) FreshToken(in *user.RefreshTokenReq) (*user.RefreshTokenResp, error) {
 	now := time.Now().Unix()
 	name := ctxdata.GetNameFromCtx(l.ctx)
-	accessExpire := l.svcCtx.Config.Auth.AccessExpire
-	accessToken, err := jwtx.GetToken(l.svcCtx.Config.Auth.AccessSecret, now, accessExpire, name)
+	accessExpire := l.svcCtx.Config.JWT.AccessExpire
+	accessToken, err := jwtx.GetToken(l.svcCtx.Config.JWT.AccessSecret, now, accessExpire, name)
 	if err != nil {
 		return nil, err
 	}

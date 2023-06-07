@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/zeromicro/go-zero/core/stores/builder"
+	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/sqlc"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 	"github.com/zeromicro/go-zero/core/stringx"
@@ -20,6 +21,8 @@ var (
 	tokenRows                = strings.Join(tokenFieldNames, ",")
 	tokenRowsExpectAutoSet   = strings.Join(stringx.Remove(tokenFieldNames, "`id`", "`create_at`", "`create_time`", "`created_at`", "`update_at`", "`update_time`", "`updated_at`"), ",")
 	tokenRowsWithPlaceHolder = strings.Join(stringx.Remove(tokenFieldNames, "`id`", "`create_at`", "`create_time`", "`created_at`", "`update_at`", "`update_time`", "`updated_at`"), "=?,") + "=?"
+
+	cacheTokenIdPrefix = "cache:token:id:"
 )
 
 type (
@@ -31,7 +34,7 @@ type (
 	}
 
 	defaultTokenModel struct {
-		conn  sqlx.SqlConn
+		sqlc.CachedConn
 		table string
 	}
 
@@ -46,23 +49,29 @@ type (
 	}
 )
 
-func newTokenModel(conn sqlx.SqlConn) *defaultTokenModel {
+func newTokenModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...cache.Option) *defaultTokenModel {
 	return &defaultTokenModel{
-		conn:  conn,
-		table: "`token`",
+		CachedConn: sqlc.NewConn(conn, c, opts...),
+		table:      "`token`",
 	}
 }
 
 func (m *defaultTokenModel) Delete(ctx context.Context, id int64) error {
-	query := fmt.Sprintf("delete from %s where `id` = ?", m.table)
-	_, err := m.conn.ExecCtx(ctx, query, id)
+	tokenIdKey := fmt.Sprintf("%s%v", cacheTokenIdPrefix, id)
+	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
+		query := fmt.Sprintf("delete from %s where `id` = ?", m.table)
+		return conn.ExecCtx(ctx, query, id)
+	}, tokenIdKey)
 	return err
 }
 
 func (m *defaultTokenModel) FindOne(ctx context.Context, id int64) (*Token, error) {
-	query := fmt.Sprintf("select %s from %s where `id` = ? limit 1", tokenRows, m.table)
+	tokenIdKey := fmt.Sprintf("%s%v", cacheTokenIdPrefix, id)
 	var resp Token
-	err := m.conn.QueryRowCtx(ctx, &resp, query, id)
+	err := m.QueryRowCtx(ctx, &resp, tokenIdKey, func(ctx context.Context, conn sqlx.SqlConn, v any) error {
+		query := fmt.Sprintf("select %s from %s where `id` = ? limit 1", tokenRows, m.table)
+		return conn.QueryRowCtx(ctx, v, query, id)
+	})
 	switch err {
 	case nil:
 		return &resp, nil
@@ -74,15 +83,30 @@ func (m *defaultTokenModel) FindOne(ctx context.Context, id int64) (*Token, erro
 }
 
 func (m *defaultTokenModel) Insert(ctx context.Context, data *Token) (sql.Result, error) {
-	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?)", m.table, tokenRowsExpectAutoSet)
-	ret, err := m.conn.ExecCtx(ctx, query, data.UserId, data.Token, data.ExpiredAt, data.DeleteTime)
+	tokenIdKey := fmt.Sprintf("%s%v", cacheTokenIdPrefix, data.Id)
+	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?)", m.table, tokenRowsExpectAutoSet)
+		return conn.ExecCtx(ctx, query, data.UserId, data.Token, data.ExpiredAt, data.DeleteTime)
+	}, tokenIdKey)
 	return ret, err
 }
 
 func (m *defaultTokenModel) Update(ctx context.Context, data *Token) error {
-	query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, tokenRowsWithPlaceHolder)
-	_, err := m.conn.ExecCtx(ctx, query, data.UserId, data.Token, data.ExpiredAt, data.DeleteTime, data.Id)
+	tokenIdKey := fmt.Sprintf("%s%v", cacheTokenIdPrefix, data.Id)
+	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
+		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, tokenRowsWithPlaceHolder)
+		return conn.ExecCtx(ctx, query, data.UserId, data.Token, data.ExpiredAt, data.DeleteTime, data.Id)
+	}, tokenIdKey)
 	return err
+}
+
+func (m *defaultTokenModel) formatPrimary(primary any) string {
+	return fmt.Sprintf("%s%v", cacheTokenIdPrefix, primary)
+}
+
+func (m *defaultTokenModel) queryPrimary(ctx context.Context, conn sqlx.SqlConn, v, primary any) error {
+	query := fmt.Sprintf("select %s from %s where `id` = ? limit 1", tokenRows, m.table)
+	return conn.QueryRowCtx(ctx, v, query, primary)
 }
 
 func (m *defaultTokenModel) tableName() string {

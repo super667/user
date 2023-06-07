@@ -2,12 +2,9 @@ package auth
 
 import (
 	"context"
-	"github.com/super667/user/common/jwtx"
-	"github.com/super667/user/rpc/userclient"
-	"time"
-
 	"github.com/super667/user/api/internal/svc"
 	"github.com/super667/user/api/internal/types"
+	"github.com/super667/user/rpc/userclient"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -28,29 +25,16 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 
 func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err error) {
 	res, err := l.svcCtx.UserRpc.Login(l.ctx, &userclient.LoginReq{
-		UserName: req.UserName,
+		Account:  req.UserName,
 		Password: req.Password,
 	})
 	if err != nil {
 		return nil, err
 	}
 
-	now := time.Now().Unix()
-	accessExpire := l.svcCtx.Config.Auth.AccessExpire
-	refreshExpire := l.svcCtx.Config.Auth.RefreshExpire
-
-	accessToken, err := jwtx.GetToken(l.svcCtx.Config.Auth.AccessSecret, now, accessExpire, res.UserName)
-	if err != nil {
-		return nil, err
-	}
-	refreshToken, err := jwtx.GetToken(l.svcCtx.Config.Auth.AccessSecret, now, refreshExpire, res.UserName)
-	if err != nil {
-		return nil, err
-	}
-
 	return &types.LoginResp{
-		AccessToken:  accessToken,
-		AccessExpire: accessExpire,
-		RefreshToken: refreshToken,
+		AccessToken:  res.AccessToken,
+		AccessExpire: res.AccessExpire,
+		RefreshToken: res.RefreshToken,
 	}, nil
 }

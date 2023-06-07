@@ -14,6 +14,8 @@ type (
 	// and implement the added methods in customUserModel.
 	UserModel interface {
 		userModel
+		FindOneByName(ctx context.Context, name string) (*User, error)
+		FindOneByAccount(ctx context.Context, account string) (*User, error)
 		Count(ctx context.Context, search string) (int64, error)
 		FindManyByPage(ctx context.Context, search string, page, pageSize int64) ([]*User, error)
 		PartialUpdate(ctx context.Context, newData *User) error
@@ -189,4 +191,11 @@ func (m *defaultUserModel) TranBatchAddUser(ctx context.Context, userList []*Use
 	}
 	err = m.conn.TransactCtx(ctx, fn)
 	return err
+}
+
+func (m *defaultUserModel) FindOneByName(ctx context.Context, name string) (*User, error) {
+	return nil, nil
+}
+func (m *defaultUserModel) FindOneByAccount(ctx context.Context, account string) (*User, error) {
+	return nil, nil
 }

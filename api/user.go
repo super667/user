@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/super667/user/api/internal/config"
 	"github.com/super667/user/api/internal/handler"
+	"github.com/super667/user/api/internal/middleware"
 	"github.com/super667/user/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/conf"
@@ -24,6 +25,7 @@ func main() {
 
 	ctx := svc.NewServiceContext(c)
 	handler.RegisterHandlers(server, ctx)
+	server.Use(middleware.TokenBlackList(ctx.TokenModel))
 
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	server.Start()

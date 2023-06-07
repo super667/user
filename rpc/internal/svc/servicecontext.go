@@ -14,6 +14,7 @@ type ServiceContext struct {
 	PermModel     model.PermissionModel
 	StrategyModel model.StrategyModel
 	UserRoleModel model.UserRoleModel
+	TokenModel    model.TokenModel
 	LdapPool      *ldap.Pool
 }
 
@@ -26,6 +27,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		PermModel:     model.NewPermissionModel(conn),
 		StrategyModel: model.NewStrategyModel(conn),
 		UserRoleModel: model.NewUserRoleModel(conn),
+		TokenModel:    model.NewTokenModel(conn, c.CacheRedis),
 		LdapPool:      ldap.NewLdapPool(c.Ldap),
 	}
 }
