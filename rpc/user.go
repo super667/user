@@ -5,7 +5,12 @@ import (
 	"fmt"
 
 	"github.com/super667/user/rpc/internal/config"
-	"github.com/super667/user/rpc/internal/server"
+	authserviceServer "github.com/super667/user/rpc/internal/server/authservice"
+	permserviceServer "github.com/super667/user/rpc/internal/server/permservice"
+	roleserviceServer "github.com/super667/user/rpc/internal/server/roleservice"
+	strategyserviceServer "github.com/super667/user/rpc/internal/server/strategyservice"
+	userroleserviceServer "github.com/super667/user/rpc/internal/server/userroleservice"
+	userserviceServer "github.com/super667/user/rpc/internal/server/userservice"
 	"github.com/super667/user/rpc/internal/svc"
 	"github.com/super667/user/rpc/user"
 
@@ -26,7 +31,12 @@ func main() {
 	ctx := svc.NewServiceContext(c)
 
 	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
-		user.RegisterUserServer(grpcServer, server.NewUserServer(ctx))
+		user.RegisterAuthServiceServer(grpcServer, authserviceServer.NewAuthServiceServer(ctx))
+		user.RegisterUserServiceServer(grpcServer, userserviceServer.NewUserServiceServer(ctx))
+		user.RegisterRoleServiceServer(grpcServer, roleserviceServer.NewRoleServiceServer(ctx))
+		user.RegisterPermServiceServer(grpcServer, permserviceServer.NewPermServiceServer(ctx))
+		user.RegisterStrategyServiceServer(grpcServer, strategyserviceServer.NewStrategyServiceServer(ctx))
+		user.RegisterUserRoleServiceServer(grpcServer, userroleserviceServer.NewUserRoleServiceServer(ctx))
 
 		if c.Mode == service.DevMode || c.Mode == service.TestMode {
 			reflection.Register(grpcServer)

@@ -456,15 +456,17 @@ message RefreshTokenResp {
   int64 AccessExpire = 2;
 }
 
-service User {
+service AuthService {
 
   // 用户认证相关
 
   rpc Login(LoginReq) returns(LoginResp);
   rpc Register(RegisterReq) returns(RegisterResp);
   rpc FreshToken(RefreshTokenReq) returns(RefreshTokenResp);
+}
 
   // 用户相关接口
+service UserService {
   rpc GetUserById(GetUserByIdReq) returns(GetUserByIdResp);
   rpc GetUserByNumber(GetUserByNumberReq) returns(GetUserByNumberResp);
   rpc GetUserByName(GetUserByNameReq) returns(GetUserByNameResp);
@@ -475,38 +477,38 @@ service User {
   rpc ListUser(ListUserReq) returns(ListUserResp);
 
   rpc SyncOpenLdapUsers(SyncOpenLdapUsersReq) returns(SyncOpenLdapUsersResp);
-
+}
   // 角色相关接口
-
+service RoleService {
   rpc GetRoleById(GetRoleByIdReq) returns(GetRoleByIdResp);
   rpc CreateRole(CreateRoleReq) returns(CreateRoleResp);
   rpc DeleteRole(DeleteRoleReq) returns(DeleteRoleResp);
   rpc UpdateRole(UpdateRoleReq) returns(UpdateRoleResp);
   rpc PatchRole(PatchRoleReq) returns(PatchRoleResp);
   rpc ListRole(ListRoleReq) returns(ListRoleResp);
-
+}
   // 权限相关接口
-
+service PermService {
   rpc GetPermById(GetPermByIdReq) returns(GetPermByIdResp);
   rpc CreatePerm(CreatePermReq) returns(CreatePermResp);
   rpc DeletePerm(DeletePermReq) returns(DeletePermResp);
   rpc UpdatePerm(UpdatePermReq) returns(UpdatePermResp);
   rpc PatchPerm(PatchPermReq) returns(PatchPermResp);
   rpc ListPerm(ListPermReq) returns(ListPermResp);
-
+}
 
   // 策略相关接口
-
+service StrategyService {
   rpc GetStrategyById(GetStrategyByIdReq) returns(GetStrategyByIdResp);
   rpc CreateStrategy(CreateStrategyReq) returns(CreateStrategyResp);
   rpc DeleteStrategy(DeleteStrategyReq) returns(DeleteStrategyResp);
   rpc UpdateStrategy(UpdateStrategyReq) returns(UpdateStrategyResp);
   rpc PatchStrategy(PatchStrategyReq) returns(PatchStrategyResp);
   rpc ListStrategy(ListStrategyReq) returns(ListStrategyResp);
-
+}
 
   // 角色分配接口
-
+service UserRoleService {
   rpc GetUserRoleById(GetUserRoleByIdReq) returns(GetUserRoleByIdResp);
   rpc CreateUserRole(CreateUserRoleReq) returns(CreateUserRoleResp);
   rpc DeleteUserRole(DeleteUserRoleReq) returns(DeleteUserRoleResp);

@@ -4,6 +4,7 @@ import (
 	"github.com/super667/user/common/ldap"
 	"github.com/super667/user/model"
 	"github.com/super667/user/rpc/internal/config"
+	"github.com/zeromicro/go-zero/core/stores/redis"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
 
@@ -16,6 +17,7 @@ type ServiceContext struct {
 	UserRoleModel model.UserRoleModel
 	TokenModel    model.TokenModel
 	LdapPool      *ldap.Pool
+	Rds           *redis.Redis
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -29,5 +31,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		UserRoleModel: model.NewUserRoleModel(conn),
 		TokenModel:    model.NewTokenModel(conn, c.CacheRedis),
 		LdapPool:      ldap.NewLdapPool(c.Ldap),
+		Rds:           redis.MustNewRedis(c.CacheRedis[0].RedisConf),
 	}
 }
