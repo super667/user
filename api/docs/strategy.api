@@ -22,7 +22,7 @@ type (
         SubjectTypeName string `json:"subjectTypeName"`
         ResourceName string `json:"resourceName"`
         PermName string `json:"permName"`
-        CreateTime int64 `json:"createTime"`
+        CreateAt int64 `json:"createAt"`
     }
 
     CreateStrategyReq {

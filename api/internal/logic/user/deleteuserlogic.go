@@ -2,10 +2,9 @@ package user
 
 import (
 	"context"
-	"github.com/super667/user/rpc/userclient"
-
 	"github.com/super667/user/api/internal/svc"
 	"github.com/super667/user/api/internal/types"
+	"github.com/super667/user/rpc/client/userservice"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -25,7 +24,7 @@ func NewDeleteUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Delete
 }
 
 func (l *DeleteUserLogic) DeleteUser(req *types.DeleteUserReq) (resp *types.DeleteUserResp, err error) {
-	_, err = l.svcCtx.UserRpc.DeleteUser(l.ctx, &userclient.DeleteUserReq{
+	_, err = l.svcCtx.UserRpc.DeleteUser(l.ctx, &userservice.DeleteUserReq{
 		Id: req.Id,
 	})
 	if err != nil {

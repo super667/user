@@ -2,10 +2,9 @@ package perm
 
 import (
 	"context"
-	"github.com/super667/user/rpc/userclient"
-
 	"github.com/super667/user/api/internal/svc"
 	"github.com/super667/user/api/internal/types"
+	"github.com/super667/user/rpc/client/permservice"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -25,7 +24,7 @@ func NewDeletePermLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Delete
 }
 
 func (l *DeletePermLogic) DeletePerm(req *types.DeletePermReq) (resp *types.DeletePermResp, err error) {
-	_, err = l.svcCtx.UserRpc.DeletePerm(l.ctx, &userclient.DeletePermReq{
+	_, err = l.svcCtx.PermRpc.DeletePerm(l.ctx, &permservice.DeletePermReq{
 		Id: req.Id,
 	})
 	if err != nil {

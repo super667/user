@@ -25,7 +25,7 @@ func main() {
 
 	ctx := svc.NewServiceContext(c)
 	handler.RegisterHandlers(server, ctx)
-	server.Use(middleware.TokenBlackList(ctx.TokenModel))
+	server.Use(middleware.TokenBlackList(ctx.AuthRpc))
 
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	server.Start()

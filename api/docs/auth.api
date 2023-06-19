@@ -27,6 +27,14 @@ type (
     }
         // 用户登录
 
+    LogoutReq {
+
+    }
+
+    LogoutResp {
+
+    }
+
         // 用户注册
     RegisterReq {
         UserName     string `json:"userName"`
@@ -56,6 +64,10 @@ type (
 service User {
     @handler Login
     post /login(LoginReq) returns (LoginResp)
+
+
+    @handler Logout
+    post /logout(LogoutReq) returns(LogoutResp)
 
     @handler Register
     post /register(RegisterReq) returns (RegisterResp)

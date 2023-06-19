@@ -65,7 +65,7 @@ func (l *LoginLogic) Login(in *user.LoginReq) (*user.LoginResp, error) {
 		UserId: res.Id,
 		Token:  refreshToken,
 		ExpiredAt: sql.NullTime{
-			Time:  now.Add(time.Duration(FreshTokenExpires)),
+			Time:  now.Add(time.Duration(refreshExpire)),
 			Valid: true,
 		},
 	})

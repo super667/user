@@ -199,3 +199,7 @@ func (m *defaultUserModel) FindOneByName(ctx context.Context, name string) (*Use
 func (m *defaultUserModel) FindOneByAccount(ctx context.Context, account string) (*User, error) {
 	return nil, nil
 }
+
+func (u *User) CreateAt() int64 {
+	return u.CreateTime.Unix()
+}

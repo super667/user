@@ -2,10 +2,9 @@ package strategy
 
 import (
 	"context"
-	"github.com/super667/user/rpc/userclient"
-
 	"github.com/super667/user/api/internal/svc"
 	"github.com/super667/user/api/internal/types"
+	"github.com/super667/user/rpc/client/strategyservice"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -25,7 +24,7 @@ func NewDeleteStrategyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *De
 }
 
 func (l *DeleteStrategyLogic) DeleteStrategy(req *types.DeleteStrategyReq) (resp *types.DeleteStrategyResp, err error) {
-	_, err = l.svcCtx.UserRpc.DeleteStrategy(l.ctx, &userclient.DeleteStrategyReq{
+	_, err = l.svcCtx.StrategyRpc.DeleteStrategy(l.ctx, &strategyservice.DeleteStrategyReq{
 		Id: req.Id,
 	})
 	if err != nil {

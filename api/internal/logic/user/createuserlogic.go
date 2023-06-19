@@ -3,10 +3,9 @@ package user
 import (
 	"context"
 	"github.com/jinzhu/copier"
-	"github.com/super667/user/rpc/userclient"
-
 	"github.com/super667/user/api/internal/svc"
 	"github.com/super667/user/api/internal/types"
+	"github.com/super667/user/rpc/client/userservice"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -26,8 +25,8 @@ func NewCreateUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Create
 }
 
 func (l *CreateUserLogic) CreateUser(req *types.CreateUserReq) (resp *types.CreateUserResp, err error) {
-	var u = &userclient.CreateUserReq{
-		UserInfo: &userclient.UserInfo{},
+	var u = &userservice.CreateUserReq{
+		UserInfo: &userservice.UserInfo{},
 	}
 	copier.Copy(u.UserInfo, req)
 	res, err := l.svcCtx.UserRpc.CreateUser(l.ctx, u)

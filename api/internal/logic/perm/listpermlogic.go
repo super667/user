@@ -3,10 +3,9 @@ package perm
 import (
 	"context"
 	"github.com/jinzhu/copier"
-	"github.com/super667/user/rpc/userclient"
-
 	"github.com/super667/user/api/internal/svc"
 	"github.com/super667/user/api/internal/types"
+	"github.com/super667/user/rpc/client/permservice"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -26,7 +25,7 @@ func NewListPermLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ListPerm
 }
 
 func (l *ListPermLogic) ListPerm(req *types.ListPermReq) (resp *types.ListPermResp, err error) {
-	res, err := l.svcCtx.UserRpc.ListPerm(l.ctx, &userclient.ListPermReq{
+	res, err := l.svcCtx.PermRpc.ListPerm(l.ctx, &permservice.ListPermReq{
 		Page:     req.Page,
 		PageSize: req.PageSize,
 	})

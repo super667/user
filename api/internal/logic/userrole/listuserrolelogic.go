@@ -3,10 +3,9 @@ package userrole
 import (
 	"context"
 	"github.com/jinzhu/copier"
-	"github.com/super667/user/rpc/userclient"
-
 	"github.com/super667/user/api/internal/svc"
 	"github.com/super667/user/api/internal/types"
+	"github.com/super667/user/rpc/client/userroleservice"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -26,7 +25,7 @@ func NewListUserRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *List
 }
 
 func (l *ListUserRoleLogic) ListUserRole(req *types.ListUserRoleReq) (resp *types.ListUserRoleResp, err error) {
-	res, err := l.svcCtx.UserRpc.ListUserRole(l.ctx, &userclient.ListUserRoleReq{
+	res, err := l.svcCtx.UserRoleRpc.ListUserRole(l.ctx, &userroleservice.ListUserRoleReq{
 		Page:     req.Page,
 		PageSize: req.PageSize,
 	})

@@ -15,7 +15,7 @@ type (
 
     UserRoleDetail {
         Id int64 `json:"id"`
-        CreateTime int64 `json:"createTime"`
+        CreateAt int64 `json:"createAt"`
         UserRoleInfo
     }
 

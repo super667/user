@@ -2,10 +2,9 @@ package userrole
 
 import (
 	"context"
-	"github.com/super667/user/rpc/userclient"
-
 	"github.com/super667/user/api/internal/svc"
 	"github.com/super667/user/api/internal/types"
+	"github.com/super667/user/rpc/client/userroleservice"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -25,7 +24,7 @@ func NewDeleteUserRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *De
 }
 
 func (l *DeleteUserRoleLogic) DeleteUserRole(req *types.DeleteUserRoleReq) (resp *types.DeleteUserRoleResp, err error) {
-	_, err = l.svcCtx.UserRpc.DeleteUserRole(l.ctx, &userclient.DeleteUserRoleReq{
+	_, err = l.svcCtx.UserRoleRpc.DeleteUserRole(l.ctx, &userroleservice.DeleteUserRoleReq{
 		Id: req.Id,
 	})
 	if err != nil {

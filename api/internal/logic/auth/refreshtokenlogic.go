@@ -2,10 +2,9 @@ package auth
 
 import (
 	"context"
-	"github.com/super667/user/rpc/userclient"
-
 	"github.com/super667/user/api/internal/svc"
 	"github.com/super667/user/api/internal/types"
+	"github.com/super667/user/rpc/client/authservice"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -26,7 +25,7 @@ func NewRefreshTokenLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Refr
 
 func (l *RefreshTokenLogic) RefreshToken(req *types.RefreshTokenReq) (resp *types.RefreshTokenResp, err error) {
 	resp = &types.RefreshTokenResp{}
-	res, err := l.svcCtx.UserRpc.FreshToken(l.ctx, &userclient.RefreshTokenReq{})
+	res, err := l.svcCtx.AuthRpc.FreshToken(l.ctx, &authservice.RefreshTokenReq{})
 	if err != nil {
 		return
 	}

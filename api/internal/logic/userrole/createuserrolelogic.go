@@ -3,11 +3,9 @@ package userrole
 import (
 	"context"
 	"github.com/jinzhu/copier"
-	"github.com/super667/user/rpc/userclient"
-
 	"github.com/super667/user/api/internal/svc"
 	"github.com/super667/user/api/internal/types"
-
+	"github.com/super667/user/rpc/client/userroleservice"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -26,11 +24,11 @@ func NewCreateUserRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Cr
 }
 
 func (l *CreateUserRoleLogic) CreateUserRole(req *types.CreateUserRoleReq) (resp *types.CreateUserRoleResp, err error) {
-	var u = &userclient.CreateUserRoleReq{
-		UserRoleInfo: &userclient.UserRoleInfo{},
+	var u = &userroleservice.CreateUserRoleReq{
+		UserRoleInfo: &userroleservice.UserRoleInfo{},
 	}
 	copier.Copy(u.UserRoleInfo, req)
-	res, err := l.svcCtx.UserRpc.CreateUserRole(l.ctx, u)
+	res, err := l.svcCtx.UserRoleRpc.CreateUserRole(l.ctx, u)
 	if err != nil {
 		return
 	}

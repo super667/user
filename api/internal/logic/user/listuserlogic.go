@@ -4,10 +4,9 @@ import (
 	"context"
 	"fmt"
 	"github.com/jinzhu/copier"
-	"github.com/super667/user/rpc/userclient"
-
 	"github.com/super667/user/api/internal/svc"
 	"github.com/super667/user/api/internal/types"
+	"github.com/super667/user/rpc/client/userservice"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -34,7 +33,7 @@ func (l *ListUserLogic) ListUser(req *types.ListUserReq) (resp *types.ListUserRe
 			PageSize: req.PageSize,
 		},
 	}
-	res, err := l.svcCtx.UserRpc.ListUser(l.ctx, &userclient.ListUserReq{
+	res, err := l.svcCtx.UserRpc.ListUser(l.ctx, &userservice.ListUserReq{
 		Search:   req.Search,
 		Page:     req.Page,
 		PageSize: req.PageSize,

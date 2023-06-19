@@ -3,10 +3,9 @@ package strategy
 import (
 	"context"
 	"github.com/jinzhu/copier"
-	"github.com/super667/user/rpc/userclient"
-
 	"github.com/super667/user/api/internal/svc"
 	"github.com/super667/user/api/internal/types"
+	"github.com/super667/user/rpc/client/strategyservice"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -26,11 +25,11 @@ func NewCreateStrategyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Cr
 }
 
 func (l *CreateStrategyLogic) CreateStrategy(req *types.CreateStrategyReq) (resp *types.CreateStrategyResp, err error) {
-	var u = &userclient.CreateStrategyReq{
-		StrategyInfo: &userclient.StrategyInfo{},
+	var u = &strategyservice.CreateStrategyReq{
+		StrategyInfo: &strategyservice.StrategyInfo{},
 	}
 	copier.Copy(u.StrategyInfo, req)
-	res, err := l.svcCtx.UserRpc.CreateStrategy(l.ctx, u)
+	res, err := l.svcCtx.StrategyRpc.CreateStrategy(l.ctx, u)
 	if err != nil {
 		return
 	}

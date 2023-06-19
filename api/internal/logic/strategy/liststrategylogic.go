@@ -3,10 +3,9 @@ package strategy
 import (
 	"context"
 	"github.com/jinzhu/copier"
-	"github.com/super667/user/rpc/userclient"
-
 	"github.com/super667/user/api/internal/svc"
 	"github.com/super667/user/api/internal/types"
+	"github.com/super667/user/rpc/client/strategyservice"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -26,7 +25,7 @@ func NewListStrategyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *List
 }
 
 func (l *ListStrategyLogic) ListStrategy(req *types.ListStrategyReq) (resp *types.ListStrategyResp, err error) {
-	res, err := l.svcCtx.UserRpc.ListStrategy(l.ctx, &userclient.ListStrategyReq{
+	res, err := l.svcCtx.StrategyRpc.ListStrategy(l.ctx, &strategyservice.ListStrategyReq{
 		Page:     req.Page,
 		PageSize: req.PageSize,
 	})

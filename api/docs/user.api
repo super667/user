@@ -30,7 +30,7 @@ type (
 
     UserDetail {
         Id int64 `json:"id"`
-        CreateTime int64  `json:"createTime,optional"`
+        CreateAt int64  `json:"createAt,optional"`
         UserBaseInfo
     }
 

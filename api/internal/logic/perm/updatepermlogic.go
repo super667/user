@@ -3,10 +3,9 @@ package perm
 import (
 	"context"
 	"github.com/jinzhu/copier"
-	"github.com/super667/user/rpc/userclient"
-
 	"github.com/super667/user/api/internal/svc"
 	"github.com/super667/user/api/internal/types"
+	"github.com/super667/user/rpc/client/permservice"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -26,9 +25,9 @@ func NewUpdatePermLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Update
 }
 
 func (l *UpdatePermLogic) UpdatePerm(req *types.UpdatePermReq) (resp *types.UpdatePermResp, err error) {
-	var updateInfo = &userclient.PermInfo{}
+	var updateInfo = &permservice.PermInfo{}
 	copier.Copy(updateInfo, req)
-	_, err = l.svcCtx.UserRpc.UpdatePerm(l.ctx, &userclient.UpdatePermReq{
+	_, err = l.svcCtx.PermRpc.UpdatePerm(l.ctx, &permservice.UpdatePermReq{
 		Id:       req.Id,
 		PermInfo: updateInfo,
 	})

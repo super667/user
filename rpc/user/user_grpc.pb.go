@@ -19,9 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	AuthService_Login_FullMethodName      = "/userclient.AuthService/Login"
-	AuthService_Register_FullMethodName   = "/userclient.AuthService/Register"
-	AuthService_FreshToken_FullMethodName = "/userclient.AuthService/FreshToken"
+	AuthService_Login_FullMethodName          = "/userclient.AuthService/Login"
+	AuthService_Logout_FullMethodName         = "/userclient.AuthService/Logout"
+	AuthService_Register_FullMethodName       = "/userclient.AuthService/Register"
+	AuthService_FreshToken_FullMethodName     = "/userclient.AuthService/FreshToken"
+	AuthService_BlackListToken_FullMethodName = "/userclient.AuthService/BlackListToken"
 )
 
 // AuthServiceClient is the client API for AuthService service.
@@ -29,8 +31,10 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AuthServiceClient interface {
 	Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
+	Logout(ctx context.Context, in *LogoutReq, opts ...grpc.CallOption) (*LogoutResp, error)
 	Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error)
 	FreshToken(ctx context.Context, in *RefreshTokenReq, opts ...grpc.CallOption) (*RefreshTokenResp, error)
+	BlackListToken(ctx context.Context, in *BlackListTokenReq, opts ...grpc.CallOption) (*BlackListTokenResp, error)
 }
 
 type authServiceClient struct {
@@ -44,6 +48,15 @@ func NewAuthServiceClient(cc grpc.ClientConnInterface) AuthServiceClient {
 func (c *authServiceClient) Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error) {
 	out := new(LoginResp)
 	err := c.cc.Invoke(ctx, AuthService_Login_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) Logout(ctx context.Context, in *LogoutReq, opts ...grpc.CallOption) (*LogoutResp, error) {
+	out := new(LogoutResp)
+	err := c.cc.Invoke(ctx, AuthService_Logout_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -68,13 +81,24 @@ func (c *authServiceClient) FreshToken(ctx context.Context, in *RefreshTokenReq,
 	return out, nil
 }
 
+func (c *authServiceClient) BlackListToken(ctx context.Context, in *BlackListTokenReq, opts ...grpc.CallOption) (*BlackListTokenResp, error) {
+	out := new(BlackListTokenResp)
+	err := c.cc.Invoke(ctx, AuthService_BlackListToken_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServiceServer is the server API for AuthService service.
 // All implementations must embed UnimplementedAuthServiceServer
 // for forward compatibility
 type AuthServiceServer interface {
 	Login(context.Context, *LoginReq) (*LoginResp, error)
+	Logout(context.Context, *LogoutReq) (*LogoutResp, error)
 	Register(context.Context, *RegisterReq) (*RegisterResp, error)
 	FreshToken(context.Context, *RefreshTokenReq) (*RefreshTokenResp, error)
+	BlackListToken(context.Context, *BlackListTokenReq) (*BlackListTokenResp, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
@@ -85,11 +109,17 @@ type UnimplementedAuthServiceServer struct {
 func (UnimplementedAuthServiceServer) Login(context.Context, *LoginReq) (*LoginResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
+func (UnimplementedAuthServiceServer) Logout(context.Context, *LogoutReq) (*LogoutResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Logout not implemented")
+}
 func (UnimplementedAuthServiceServer) Register(context.Context, *RegisterReq) (*RegisterResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
 }
 func (UnimplementedAuthServiceServer) FreshToken(context.Context, *RefreshTokenReq) (*RefreshTokenResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FreshToken not implemented")
+}
+func (UnimplementedAuthServiceServer) BlackListToken(context.Context, *BlackListTokenReq) (*BlackListTokenResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BlackListToken not implemented")
 }
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 
@@ -118,6 +148,24 @@ func _AuthService_Login_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AuthServiceServer).Login(ctx, req.(*LoginReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_Logout_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LogoutReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).Logout(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_Logout_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).Logout(ctx, req.(*LogoutReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -158,6 +206,24 @@ func _AuthService_FreshToken_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthService_BlackListToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BlackListTokenReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).BlackListToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_BlackListToken_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).BlackListToken(ctx, req.(*BlackListTokenReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -170,12 +236,20 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AuthService_Login_Handler,
 		},
 		{
+			MethodName: "Logout",
+			Handler:    _AuthService_Logout_Handler,
+		},
+		{
 			MethodName: "Register",
 			Handler:    _AuthService_Register_Handler,
 		},
 		{
 			MethodName: "FreshToken",
 			Handler:    _AuthService_FreshToken_Handler,
+		},
+		{
+			MethodName: "BlackListToken",
+			Handler:    _AuthService_BlackListToken_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

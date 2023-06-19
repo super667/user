@@ -22,8 +22,8 @@ type UserBaseInfo struct {
 }
 
 type UserDetail struct {
-	Id         int64 `json:"id"`
-	CreateTime int64 `json:"createTime,optional"`
+	Id       int64 `json:"id"`
+	CreateAt int64 `json:"createAt,optional"`
 	UserBaseInfo
 }
 
@@ -96,8 +96,8 @@ type RoleInfo struct {
 }
 
 type RoleDetail struct {
-	Id         int64 `json:"id"`
-	CreateTime int64 `json:"createTime"`
+	Id       int64 `json:"id"`
+	CreateAt int64 `json:"createAt"`
 	RoleInfo
 }
 
@@ -159,8 +159,8 @@ type PermInfo struct {
 }
 
 type PermDetail struct {
-	Id         int64 `json:"id"`
-	CreateTime int64 `json:"createTime"`
+	Id       int64 `json:"id"`
+	CreateAt int64 `json:"createAt"`
 	PermInfo
 }
 
@@ -229,7 +229,7 @@ type StrategyDetail struct {
 	SubjectTypeName string `json:"subjectTypeName"`
 	ResourceName    string `json:"resourceName"`
 	PermName        string `json:"permName"`
-	CreateTime      int64  `json:"createTime"`
+	CreateAt        int64  `json:"createAt"`
 }
 
 type CreateStrategyReq struct {
@@ -289,8 +289,8 @@ type UserRoleInfo struct {
 }
 
 type UserRoleDetail struct {
-	Id         int64 `json:"id"`
-	CreateTime int64 `json:"createTime"`
+	Id       int64 `json:"id"`
+	CreateAt int64 `json:"createAt"`
 	UserRoleInfo
 }
 
@@ -365,6 +365,12 @@ type LoginResp struct {
 	RefreshToken string `json:"refreshToken"`
 }
 
+type LogoutReq struct {
+}
+
+type LogoutResp struct {
+}
+
 type RegisterReq struct {
 	UserName string `json:"userName"`
 	Phone    string `json:"phone"`
@@ -396,8 +402,8 @@ type MenuInfo struct {
 type MenuDetail struct {
 	Id int64 `json:"id"`
 	MenuInfo
-	Children   []MenuDetail `json:"children"`
-	CreateTime int64        `json:"createTime"`
+	Children []MenuDetail `json:"children"`
+	CreateAt int64        `json:"createAt"`
 }
 
 type ListMenuReq struct {

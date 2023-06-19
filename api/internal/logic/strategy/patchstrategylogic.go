@@ -3,10 +3,9 @@ package strategy
 import (
 	"context"
 	"github.com/jinzhu/copier"
-	"github.com/super667/user/rpc/userclient"
-
 	"github.com/super667/user/api/internal/svc"
 	"github.com/super667/user/api/internal/types"
+	"github.com/super667/user/rpc/client/strategyservice"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -26,9 +25,9 @@ func NewPatchStrategyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Pat
 }
 
 func (l *PatchStrategyLogic) PatchStrategy(req *types.PatchStrategyReq) (resp *types.PatchStrategyResp, err error) {
-	var updateInfo = &userclient.StrategyInfo{}
+	var updateInfo = &strategyservice.StrategyInfo{}
 	copier.Copy(updateInfo, req)
-	_, err = l.svcCtx.UserRpc.PatchStrategy(l.ctx, &userclient.PatchStrategyReq{
+	_, err = l.svcCtx.StrategyRpc.PatchStrategy(l.ctx, &strategyservice.PatchStrategyReq{
 		Id:           req.Id,
 		StrategyInfo: updateInfo,
 	})

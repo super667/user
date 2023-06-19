@@ -3,10 +3,9 @@ package role
 import (
 	"context"
 	"github.com/jinzhu/copier"
-	"github.com/super667/user/rpc/userclient"
-
 	"github.com/super667/user/api/internal/svc"
 	"github.com/super667/user/api/internal/types"
+	"github.com/super667/user/rpc/client/roleservice"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -26,9 +25,9 @@ func NewPatchRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *PatchRo
 }
 
 func (l *PatchRoleLogic) PatchRole(req *types.PatchRoleReq) (resp *types.PatchRoleResp, err error) {
-	var updateInfo = &userclient.RoleInfo{}
+	var updateInfo = &roleservice.RoleInfo{}
 	copier.Copy(updateInfo, req)
-	_, err = l.svcCtx.UserRpc.PatchRole(l.ctx, &userclient.PatchRoleReq{
+	_, err = l.svcCtx.RoleRpc.PatchRole(l.ctx, &roleservice.PatchRoleReq{
 		Id:       req.Id,
 		RoleInfo: updateInfo,
 	})

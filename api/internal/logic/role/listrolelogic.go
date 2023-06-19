@@ -3,10 +3,9 @@ package role
 import (
 	"context"
 	"github.com/jinzhu/copier"
-	"github.com/super667/user/rpc/userclient"
-
 	"github.com/super667/user/api/internal/svc"
 	"github.com/super667/user/api/internal/types"
+	"github.com/super667/user/rpc/client/roleservice"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -26,7 +25,7 @@ func NewListRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ListRole
 }
 
 func (l *ListRoleLogic) ListRole(req *types.ListRoleReq) (resp *types.ListRoleResp, err error) {
-	res, err := l.svcCtx.UserRpc.ListRole(l.ctx, &userclient.ListRoleReq{
+	res, err := l.svcCtx.RoleRpc.ListRole(l.ctx, &roleservice.ListRoleReq{
 		Page:     req.Page,
 		PageSize: req.PageSize,
 	})

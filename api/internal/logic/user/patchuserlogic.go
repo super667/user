@@ -3,10 +3,9 @@ package user
 import (
 	"context"
 	"github.com/jinzhu/copier"
-	"github.com/super667/user/rpc/userclient"
-
 	"github.com/super667/user/api/internal/svc"
 	"github.com/super667/user/api/internal/types"
+	"github.com/super667/user/rpc/client/userservice"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -26,9 +25,9 @@ func NewPatchUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *PatchUs
 }
 
 func (l *PatchUserLogic) PatchUser(req *types.PatchUserReq) (resp *types.PatchUserResp, err error) {
-	var updateInfo = &userclient.UserInfo{}
+	var updateInfo = &userservice.UserInfo{}
 	copier.Copy(updateInfo, req)
-	_, err = l.svcCtx.UserRpc.PatchUser(l.ctx, &userclient.PatchUserReq{
+	_, err = l.svcCtx.UserRpc.PatchUser(l.ctx, &userservice.PatchUserReq{
 		Id:       req.Id,
 		UserInfo: updateInfo,
 	})

@@ -27,6 +27,11 @@ func (s *AuthServiceServer) Login(ctx context.Context, in *user.LoginReq) (*user
 	return l.Login(in)
 }
 
+func (s *AuthServiceServer) Logout(ctx context.Context, in *user.LogoutReq) (*user.LogoutResp, error) {
+	l := authservicelogic.NewLogoutLogic(ctx, s.svcCtx)
+	return l.Logout(in)
+}
+
 func (s *AuthServiceServer) Register(ctx context.Context, in *user.RegisterReq) (*user.RegisterResp, error) {
 	l := authservicelogic.NewRegisterLogic(ctx, s.svcCtx)
 	return l.Register(in)
@@ -35,4 +40,9 @@ func (s *AuthServiceServer) Register(ctx context.Context, in *user.RegisterReq) 
 func (s *AuthServiceServer) FreshToken(ctx context.Context, in *user.RefreshTokenReq) (*user.RefreshTokenResp, error) {
 	l := authservicelogic.NewFreshTokenLogic(ctx, s.svcCtx)
 	return l.FreshToken(in)
+}
+
+func (s *AuthServiceServer) BlackListToken(ctx context.Context, in *user.BlackListTokenReq) (*user.BlackListTokenResp, error) {
+	l := authservicelogic.NewBlackListTokenLogic(ctx, s.svcCtx)
+	return l.BlackListToken(in)
 }

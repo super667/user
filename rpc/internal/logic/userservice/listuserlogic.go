@@ -30,7 +30,7 @@ func (l *ListUserLogic) ListUser(in *user.ListUserReq) (*user.ListUserResp, erro
 		return resp, err
 	}
 	userDetails := make([]*user.UserDetail, 0)
-	err = copier.Copy(&userDetails, res)
+	err = copier.CopyWithOption(&userDetails, res, copier.Option{DeepCopy: true})
 	if err != nil {
 		return resp, err
 	}

@@ -4,10 +4,9 @@ import (
 	"context"
 	"fmt"
 	"github.com/jinzhu/copier"
-	"github.com/super667/user/rpc/userclient"
-
 	"github.com/super667/user/api/internal/svc"
 	"github.com/super667/user/api/internal/types"
+	"github.com/super667/user/rpc/client/userservice"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -27,7 +26,7 @@ func NewGetUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUserLo
 }
 
 func (l *GetUserLogic) GetUser(req *types.GetUserReq) (resp *types.GetUserResp, err error) {
-	res, err := l.svcCtx.UserRpc.GetUserById(l.ctx, &userclient.GetUserByIdReq{
+	res, err := l.svcCtx.UserRpc.GetUserById(l.ctx, &userservice.GetUserByIdReq{
 		Id: req.Id,
 	})
 	if err != nil {

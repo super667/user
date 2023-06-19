@@ -3,10 +3,9 @@ package perm
 import (
 	"context"
 	"github.com/jinzhu/copier"
-	"github.com/super667/user/rpc/userclient"
-
 	"github.com/super667/user/api/internal/svc"
 	"github.com/super667/user/api/internal/types"
+	"github.com/super667/user/rpc/client/permservice"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -26,7 +25,7 @@ func NewGetPermLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetPermLo
 }
 
 func (l *GetPermLogic) GetPerm(req *types.GetPermReq) (resp *types.GetPermResp, err error) {
-	res, err := l.svcCtx.UserRpc.GetPermById(l.ctx, &userclient.GetPermByIdReq{
+	res, err := l.svcCtx.PermRpc.GetPermById(l.ctx, &permservice.GetPermByIdReq{
 		Id: req.Id,
 	})
 	if err != nil {

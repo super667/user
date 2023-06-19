@@ -13,6 +13,8 @@ import (
 )
 
 type (
+	BlackListTokenReq     = user.BlackListTokenReq
+	BlackListTokenResp    = user.BlackListTokenResp
 	CreatePermReq         = user.CreatePermReq
 	CreatePermResp        = user.CreatePermResp
 	CreateRoleReq         = user.CreateRoleReq
@@ -59,6 +61,8 @@ type (
 	ListUserRoleResp      = user.ListUserRoleResp
 	LoginReq              = user.LoginReq
 	LoginResp             = user.LoginResp
+	LogoutReq             = user.LogoutReq
+	LogoutResp            = user.LogoutResp
 	PatchPermReq          = user.PatchPermReq
 	PatchPermResp         = user.PatchPermResp
 	PatchRoleReq          = user.PatchRoleReq

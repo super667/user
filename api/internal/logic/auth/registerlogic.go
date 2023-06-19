@@ -2,10 +2,9 @@ package auth
 
 import (
 	"context"
-	"github.com/super667/user/rpc/userclient"
-
 	"github.com/super667/user/api/internal/svc"
 	"github.com/super667/user/api/internal/types"
+	"github.com/super667/user/rpc/client/authservice"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -25,7 +24,7 @@ func NewRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Register
 }
 
 func (l *RegisterLogic) Register(req *types.RegisterReq) (resp *types.RegisterResp, err error) {
-	res, err := l.svcCtx.UserRpc.Register(l.ctx, &userclient.RegisterReq{
+	res, err := l.svcCtx.AuthRpc.Register(l.ctx, &authservice.RegisterReq{
 		UserName: req.UserName,
 		Phone:    req.Phone,
 		Password: req.Password,

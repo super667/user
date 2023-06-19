@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/super667/user/api/internal/svc"
 	"github.com/super667/user/api/internal/types"
-	"github.com/super667/user/rpc/userclient"
+	"github.com/super667/user/rpc/client/userservice"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -24,7 +24,7 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 }
 
 func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err error) {
-	res, err := l.svcCtx.UserRpc.Login(l.ctx, &userclient.LoginReq{
+	res, err := l.svcCtx.AuthRpc.Login(l.ctx, &userservice.LoginReq{
 		Account:  req.UserName,
 		Password: req.Password,
 	})

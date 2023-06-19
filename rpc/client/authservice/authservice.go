@@ -13,6 +13,8 @@ import (
 )
 
 type (
+	BlackListTokenReq     = user.BlackListTokenReq
+	BlackListTokenResp    = user.BlackListTokenResp
 	CreatePermReq         = user.CreatePermReq
 	CreatePermResp        = user.CreatePermResp
 	CreateRoleReq         = user.CreateRoleReq
@@ -59,6 +61,8 @@ type (
 	ListUserRoleResp      = user.ListUserRoleResp
 	LoginReq              = user.LoginReq
 	LoginResp             = user.LoginResp
+	LogoutReq             = user.LogoutReq
+	LogoutResp            = user.LogoutResp
 	PatchPermReq          = user.PatchPermReq
 	PatchPermResp         = user.PatchPermResp
 	PatchRoleReq          = user.PatchRoleReq
@@ -98,8 +102,10 @@ type (
 
 	AuthService interface {
 		Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
+		Logout(ctx context.Context, in *LogoutReq, opts ...grpc.CallOption) (*LogoutResp, error)
 		Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error)
 		FreshToken(ctx context.Context, in *RefreshTokenReq, opts ...grpc.CallOption) (*RefreshTokenResp, error)
+		BlackListToken(ctx context.Context, in *BlackListTokenReq, opts ...grpc.CallOption) (*BlackListTokenResp, error)
 	}
 
 	defaultAuthService struct {
@@ -118,6 +124,11 @@ func (m *defaultAuthService) Login(ctx context.Context, in *LoginReq, opts ...gr
 	return client.Login(ctx, in, opts...)
 }
 
+func (m *defaultAuthService) Logout(ctx context.Context, in *LogoutReq, opts ...grpc.CallOption) (*LogoutResp, error) {
+	client := user.NewAuthServiceClient(m.cli.Conn())
+	return client.Logout(ctx, in, opts...)
+}
+
 func (m *defaultAuthService) Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error) {
 	client := user.NewAuthServiceClient(m.cli.Conn())
 	return client.Register(ctx, in, opts...)
@@ -126,4 +137,9 @@ func (m *defaultAuthService) Register(ctx context.Context, in *RegisterReq, opts
 func (m *defaultAuthService) FreshToken(ctx context.Context, in *RefreshTokenReq, opts ...grpc.CallOption) (*RefreshTokenResp, error) {
 	client := user.NewAuthServiceClient(m.cli.Conn())
 	return client.FreshToken(ctx, in, opts...)
+}
+
+func (m *defaultAuthService) BlackListToken(ctx context.Context, in *BlackListTokenReq, opts ...grpc.CallOption) (*BlackListTokenResp, error) {
+	client := user.NewAuthServiceClient(m.cli.Conn())
+	return client.BlackListToken(ctx, in, opts...)
 }

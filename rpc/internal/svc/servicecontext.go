@@ -4,8 +4,10 @@ import (
 	"github.com/super667/user/common/ldap"
 	"github.com/super667/user/model"
 	"github.com/super667/user/rpc/internal/config"
+	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/redis"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
+	"time"
 )
 
 type ServiceContext struct {
@@ -29,7 +31,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		PermModel:     model.NewPermissionModel(conn),
 		StrategyModel: model.NewStrategyModel(conn),
 		UserRoleModel: model.NewUserRoleModel(conn),
-		TokenModel:    model.NewTokenModel(conn, c.CacheRedis),
+		TokenModel:    model.NewTokenModel(conn, c.CacheRedis, cache.WithExpiry(time.Duration(5))),
 		LdapPool:      ldap.NewLdapPool(c.Ldap),
 		Rds:           redis.MustNewRedis(c.CacheRedis[0].RedisConf),
 	}

@@ -48,9 +48,8 @@ message UserDetail {
   string DeptName = 15;
   string ManagerCode = 16;
   string ManagerName = 17;
-  string Password = 18;
-  string UserDn = 19;
-  int64 CreateTime = 20;
+  string UserDn = 18;
+  int64 CreateAt = 19;
 }
 
 
@@ -139,7 +138,7 @@ message RoleDetail {
   int64 Id = 1;
   string Name = 2;
   string Desc = 3;
-  int64 CreateTime  = 4;
+  int64 CreateAt  = 4;
 }
 
 message CreateRoleReq {
@@ -209,7 +208,7 @@ message PermDetail {
   string Resource = 2;
   string Perm = 3;
   string Desc = 4;
-  int64 CreateTime  = 5;
+  int64 CreateAt  = 5;
 }
 
 message CreatePermReq {
@@ -285,7 +284,7 @@ message StrategyDetail {
   string resourceName = 7;
   string Perm = 8;
   string PermName = 9;
-  int64 CreateTime  = 10;
+  int64 CreateAt  = 10;
 }
 
 message CreateStrategyReq {
@@ -424,6 +423,15 @@ message LoginResp {
 }
 // 用户登录
 
+// 用户退出
+message LogoutReq {
+  string Token = 1;
+}
+
+message LogoutResp {
+}
+// 用户退出
+
 // 用户注册
 message RegisterReq {
   string UserName = 1;
@@ -447,6 +455,7 @@ message SyncOpenLdapUsersResp {
   string Res = 1;
 }
 
+// 鉴权相关
 message RefreshTokenReq {
 
 }
@@ -456,13 +465,27 @@ message RefreshTokenResp {
   int64 AccessExpire = 2;
 }
 
+message BlackListTokenReq {
+  string Token = 1;
+}
+
+message BlackListTokenResp {
+  bool Invalid = 1;
+}
+
+// 鉴权相关
+
+
+
 service AuthService {
 
   // 用户认证相关
 
   rpc Login(LoginReq) returns(LoginResp);
+  rpc Logout(LogoutReq) returns(LogoutResp);
   rpc Register(RegisterReq) returns(RegisterResp);
   rpc FreshToken(RefreshTokenReq) returns(RefreshTokenResp);
+  rpc BlackListToken(BlackListTokenReq) returns(BlackListTokenResp);
 }
 
   // 用户相关接口

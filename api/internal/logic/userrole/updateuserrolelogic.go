@@ -3,10 +3,9 @@ package userrole
 import (
 	"context"
 	"github.com/jinzhu/copier"
-	"github.com/super667/user/rpc/userclient"
-
 	"github.com/super667/user/api/internal/svc"
 	"github.com/super667/user/api/internal/types"
+	"github.com/super667/user/rpc/client/userroleservice"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -26,9 +25,9 @@ func NewUpdateUserRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Up
 }
 
 func (l *UpdateUserRoleLogic) UpdateUserRole(req *types.UpdateUserRoleReq) (resp *types.UpdateUserRoleResp, err error) {
-	var updateInfo = &userclient.UserRoleInfo{}
+	var updateInfo = &userroleservice.UserRoleInfo{}
 	copier.Copy(updateInfo, req)
-	_, err = l.svcCtx.UserRpc.UpdateUserRole(l.ctx, &userclient.UpdateUserRoleReq{
+	_, err = l.svcCtx.UserRoleRpc.UpdateUserRole(l.ctx, &userroleservice.UpdateUserRoleReq{
 		Id:           req.Id,
 		UserRoleInfo: updateInfo,
 	})

@@ -1,18 +1,20 @@
 package middleware
 
 import (
-	"github.com/super667/user/model"
+	"context"
+	"github.com/super667/user/rpc/client/authservice"
 	"github.com/zeromicro/go-zero/rest"
 	"net/http"
+	"strings"
 )
 
 type TokenBlackListMiddleware struct {
-	tokenModel model.TokenModel
+	AuthRpc authservice.AuthService
 }
 
-func NewTokenBlackListMiddleware(t model.TokenModel) *TokenBlackListMiddleware {
+func NewTokenBlackListMiddleware(t authservice.AuthService) *TokenBlackListMiddleware {
 	return &TokenBlackListMiddleware{
-		tokenModel: t,
+		AuthRpc: t,
 	}
 }
 
@@ -25,12 +27,25 @@ func (m *TokenBlackListMiddleware) Handle(next http.HandlerFunc) http.HandlerFun
 	}
 }
 
-func TokenBlackList(s model.TokenModel) rest.Middleware {
+func TokenBlackList(s authservice.AuthService) rest.Middleware {
 	return func(next http.HandlerFunc) http.HandlerFunc {
 		return func(w http.ResponseWriter, r *http.Request) {
-			_, _ = s.FindOne(r.Context(), 0)
 			w.Header().Add("X-Middleware", "TokenBlackList")
-			next(w, r)
+			author := r.Header.Get("Authorization")
+			token := strings.TrimPrefix(author, "Bearer ")
+			resp, err := s.BlackListToken(r.Context(), &authservice.BlackListTokenReq{
+				Token: token,
+			})
+
+			if err != nil {
+				return
+			}
+			if resp.Invalid {
+				return
+			}
+
+			ctx := context.WithValue(r.Context(), "token", token)
+			next(w, r.WithContext(ctx))
 		}
 	}
 }

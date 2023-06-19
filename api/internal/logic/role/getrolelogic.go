@@ -3,10 +3,9 @@ package role
 import (
 	"context"
 	"github.com/jinzhu/copier"
-	"github.com/super667/user/rpc/userclient"
-
 	"github.com/super667/user/api/internal/svc"
 	"github.com/super667/user/api/internal/types"
+	"github.com/super667/user/rpc/client/roleservice"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -26,7 +25,7 @@ func NewGetRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetRoleLo
 }
 
 func (l *GetRoleLogic) GetRole(req *types.GetRoleReq) (resp *types.GetRoleResp, err error) {
-	res, err := l.svcCtx.UserRpc.GetRoleById(l.ctx, &userclient.GetRoleByIdReq{
+	res, err := l.svcCtx.RoleRpc.GetRoleById(l.ctx, &roleservice.GetRoleByIdReq{
 		Id: req.Id,
 	})
 	if err != nil {
