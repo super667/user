@@ -337,9 +337,9 @@ message PatchPermResp {
 // =============权限策略相关==================
 
 message StrategyInfo {
-  string Subject = 1;
+  repeated string Subject = 1;
   string SubjectType = 2;
-  string resource = 3;
+  repeated string resource = 3;
   string Perm = 4;
 }
 

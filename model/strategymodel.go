@@ -16,6 +16,7 @@ type (
 		FindManyByPage(ctx context.Context, page, pageSize int64) ([]*Strategy, error)
 		Count(ctx context.Context) (int64, error)
 		PartialUpdate(ctx context.Context, newData *Strategy) error
+		TranBatchInsert(ctx context.Context, Strategies []*Strategy) (err error)
 	}
 
 	customStrategyModel struct {
@@ -105,10 +106,10 @@ func (m *defaultStrategyModel) PartialUpdate(ctx context.Context, newData *Strat
 	return err
 }
 
-func (m *defaultStrategyModel) TranBatchAddStrategy(ctx context.Context, Strategys []*Strategy) (err error) {
+func (m *defaultStrategyModel) TranBatchInsert(ctx context.Context, Strategies []*Strategy) (err error) {
 	fn := func(ctx context.Context, session sqlx.Session) error {
-		rowBuilder := squirrel.Insert(m.tableName())
-		for _, s := range Strategys {
+		for _, s := range Strategies {
+			rowBuilder := squirrel.Insert(m.tableName())
 			rowBuilder = rowBuilder.SetMap(
 				squirrel.Eq{
 					"subject":           s.Subject,

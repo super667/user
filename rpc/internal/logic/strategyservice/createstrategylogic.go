@@ -33,15 +33,24 @@ func (l *CreateStrategyLogic) CreateStrategy(in *user.CreateStrategyReq) (*user.
 		l.Logger.Error(err)
 		return resp, err
 	}
-	insertRes, err := l.svcCtx.StrategyModel.Insert(l.ctx, strategyInfo)
+	subjectType := in.StrategyInfo.SubjectType
+	perm := in.StrategyInfo.Perm
+	var strategyInfos = make([]*model.Strategy, 0, len(in.StrategyInfo.Subject)*len(in.StrategyInfo.Resource))
+	for _, s := range in.StrategyInfo.Subject {
+		for _, r := range in.StrategyInfo.Resource {
+			strategyInfos = append(strategyInfos, &model.Strategy{
+				Subject:     s,
+				SubjectType: subjectType,
+				Resource:    r,
+				Perm:        perm,
+			})
+		}
+	}
+
+	err = l.svcCtx.StrategyModel.TranBatchInsert(l.ctx, strategyInfos)
 	if err != nil {
 		return resp, err
 	}
-	lastId, err := insertRes.LastInsertId()
-	if err != nil {
-		return resp, err
-	}
-	resp.Id = lastId
 
 	return resp, nil
 }

@@ -1,6 +1,8 @@
 package svc
 
 import (
+	casbinsqlx "github.com/jmoiron/sqlx"
+	"github.com/super667/user/common/casbinx"
 	"github.com/super667/user/common/ldap"
 	"github.com/super667/user/model"
 	"github.com/super667/user/rpc/internal/config"
@@ -20,10 +22,18 @@ type ServiceContext struct {
 	TokenModel    model.TokenModel
 	LdapPool      *ldap.Pool
 	Rds           *redis.Redis
+	Casbin        *casbinx.Casbin
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
 	conn := sqlx.NewMysql(c.MySql.DataSource)
+	// connect to the database first.
+	db, err := casbinsqlx.Connect("mysql", c.MySql.DataSource)
+	if err != nil {
+		panic(err)
+	}
+
+	casbin := casbinx.New(db)
 	return &ServiceContext{
 		Config:        c,
 		UserModel:     model.NewUserModel(conn),
@@ -34,5 +44,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		TokenModel:    model.NewTokenModel(conn, c.CacheRedis, cache.WithExpiry(time.Duration(5))),
 		LdapPool:      ldap.NewLdapPool(c.Ldap),
 		Rds:           redis.MustNewRedis(c.CacheRedis[0].RedisConf),
+		Casbin:        casbin,
 	}
 }

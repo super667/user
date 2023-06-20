@@ -9,9 +9,9 @@ info(
 
 type (
     StrategyInfo {
-        Subject string `json:"subject"`
+        Subject []string `json:"subject"`
         SubjectType string `json:"subjectType"`
-        Resource string `json:"resource"`
+        Resource []string `json:"resource"`
         Perm string `json:"perm"`
     }
 
