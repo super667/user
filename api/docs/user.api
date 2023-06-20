@@ -8,7 +8,7 @@ info(
 )
 
 type (
-    UserBaseInfo {
+    UserInfo {
         UserName string `json:"userName"`
         NickName string `json:"nickName"`
         Number     string `json:"number"`
@@ -31,7 +31,7 @@ type (
     UserDetail {
         Id int64 `json:"id"`
         CreateAt int64  `json:"createAt,optional"`
-        UserBaseInfo
+        UserInfo
     }
 
     GetUserReq {
@@ -43,7 +43,7 @@ type (
     }
 
     CreateUserReq {
-        UserBaseInfo
+        UserInfo
     }
 
     CreateUserResp {
@@ -69,7 +69,7 @@ type (
 
     UpdateUserReq {
         Id int64 `path:"id"`
-        UserBaseInfo
+        UserInfo
     }
 
     UpdateUserResp {
@@ -78,7 +78,7 @@ type (
 
     PatchUserReq {
         Id int64 `path:"id"`
-        UserBaseInfo
+        UserInfo
     }
 
     PatchUserResp {
