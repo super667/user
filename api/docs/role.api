@@ -61,14 +61,76 @@ type (
         RoleDetail
     }
 
+    QueryRoleParam {
+        UserName string `path:"userName,optional"`
+        RoleName string `path:"roleName,optioanl"`
+    }
     ListRoleReq {
         ListReq
+        QueryRoleParam
     }
 
     ListRoleResp {
         ListResp
         Roles []RoleDetail `json:"list"`
     }
+
+    ListUserRolesReq {
+        ListReq
+    }
+
+    RoleUserInfo {
+        UserId int64 `json:"userId"`
+        RoleId int64 `json:"roleId"`
+    }
+
+    RoleUserDetail {
+        Id int64 `json:"id"`
+        UserName string `json:"userName"`
+        RoleName string `json:"roleName"`
+        CreateAt int64 `json:"createAt"`
+        RoleUserInfo
+    }
+
+    ListUserRolesResp {
+        ListResp
+        RoleUsers []RoleUserDetail `json:"list"`
+    }
+
+    AddRoleForUserReq {
+        UserId []int64 `json:"userId"`
+        RoleId int64 `path:"roleId"`
+    }
+
+    AddRoleForUserResp {
+        Id int64 `json:"id"`
+    }
+
+    RemoveRoleForUserReq {
+        UserId []int64 `json:"user_id"`
+        RoleId int64 `path:"role_id"`
+    }
+
+    RemoveRoleForUserResp {
+    }
+
+    UpdateRoleForUserReq {
+        UserId []int64 `json:"user_id"`
+        RoleId int64 `path:"role_id"`
+    }
+
+    UpdateRoleForUserResp {
+    }
+
+    ListAllUserRolesReq {
+        ListReq
+    }
+
+    ListAllUserRolesResp {
+        ListResp
+        RoleUsers []RoleUserDetail `json:"list"`
+    }
+
 )
 
 
@@ -100,4 +162,24 @@ service User {
     @doc "更新角色部分信息"
     @handler PatchRole
     patch /role/:id (PatchRoleReq) returns (PatchRoleResp)
+
+    @doc "所属角色的用户"
+    @handler ListUserRoles
+    get /role/:role_id/user(ListUserRolesReq) returns(ListUserRolesResp)
+
+    @doc "为用户添加角色"
+    @handler AddRoleForUser
+    post /role/:role_id/user(AddRoleForUserReq) returns(AddRoleForUserResp)
+
+    @doc "为用户删除角色"
+    @handler RemoveRoleForUser
+    delete /role/:role_id/user/:user_id(RemoveRoleForUserReq) returns(RemoveRoleForUserResp)
+
+    @doc "更新用户的角色相关信息"
+    @handler UpdateRoleForUser
+    patch /role/:role_id/user/:user_id(UpdateRoleForUserReq) returns(RemoveRoleForUserResp)
+
+    @doc "列出所有用户角色列表"
+    @handler ListAllUserRolesReq
+    get /role/user (ListAllUserRolesReq) returns(ListAllUserRolesResp);
 }

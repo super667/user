@@ -152,6 +152,45 @@ type ListRoleResp struct {
 	Roles []RoleDetail `json:"list"`
 }
 
+type ListUserRolesReq struct {
+	ListReq
+}
+
+type RoleUserBase struct {
+	UserId int64 `json:"userId"`
+	RoleId int64 `json:"roleId"`
+}
+
+type RoleUserDetail struct {
+	Id       int64  `json:"id"`
+	UserName string `json:"userName"`
+	RoleName string `json:"roleName"`
+	CreateAt int64  `json:"createAt"`
+	RoleUserBase
+}
+
+type ListUserRolesResp struct {
+	ListResp
+	RoleUsers []RoleUserDetail `json:"list"`
+}
+
+type AddRoleForUserReq struct {
+	UserId []int64 `json:"userId"`
+	RoleId int64   `path:"roleId"`
+}
+
+type AddRoleForUserResp struct {
+	Id int64 `json:"id"`
+}
+
+type RemoveRoleForUserReq struct {
+	UserId []int64 `json:"userId"`
+	RoleId int64   `path:"roleId"`
+}
+
+type RemoveRoleForUserResp struct {
+}
+
 type PermInfo struct {
 	Resource string `json:"resource"`
 	Perm     string `json:"perm"`

@@ -88,6 +88,26 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/role/:id",
 				Handler: role.PatchRoleHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/role/:role_id/user",
+				Handler: role.ListUserRolesHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/role/:role_id/user",
+				Handler: role.AddRoleForUserHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodDelete,
+				Path:    "/role/:role_id/user",
+				Handler: role.RemoveRoleForUserHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPatch,
+				Path:    "/role/:role_id/user",
+				Handler: role.UpdateRoleForUserHandler(serverCtx),
+			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 	)

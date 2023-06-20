@@ -195,6 +195,72 @@ message PatchRoleResp {
   int64 Id = 1;
 }
 
+message RoleUserInfo {
+  int64 UserId = 1;
+  int64 RoleId = 2;
+}
+
+message RoleUserDetail {
+  int64 Id = 1;
+  int64 UserId = 2;
+  string UserName = 3;
+  int64 RoleId = 4;
+  int64 RoleName = 5;
+  string Desc = 6;
+  int64 CreateAt = 7;
+}
+
+message ListAllRoleUsersReq {
+  int64 Page = 1;
+  int64 PageSize = 2;
+}
+
+message ListAllRoleUsersResp {
+  int64 Page = 1;
+  int64 PageSize = 2;
+  int64 Total = 3;
+  repeated RoleUserDetail RoleUserDetail = 4;
+}
+
+message ListRoleForUserReq {
+  int64 Page = 1;
+  int64 PageSize = 2;
+  int64 RoleId = 3;
+  int64 UserId = 4;
+}
+
+message ListRoleForUserResp {
+  int64 Page = 1;
+  int64 PageSize = 2;
+  int64 Total = 3;
+  repeated RoleUserDetail RoleUserDetail = 4;
+}
+
+message AddRoleForUserReq {
+
+}
+
+message AddRoleForUserResp {
+
+}
+
+message RemoveRoleForUserReq {
+
+}
+
+message RemoveRoleForUserResp {
+
+}
+
+message UpdateRoleForUserReq {
+
+}
+
+message UpdateRoleForUserResp {
+
+}
+
+
 // =============权限相关==================
 
 message PermInfo {
@@ -475,8 +541,6 @@ message BlackListTokenResp {
 
 // 鉴权相关
 
-
-
 service AuthService {
 
   // 用户认证相关
@@ -509,7 +573,13 @@ service RoleService {
   rpc UpdateRole(UpdateRoleReq) returns(UpdateRoleResp);
   rpc PatchRole(PatchRoleReq) returns(PatchRoleResp);
   rpc ListRole(ListRoleReq) returns(ListRoleResp);
+  rpc ListAllRoleUsers(ListAllRoleUsersReq) returns(ListAllRoleUsersResp);
+  rpc ListRoleUser(ListRoleForUserReq) returns(ListRoleForUserResp);
+  rpc AddRoleForUser(AddRoleForUserReq) returns(AddRoleForUserResp);
+  rpc RemoveRoleForUser(RemoveRoleForUserReq) returns(RemoveRoleForUserResp);
+  rpc UpdateRoleForUser(UpdateRoleForUserReq) returns(UpdateRoleForUserResp);
 }
+
   // 权限相关接口
 service PermService {
   rpc GetPermById(GetPermByIdReq) returns(GetPermByIdResp);
