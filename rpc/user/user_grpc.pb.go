@@ -643,12 +643,17 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	RoleService_GetRoleById_FullMethodName = "/userclient.RoleService/GetRoleById"
-	RoleService_CreateRole_FullMethodName  = "/userclient.RoleService/CreateRole"
-	RoleService_DeleteRole_FullMethodName  = "/userclient.RoleService/DeleteRole"
-	RoleService_UpdateRole_FullMethodName  = "/userclient.RoleService/UpdateRole"
-	RoleService_PatchRole_FullMethodName   = "/userclient.RoleService/PatchRole"
-	RoleService_ListRole_FullMethodName    = "/userclient.RoleService/ListRole"
+	RoleService_GetRoleById_FullMethodName       = "/userclient.RoleService/GetRoleById"
+	RoleService_CreateRole_FullMethodName        = "/userclient.RoleService/CreateRole"
+	RoleService_DeleteRole_FullMethodName        = "/userclient.RoleService/DeleteRole"
+	RoleService_UpdateRole_FullMethodName        = "/userclient.RoleService/UpdateRole"
+	RoleService_PatchRole_FullMethodName         = "/userclient.RoleService/PatchRole"
+	RoleService_ListRole_FullMethodName          = "/userclient.RoleService/ListRole"
+	RoleService_ListAllRoleUsers_FullMethodName  = "/userclient.RoleService/ListAllRoleUsers"
+	RoleService_ListRoleUser_FullMethodName      = "/userclient.RoleService/ListRoleUser"
+	RoleService_AddRoleForUser_FullMethodName    = "/userclient.RoleService/AddRoleForUser"
+	RoleService_RemoveRoleForUser_FullMethodName = "/userclient.RoleService/RemoveRoleForUser"
+	RoleService_UpdateRoleForUser_FullMethodName = "/userclient.RoleService/UpdateRoleForUser"
 )
 
 // RoleServiceClient is the client API for RoleService service.
@@ -661,6 +666,11 @@ type RoleServiceClient interface {
 	UpdateRole(ctx context.Context, in *UpdateRoleReq, opts ...grpc.CallOption) (*UpdateRoleResp, error)
 	PatchRole(ctx context.Context, in *PatchRoleReq, opts ...grpc.CallOption) (*PatchRoleResp, error)
 	ListRole(ctx context.Context, in *ListRoleReq, opts ...grpc.CallOption) (*ListRoleResp, error)
+	ListAllRoleUsers(ctx context.Context, in *ListAllRoleUsersReq, opts ...grpc.CallOption) (*ListAllRoleUsersResp, error)
+	ListRoleUser(ctx context.Context, in *ListRoleForUserReq, opts ...grpc.CallOption) (*ListRoleForUserResp, error)
+	AddRoleForUser(ctx context.Context, in *AddRoleForUserReq, opts ...grpc.CallOption) (*AddRoleForUserResp, error)
+	RemoveRoleForUser(ctx context.Context, in *RemoveRoleForUserReq, opts ...grpc.CallOption) (*RemoveRoleForUserResp, error)
+	UpdateRoleForUser(ctx context.Context, in *UpdateRoleForUserReq, opts ...grpc.CallOption) (*UpdateRoleForUserResp, error)
 }
 
 type roleServiceClient struct {
@@ -725,6 +735,51 @@ func (c *roleServiceClient) ListRole(ctx context.Context, in *ListRoleReq, opts 
 	return out, nil
 }
 
+func (c *roleServiceClient) ListAllRoleUsers(ctx context.Context, in *ListAllRoleUsersReq, opts ...grpc.CallOption) (*ListAllRoleUsersResp, error) {
+	out := new(ListAllRoleUsersResp)
+	err := c.cc.Invoke(ctx, RoleService_ListAllRoleUsers_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *roleServiceClient) ListRoleUser(ctx context.Context, in *ListRoleForUserReq, opts ...grpc.CallOption) (*ListRoleForUserResp, error) {
+	out := new(ListRoleForUserResp)
+	err := c.cc.Invoke(ctx, RoleService_ListRoleUser_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *roleServiceClient) AddRoleForUser(ctx context.Context, in *AddRoleForUserReq, opts ...grpc.CallOption) (*AddRoleForUserResp, error) {
+	out := new(AddRoleForUserResp)
+	err := c.cc.Invoke(ctx, RoleService_AddRoleForUser_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *roleServiceClient) RemoveRoleForUser(ctx context.Context, in *RemoveRoleForUserReq, opts ...grpc.CallOption) (*RemoveRoleForUserResp, error) {
+	out := new(RemoveRoleForUserResp)
+	err := c.cc.Invoke(ctx, RoleService_RemoveRoleForUser_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *roleServiceClient) UpdateRoleForUser(ctx context.Context, in *UpdateRoleForUserReq, opts ...grpc.CallOption) (*UpdateRoleForUserResp, error) {
+	out := new(UpdateRoleForUserResp)
+	err := c.cc.Invoke(ctx, RoleService_UpdateRoleForUser_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RoleServiceServer is the server API for RoleService service.
 // All implementations must embed UnimplementedRoleServiceServer
 // for forward compatibility
@@ -735,6 +790,11 @@ type RoleServiceServer interface {
 	UpdateRole(context.Context, *UpdateRoleReq) (*UpdateRoleResp, error)
 	PatchRole(context.Context, *PatchRoleReq) (*PatchRoleResp, error)
 	ListRole(context.Context, *ListRoleReq) (*ListRoleResp, error)
+	ListAllRoleUsers(context.Context, *ListAllRoleUsersReq) (*ListAllRoleUsersResp, error)
+	ListRoleUser(context.Context, *ListRoleForUserReq) (*ListRoleForUserResp, error)
+	AddRoleForUser(context.Context, *AddRoleForUserReq) (*AddRoleForUserResp, error)
+	RemoveRoleForUser(context.Context, *RemoveRoleForUserReq) (*RemoveRoleForUserResp, error)
+	UpdateRoleForUser(context.Context, *UpdateRoleForUserReq) (*UpdateRoleForUserResp, error)
 	mustEmbedUnimplementedRoleServiceServer()
 }
 
@@ -759,6 +819,21 @@ func (UnimplementedRoleServiceServer) PatchRole(context.Context, *PatchRoleReq) 
 }
 func (UnimplementedRoleServiceServer) ListRole(context.Context, *ListRoleReq) (*ListRoleResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListRole not implemented")
+}
+func (UnimplementedRoleServiceServer) ListAllRoleUsers(context.Context, *ListAllRoleUsersReq) (*ListAllRoleUsersResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListAllRoleUsers not implemented")
+}
+func (UnimplementedRoleServiceServer) ListRoleUser(context.Context, *ListRoleForUserReq) (*ListRoleForUserResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListRoleUser not implemented")
+}
+func (UnimplementedRoleServiceServer) AddRoleForUser(context.Context, *AddRoleForUserReq) (*AddRoleForUserResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddRoleForUser not implemented")
+}
+func (UnimplementedRoleServiceServer) RemoveRoleForUser(context.Context, *RemoveRoleForUserReq) (*RemoveRoleForUserResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveRoleForUser not implemented")
+}
+func (UnimplementedRoleServiceServer) UpdateRoleForUser(context.Context, *UpdateRoleForUserReq) (*UpdateRoleForUserResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateRoleForUser not implemented")
 }
 func (UnimplementedRoleServiceServer) mustEmbedUnimplementedRoleServiceServer() {}
 
@@ -881,6 +956,96 @@ func _RoleService_ListRole_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RoleService_ListAllRoleUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListAllRoleUsersReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RoleServiceServer).ListAllRoleUsers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RoleService_ListAllRoleUsers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoleServiceServer).ListAllRoleUsers(ctx, req.(*ListAllRoleUsersReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RoleService_ListRoleUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListRoleForUserReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RoleServiceServer).ListRoleUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RoleService_ListRoleUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoleServiceServer).ListRoleUser(ctx, req.(*ListRoleForUserReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RoleService_AddRoleForUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddRoleForUserReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RoleServiceServer).AddRoleForUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RoleService_AddRoleForUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoleServiceServer).AddRoleForUser(ctx, req.(*AddRoleForUserReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RoleService_RemoveRoleForUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveRoleForUserReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RoleServiceServer).RemoveRoleForUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RoleService_RemoveRoleForUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoleServiceServer).RemoveRoleForUser(ctx, req.(*RemoveRoleForUserReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RoleService_UpdateRoleForUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateRoleForUserReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RoleServiceServer).UpdateRoleForUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RoleService_UpdateRoleForUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoleServiceServer).UpdateRoleForUser(ctx, req.(*UpdateRoleForUserReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // RoleService_ServiceDesc is the grpc.ServiceDesc for RoleService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -911,6 +1076,26 @@ var RoleService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListRole",
 			Handler:    _RoleService_ListRole_Handler,
+		},
+		{
+			MethodName: "ListAllRoleUsers",
+			Handler:    _RoleService_ListAllRoleUsers_Handler,
+		},
+		{
+			MethodName: "ListRoleUser",
+			Handler:    _RoleService_ListRoleUser_Handler,
+		},
+		{
+			MethodName: "AddRoleForUser",
+			Handler:    _RoleService_AddRoleForUser_Handler,
+		},
+		{
+			MethodName: "RemoveRoleForUser",
+			Handler:    _RoleService_RemoveRoleForUser_Handler,
+		},
+		{
+			MethodName: "UpdateRoleForUser",
+			Handler:    _RoleService_UpdateRoleForUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

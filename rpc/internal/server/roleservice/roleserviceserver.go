@@ -51,3 +51,28 @@ func (s *RoleServiceServer) ListRole(ctx context.Context, in *user.ListRoleReq) 
 	l := roleservicelogic.NewListRoleLogic(ctx, s.svcCtx)
 	return l.ListRole(in)
 }
+
+func (s *RoleServiceServer) ListAllRoleUsers(ctx context.Context, in *user.ListAllRoleUsersReq) (*user.ListAllRoleUsersResp, error) {
+	l := roleservicelogic.NewListAllRoleUsersLogic(ctx, s.svcCtx)
+	return l.ListAllRoleUsers(in)
+}
+
+func (s *RoleServiceServer) ListRoleUser(ctx context.Context, in *user.ListRoleForUserReq) (*user.ListRoleForUserResp, error) {
+	l := roleservicelogic.NewListRoleUserLogic(ctx, s.svcCtx)
+	return l.ListRoleUser(in)
+}
+
+func (s *RoleServiceServer) AddRoleForUser(ctx context.Context, in *user.AddRoleForUserReq) (*user.AddRoleForUserResp, error) {
+	l := roleservicelogic.NewAddRoleForUserLogic(ctx, s.svcCtx)
+	return l.AddRoleForUser(in)
+}
+
+func (s *RoleServiceServer) RemoveRoleForUser(ctx context.Context, in *user.RemoveRoleForUserReq) (*user.RemoveRoleForUserResp, error) {
+	l := roleservicelogic.NewRemoveRoleForUserLogic(ctx, s.svcCtx)
+	return l.RemoveRoleForUser(in)
+}
+
+func (s *RoleServiceServer) UpdateRoleForUser(ctx context.Context, in *user.UpdateRoleForUserReq) (*user.UpdateRoleForUserResp, error) {
+	l := roleservicelogic.NewUpdateRoleForUserLogic(ctx, s.svcCtx)
+	return l.UpdateRoleForUser(in)
+}

@@ -13,6 +13,8 @@ import (
 )
 
 type (
+	AddRoleForUserReq     = user.AddRoleForUserReq
+	AddRoleForUserResp    = user.AddRoleForUserResp
 	BlackListTokenReq     = user.BlackListTokenReq
 	BlackListTokenResp    = user.BlackListTokenResp
 	CreatePermReq         = user.CreatePermReq
@@ -49,8 +51,12 @@ type (
 	GetUserByNumberResp   = user.GetUserByNumberResp
 	GetUserRoleByIdReq    = user.GetUserRoleByIdReq
 	GetUserRoleByIdResp   = user.GetUserRoleByIdResp
+	ListAllRoleUsersReq   = user.ListAllRoleUsersReq
+	ListAllRoleUsersResp  = user.ListAllRoleUsersResp
 	ListPermReq           = user.ListPermReq
 	ListPermResp          = user.ListPermResp
+	ListRoleForUserReq    = user.ListRoleForUserReq
+	ListRoleForUserResp   = user.ListRoleForUserResp
 	ListRoleReq           = user.ListRoleReq
 	ListRoleResp          = user.ListRoleResp
 	ListStrategyReq       = user.ListStrategyReq
@@ -79,14 +85,20 @@ type (
 	RefreshTokenResp      = user.RefreshTokenResp
 	RegisterReq           = user.RegisterReq
 	RegisterResp          = user.RegisterResp
+	RemoveRoleForUserReq  = user.RemoveRoleForUserReq
+	RemoveRoleForUserResp = user.RemoveRoleForUserResp
 	RoleDetail            = user.RoleDetail
 	RoleInfo              = user.RoleInfo
+	RoleUserDetail        = user.RoleUserDetail
+	RoleUserInfo          = user.RoleUserInfo
 	StrategyDetail        = user.StrategyDetail
 	StrategyInfo          = user.StrategyInfo
 	SyncOpenLdapUsersReq  = user.SyncOpenLdapUsersReq
 	SyncOpenLdapUsersResp = user.SyncOpenLdapUsersResp
 	UpdatePermReq         = user.UpdatePermReq
 	UpdatePermResp        = user.UpdatePermResp
+	UpdateRoleForUserReq  = user.UpdateRoleForUserReq
+	UpdateRoleForUserResp = user.UpdateRoleForUserResp
 	UpdateRoleReq         = user.UpdateRoleReq
 	UpdateRoleResp        = user.UpdateRoleResp
 	UpdateStrategyReq     = user.UpdateStrategyReq
@@ -107,6 +119,11 @@ type (
 		UpdateRole(ctx context.Context, in *UpdateRoleReq, opts ...grpc.CallOption) (*UpdateRoleResp, error)
 		PatchRole(ctx context.Context, in *PatchRoleReq, opts ...grpc.CallOption) (*PatchRoleResp, error)
 		ListRole(ctx context.Context, in *ListRoleReq, opts ...grpc.CallOption) (*ListRoleResp, error)
+		ListAllRoleUsers(ctx context.Context, in *ListAllRoleUsersReq, opts ...grpc.CallOption) (*ListAllRoleUsersResp, error)
+		ListRoleUser(ctx context.Context, in *ListRoleForUserReq, opts ...grpc.CallOption) (*ListRoleForUserResp, error)
+		AddRoleForUser(ctx context.Context, in *AddRoleForUserReq, opts ...grpc.CallOption) (*AddRoleForUserResp, error)
+		RemoveRoleForUser(ctx context.Context, in *RemoveRoleForUserReq, opts ...grpc.CallOption) (*RemoveRoleForUserResp, error)
+		UpdateRoleForUser(ctx context.Context, in *UpdateRoleForUserReq, opts ...grpc.CallOption) (*UpdateRoleForUserResp, error)
 	}
 
 	defaultRoleService struct {
@@ -148,4 +165,29 @@ func (m *defaultRoleService) PatchRole(ctx context.Context, in *PatchRoleReq, op
 func (m *defaultRoleService) ListRole(ctx context.Context, in *ListRoleReq, opts ...grpc.CallOption) (*ListRoleResp, error) {
 	client := user.NewRoleServiceClient(m.cli.Conn())
 	return client.ListRole(ctx, in, opts...)
+}
+
+func (m *defaultRoleService) ListAllRoleUsers(ctx context.Context, in *ListAllRoleUsersReq, opts ...grpc.CallOption) (*ListAllRoleUsersResp, error) {
+	client := user.NewRoleServiceClient(m.cli.Conn())
+	return client.ListAllRoleUsers(ctx, in, opts...)
+}
+
+func (m *defaultRoleService) ListRoleUser(ctx context.Context, in *ListRoleForUserReq, opts ...grpc.CallOption) (*ListRoleForUserResp, error) {
+	client := user.NewRoleServiceClient(m.cli.Conn())
+	return client.ListRoleUser(ctx, in, opts...)
+}
+
+func (m *defaultRoleService) AddRoleForUser(ctx context.Context, in *AddRoleForUserReq, opts ...grpc.CallOption) (*AddRoleForUserResp, error) {
+	client := user.NewRoleServiceClient(m.cli.Conn())
+	return client.AddRoleForUser(ctx, in, opts...)
+}
+
+func (m *defaultRoleService) RemoveRoleForUser(ctx context.Context, in *RemoveRoleForUserReq, opts ...grpc.CallOption) (*RemoveRoleForUserResp, error) {
+	client := user.NewRoleServiceClient(m.cli.Conn())
+	return client.RemoveRoleForUser(ctx, in, opts...)
+}
+
+func (m *defaultRoleService) UpdateRoleForUser(ctx context.Context, in *UpdateRoleForUserReq, opts ...grpc.CallOption) (*UpdateRoleForUserResp, error) {
+	client := user.NewRoleServiceClient(m.cli.Conn())
+	return client.UpdateRoleForUser(ctx, in, opts...)
 }

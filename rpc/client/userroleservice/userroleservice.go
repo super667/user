@@ -13,6 +13,8 @@ import (
 )
 
 type (
+	AddRoleForUserReq     = user.AddRoleForUserReq
+	AddRoleForUserResp    = user.AddRoleForUserResp
 	BlackListTokenReq     = user.BlackListTokenReq
 	BlackListTokenResp    = user.BlackListTokenResp
 	CreatePermReq         = user.CreatePermReq
@@ -49,8 +51,12 @@ type (
 	GetUserByNumberResp   = user.GetUserByNumberResp
 	GetUserRoleByIdReq    = user.GetUserRoleByIdReq
 	GetUserRoleByIdResp   = user.GetUserRoleByIdResp
+	ListAllRoleUsersReq   = user.ListAllRoleUsersReq
+	ListAllRoleUsersResp  = user.ListAllRoleUsersResp
 	ListPermReq           = user.ListPermReq
 	ListPermResp          = user.ListPermResp
+	ListRoleForUserReq    = user.ListRoleForUserReq
+	ListRoleForUserResp   = user.ListRoleForUserResp
 	ListRoleReq           = user.ListRoleReq
 	ListRoleResp          = user.ListRoleResp
 	ListStrategyReq       = user.ListStrategyReq
@@ -79,14 +85,20 @@ type (
 	RefreshTokenResp      = user.RefreshTokenResp
 	RegisterReq           = user.RegisterReq
 	RegisterResp          = user.RegisterResp
+	RemoveRoleForUserReq  = user.RemoveRoleForUserReq
+	RemoveRoleForUserResp = user.RemoveRoleForUserResp
 	RoleDetail            = user.RoleDetail
 	RoleInfo              = user.RoleInfo
+	RoleUserDetail        = user.RoleUserDetail
+	RoleUserInfo          = user.RoleUserInfo
 	StrategyDetail        = user.StrategyDetail
 	StrategyInfo          = user.StrategyInfo
 	SyncOpenLdapUsersReq  = user.SyncOpenLdapUsersReq
 	SyncOpenLdapUsersResp = user.SyncOpenLdapUsersResp
 	UpdatePermReq         = user.UpdatePermReq
 	UpdatePermResp        = user.UpdatePermResp
+	UpdateRoleForUserReq  = user.UpdateRoleForUserReq
+	UpdateRoleForUserResp = user.UpdateRoleForUserResp
 	UpdateRoleReq         = user.UpdateRoleReq
 	UpdateRoleResp        = user.UpdateRoleResp
 	UpdateStrategyReq     = user.UpdateStrategyReq
