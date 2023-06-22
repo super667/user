@@ -1,6 +1,7 @@
 package casbinx
 
 import (
+	"fmt"
 	sqlxadapter "github.com/Blank-Xu/sqlx-adapter"
 	"github.com/casbin/casbin/v2"
 	"github.com/casbin/casbin/v2/model"
@@ -53,7 +54,11 @@ func (c *Casbin) Init() *casbin.CachedEnforcer {
 		if err != nil {
 			return
 		}
-		cachedEnforcer, _ = casbin.NewCachedEnforcer(m, a)
+		cachedEnforcer, err = casbin.NewCachedEnforcer(m, a)
+		if err != nil {
+			fmt.Println("初始化casbin出错")
+			panic(err)
+		}
 		cachedEnforcer.SetExpireTime(60 * 60)
 		_ = cachedEnforcer.LoadPolicy()
 	})
