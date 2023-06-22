@@ -8,6 +8,7 @@ CREATE TABLE `strategy` (
 `resource_name`         varchar(1024) NOT NULL DEFAULT '' COMMENT '资源名称',
 `perm`          varchar(255) NOT NULL DEFAULT '' COMMENT '权限点',
 `perm_name`          varchar(255) NOT NULL DEFAULT '' COMMENT '权限点名称',
+`scope`         varchar(255) NOT NULL DEFAULT '' COMMENT '数据范围',
 `create_time`   datetime NULL DEFAULT CURRENT_TIMESTAMP,
 `update_time`   datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 `delete_time`   datetime NULL,

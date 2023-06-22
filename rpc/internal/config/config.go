@@ -2,6 +2,7 @@ package config
 
 import (
 	"github.com/super667/user/common/ldap"
+	"github.com/zeromicro/go-queue/kq"
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/zrpc"
 )
@@ -24,4 +25,11 @@ type Config struct {
 		AccessExpire  int64
 		RefreshExpire int64
 	}
+
+	KqPusherConf struct {
+		Brokers []string
+		Topic   string
+	}
+
+	KqConsumerConf kq.KqConf
 }

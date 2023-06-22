@@ -50,3 +50,18 @@ Ldap:
 #  Endpoint: http://121.5.70.40:14268/api/traces
 #  Sampler: 1.0
 #  Batcher: jaeger
+
+KqPusherConf:
+  Brokers:
+    - 127.0.0.1:9092
+  Topic: payment-success
+
+KqConsumerConf:
+  Name: kqConsumer
+  Brokers:
+    - 127.0.1:9092
+  Group: kqConsumer
+  Topic: payment-success
+  Offset: first
+  Consumers: 8
+  Processors: 8

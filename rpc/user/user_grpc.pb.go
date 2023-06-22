@@ -1384,6 +1384,7 @@ const (
 	StrategyService_UpdateStrategy_FullMethodName  = "/userclient.StrategyService/UpdateStrategy"
 	StrategyService_PatchStrategy_FullMethodName   = "/userclient.StrategyService/PatchStrategy"
 	StrategyService_ListStrategy_FullMethodName    = "/userclient.StrategyService/ListStrategy"
+	StrategyService_Authenticate_FullMethodName    = "/userclient.StrategyService/Authenticate"
 )
 
 // StrategyServiceClient is the client API for StrategyService service.
@@ -1396,6 +1397,7 @@ type StrategyServiceClient interface {
 	UpdateStrategy(ctx context.Context, in *UpdateStrategyReq, opts ...grpc.CallOption) (*UpdateStrategyResp, error)
 	PatchStrategy(ctx context.Context, in *PatchStrategyReq, opts ...grpc.CallOption) (*PatchStrategyResp, error)
 	ListStrategy(ctx context.Context, in *ListStrategyReq, opts ...grpc.CallOption) (*ListStrategyResp, error)
+	Authenticate(ctx context.Context, in *AuthenticateReq, opts ...grpc.CallOption) (*AuthenticateResp, error)
 }
 
 type strategyServiceClient struct {
@@ -1460,6 +1462,15 @@ func (c *strategyServiceClient) ListStrategy(ctx context.Context, in *ListStrate
 	return out, nil
 }
 
+func (c *strategyServiceClient) Authenticate(ctx context.Context, in *AuthenticateReq, opts ...grpc.CallOption) (*AuthenticateResp, error) {
+	out := new(AuthenticateResp)
+	err := c.cc.Invoke(ctx, StrategyService_Authenticate_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // StrategyServiceServer is the server API for StrategyService service.
 // All implementations must embed UnimplementedStrategyServiceServer
 // for forward compatibility
@@ -1470,6 +1481,7 @@ type StrategyServiceServer interface {
 	UpdateStrategy(context.Context, *UpdateStrategyReq) (*UpdateStrategyResp, error)
 	PatchStrategy(context.Context, *PatchStrategyReq) (*PatchStrategyResp, error)
 	ListStrategy(context.Context, *ListStrategyReq) (*ListStrategyResp, error)
+	Authenticate(context.Context, *AuthenticateReq) (*AuthenticateResp, error)
 	mustEmbedUnimplementedStrategyServiceServer()
 }
 
@@ -1494,6 +1506,9 @@ func (UnimplementedStrategyServiceServer) PatchStrategy(context.Context, *PatchS
 }
 func (UnimplementedStrategyServiceServer) ListStrategy(context.Context, *ListStrategyReq) (*ListStrategyResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListStrategy not implemented")
+}
+func (UnimplementedStrategyServiceServer) Authenticate(context.Context, *AuthenticateReq) (*AuthenticateResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Authenticate not implemented")
 }
 func (UnimplementedStrategyServiceServer) mustEmbedUnimplementedStrategyServiceServer() {}
 
@@ -1616,6 +1631,24 @@ func _StrategyService_ListStrategy_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _StrategyService_Authenticate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AuthenticateReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StrategyServiceServer).Authenticate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StrategyService_Authenticate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StrategyServiceServer).Authenticate(ctx, req.(*AuthenticateReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // StrategyService_ServiceDesc is the grpc.ServiceDesc for StrategyService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1646,6 +1679,10 @@ var StrategyService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListStrategy",
 			Handler:    _StrategyService_ListStrategy_Handler,
+		},
+		{
+			MethodName: "Authenticate",
+			Handler:    _StrategyService_Authenticate_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

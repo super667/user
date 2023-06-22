@@ -410,6 +410,16 @@ message PatchStrategyResp {
   int64 Id = 1;
 }
 
+message AuthenticateReq {
+  string Subject = 1;
+  string Resource = 2;
+  string Operate = 3;
+}
+
+message AuthenticateResp {
+  bool Valid = 1;
+}
+
 // =============角色分配相关==================
 
 message UserRoleInfo {
@@ -601,6 +611,10 @@ service StrategyService {
   rpc UpdateStrategy(UpdateStrategyReq) returns(UpdateStrategyResp);
   rpc PatchStrategy(PatchStrategyReq) returns(PatchStrategyResp);
   rpc ListStrategy(ListStrategyReq) returns(ListStrategyResp);
+
+  // 查询是否有响应操作权限
+  rpc Authenticate(AuthenticateReq) returns(AuthenticateResp);
+
 }
 
   // 角色分配接口

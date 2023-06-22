@@ -1,8 +1,10 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
+	"github.com/super667/user/rpc/internal/mqs"
 
 	"github.com/super667/user/rpc/internal/config"
 	authserviceServer "github.com/super667/user/rpc/internal/server/authservice"
@@ -43,6 +45,13 @@ func main() {
 		}
 	})
 	defer s.Stop()
+
+	serviceGroup := service.NewServiceGroup()
+	defer serviceGroup.Stop()
+	for _, mq := range mqs.Consumers(c, context.Background(), ctx) {
+		serviceGroup.Add(mq)
+	}
+	go serviceGroup.Start()
 
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)
 	s.Start()

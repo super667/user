@@ -51,3 +51,8 @@ func (s *StrategyServiceServer) ListStrategy(ctx context.Context, in *user.ListS
 	l := strategyservicelogic.NewListStrategyLogic(ctx, s.svcCtx)
 	return l.ListStrategy(in)
 }
+
+func (s *StrategyServiceServer) Authenticate(ctx context.Context, in *user.AuthenticateReq) (*user.AuthenticateResp, error) {
+	l := strategyservicelogic.NewAuthenticateLogic(ctx, s.svcCtx)
+	return l.Authenticate(in)
+}

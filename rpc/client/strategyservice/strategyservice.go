@@ -15,6 +15,8 @@ import (
 type (
 	AddRoleForUserReq     = user.AddRoleForUserReq
 	AddRoleForUserResp    = user.AddRoleForUserResp
+	AuthenticateReq       = user.AuthenticateReq
+	AuthenticateResp      = user.AuthenticateResp
 	BlackListTokenReq     = user.BlackListTokenReq
 	BlackListTokenResp    = user.BlackListTokenResp
 	CreatePermReq         = user.CreatePermReq
@@ -119,6 +121,7 @@ type (
 		UpdateStrategy(ctx context.Context, in *UpdateStrategyReq, opts ...grpc.CallOption) (*UpdateStrategyResp, error)
 		PatchStrategy(ctx context.Context, in *PatchStrategyReq, opts ...grpc.CallOption) (*PatchStrategyResp, error)
 		ListStrategy(ctx context.Context, in *ListStrategyReq, opts ...grpc.CallOption) (*ListStrategyResp, error)
+		Authenticate(ctx context.Context, in *AuthenticateReq, opts ...grpc.CallOption) (*AuthenticateResp, error)
 	}
 
 	defaultStrategyService struct {
@@ -160,4 +163,9 @@ func (m *defaultStrategyService) PatchStrategy(ctx context.Context, in *PatchStr
 func (m *defaultStrategyService) ListStrategy(ctx context.Context, in *ListStrategyReq, opts ...grpc.CallOption) (*ListStrategyResp, error) {
 	client := user.NewStrategyServiceClient(m.cli.Conn())
 	return client.ListStrategy(ctx, in, opts...)
+}
+
+func (m *defaultStrategyService) Authenticate(ctx context.Context, in *AuthenticateReq, opts ...grpc.CallOption) (*AuthenticateResp, error) {
+	client := user.NewStrategyServiceClient(m.cli.Conn())
+	return client.Authenticate(ctx, in, opts...)
 }

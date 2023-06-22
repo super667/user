@@ -15,6 +15,8 @@ import (
 type (
 	AddRoleForUserReq     = user.AddRoleForUserReq
 	AddRoleForUserResp    = user.AddRoleForUserResp
+	AuthenticateReq       = user.AuthenticateReq
+	AuthenticateResp      = user.AuthenticateResp
 	BlackListTokenReq     = user.BlackListTokenReq
 	BlackListTokenResp    = user.BlackListTokenResp
 	CreatePermReq         = user.CreatePermReq
