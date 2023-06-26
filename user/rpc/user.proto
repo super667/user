@@ -626,4 +626,3 @@ service UserRoleService {
   rpc PatchUserRole(PatchUserRoleReq) returns(PatchUserRoleResp);
   rpc ListUserRole(ListUserRoleReq) returns(ListUserRoleResp);
 }
-
