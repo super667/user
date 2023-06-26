@@ -2,7 +2,7 @@ package {{.PkgName}}
 
 import (
 	"net/http"
-    "github.com/super667/user/api/response"
+    "github.com/super667/user/user/api/response"
 	"github.com/zeromicro/go-zero/rest/httpx"
 	{{.ImportPackages}}
 )

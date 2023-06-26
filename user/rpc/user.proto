@@ -1,0 +1,629 @@
+syntax = "proto3";
+package userclient;
+option go_package = "./user";
+
+
+// ========= 用户相关接口 ==========
+
+enum Gender {
+  Unknown = 0;
+  Male = 1;
+  Female = 2;
+}
+message UserInfo {
+  string UserName = 1;
+  string NickName = 2;
+  string Number = 3;
+  string Avatar = 4;
+  string Email = 5;
+  string Phone = 6;
+  string Address = 7;
+  string Position = 8;
+  string Introduction = 9;
+  string Status = 10;
+  string Source = 11;
+  int32  Age = 12;
+  string DeptCode = 13;
+  string DeptName = 14;
+  string ManagerCode = 15;
+  string ManagerName = 16;
+  string Password = 17;
+}
+
+message UserDetail {
+  int64 Id = 1;
+  string UserName = 2;
+  string NickName = 3;
+  string Number = 4;
+  string Avatar = 5;
+  string Email = 6;
+  string Phone = 7;
+  string Address = 8;
+  string Position = 9;
+  string Introduction = 10;
+  string Status = 11;
+  string Source = 12;
+  int32  Age = 13;
+  string DeptCode = 14;
+  string DeptName = 15;
+  string ManagerCode = 16;
+  string ManagerName = 17;
+  string UserDn = 18;
+  int64 CreateAt = 19;
+}
+
+
+message GetUserByIdReq {
+  int64 Id = 1;
+}
+
+message GetUserByIdResp {
+  UserDetail UserDetail = 1;
+}
+
+
+message GetUserByNumberReq {
+  string Number = 1;
+}
+
+message GetUserByNumberResp {
+  UserDetail UserDetail = 1;
+}
+
+
+message GetUserByNameReq {
+  string Name = 1;
+}
+
+message GetUserByNameResp {
+  UserDetail UserDetail = 1;
+}
+
+message CreateUserReq {
+  UserInfo UserInfo = 1;
+}
+
+message CreateUserResp {
+  int64 Id = 1;
+}
+
+message ListUserReq {
+  string Search = 1;
+  int64 Page = 2;
+  int64 PageSize = 3;
+}
+
+message ListUserResp {
+  int64 Page = 1;
+  int64 PageSize = 2;
+  int64 Total = 3;
+  repeated UserDetail UserDetail = 4;
+}
+
+message DeleteUserReq {
+  int64 Id = 1;
+}
+
+message DeleteUserResp {
+  int64 Id = 1;
+}
+
+message UpdateUserReq {
+  int64 Id = 1;
+  UserInfo UserInfo = 2;
+}
+
+message UpdateUserResp {
+  int64 Id = 1;
+}
+
+message PatchUserReq {
+  int64 Id = 1;
+  UserInfo UserInfo = 2;
+}
+
+message PatchUserResp {
+  int64 Id = 1;
+}
+// ===============================
+
+// =============角色相关==================
+
+message RoleInfo {
+  string Name = 1;
+  string Desc = 2;
+}
+
+message RoleDetail {
+  int64 Id = 1;
+  string Name = 2;
+  string Desc = 3;
+  int64 CreateAt  = 4;
+}
+
+message CreateRoleReq {
+  RoleInfo RoleInfo = 1;
+}
+
+message CreateRoleResp {
+  int64 Id = 1;
+}
+
+message GetRoleByIdReq {
+  int64 Id = 1;
+}
+
+message GetRoleByIdResp {
+  RoleDetail RoleDetail = 1;
+}
+
+message ListRoleReq {
+  int64 Page = 1;
+  int64 PageSize = 2;
+}
+
+message ListRoleResp {
+  int64 Page = 1;
+  int64 PageSize = 2;
+  int64 Total = 3;
+  repeated RoleDetail RoleDetail = 4;
+}
+
+message DeleteRoleReq {
+  int64 Id = 1;
+}
+
+message DeleteRoleResp {
+  int64 Id = 1;
+}
+
+message UpdateRoleReq {
+  int64 Id = 1;
+  RoleInfo RoleInfo = 2;
+}
+
+message UpdateRoleResp {
+  int64 Id = 1;
+}
+
+message PatchRoleReq {
+  int64 Id = 1;
+  RoleInfo RoleInfo = 2;
+}
+
+message PatchRoleResp {
+  int64 Id = 1;
+}
+
+message RoleUserInfo {
+  int64 UserId = 1;
+  int64 RoleId = 2;
+}
+
+message RoleUserDetail {
+  int64 Id = 1;
+  int64 UserId = 2;
+  string UserName = 3;
+  int64 RoleId = 4;
+  int64 RoleName = 5;
+  string Desc = 6;
+  int64 CreateAt = 7;
+}
+
+message ListAllRoleUsersReq {
+  int64 Page = 1;
+  int64 PageSize = 2;
+}
+
+message ListAllRoleUsersResp {
+  int64 Page = 1;
+  int64 PageSize = 2;
+  int64 Total = 3;
+  repeated RoleUserDetail RoleUserDetail = 4;
+}
+
+message ListRoleForUserReq {
+  int64 Page = 1;
+  int64 PageSize = 2;
+  int64 RoleId = 3;
+  int64 UserId = 4;
+}
+
+message ListRoleForUserResp {
+  int64 Page = 1;
+  int64 PageSize = 2;
+  int64 Total = 3;
+  repeated RoleUserDetail RoleUserDetail = 4;
+}
+
+message AddRoleForUserReq {
+  int64 RoleId = 1;
+  repeated int64 UserId = 2;
+}
+
+message AddRoleForUserResp {
+
+}
+
+message RemoveRoleForUserReq {
+  int64 Id = 1;
+}
+
+message RemoveRoleForUserResp {
+}
+
+message UpdateRoleForUserReq {
+  int64 Id = 1;
+  int64 RoleId = 2;
+  int64 UserId = 3;
+  string Desc = 4;
+}
+
+message UpdateRoleForUserResp {
+
+}
+
+
+// =============权限相关==================
+
+message PermInfo {
+  string Resource = 1;
+  string Perm = 2;
+  string Desc = 3;
+}
+
+message PermDetail {
+  int64 Id = 1;
+  string Resource = 2;
+  string Perm = 3;
+  string Desc = 4;
+  int64 CreateAt  = 5;
+}
+
+message CreatePermReq {
+  PermInfo PermInfo = 1;
+}
+
+message CreatePermResp {
+  int64 Id = 1;
+}
+
+message GetPermByIdReq {
+  int64 Id = 1;
+}
+
+message GetPermByIdResp {
+  PermDetail PermDetail = 1;
+}
+
+message ListPermReq {
+  int64 Page = 1;
+  int64 PageSize = 2;
+}
+
+message ListPermResp {
+  int64 Page = 1;
+  int64 PageSize = 2;
+  int64 Total = 3;
+  repeated PermDetail PermDetail = 4;
+}
+
+message DeletePermReq {
+  int64 Id = 1;
+}
+
+message DeletePermResp {
+  int64 Id = 1;
+}
+
+message UpdatePermReq {
+  int64 Id = 1;
+  PermInfo PermInfo = 2;
+}
+
+message UpdatePermResp {
+  int64 Id = 1;
+}
+
+message PatchPermReq {
+  int64 Id = 1;
+  PermInfo PermInfo = 2;
+}
+
+message PatchPermResp {
+  int64 Id = 1;
+}
+
+// =============权限策略相关==================
+
+message StrategyInfo {
+  repeated string Subject = 1;
+  string SubjectType = 2;
+  repeated string resource = 3;
+  string Perm = 4;
+}
+
+message StrategyDetail {
+  int64 Id = 1;
+  string Subject = 2;
+  string SubjectName = 3;
+  string SubjectType = 4;
+  string SubjectTypeName = 5;
+  string resource = 6;
+  string resourceName = 7;
+  string Perm = 8;
+  string PermName = 9;
+  int64 CreateAt  = 10;
+}
+
+message CreateStrategyReq {
+  StrategyInfo StrategyInfo = 1;
+}
+
+message CreateStrategyResp {
+  int64 Id = 1;
+}
+
+message GetStrategyByIdReq {
+  int64 Id = 1;
+}
+
+message GetStrategyByIdResp {
+  StrategyDetail StrategyDetail = 1;
+}
+
+message ListStrategyReq {
+  int64 Page = 1;
+  int64 PageSize = 2;
+}
+
+message ListStrategyResp {
+  int64 Page = 1;
+  int64 PageSize = 2;
+  int64 Total = 3;
+  repeated StrategyDetail StrategyDetail = 4;
+}
+
+message DeleteStrategyReq {
+  int64 Id = 1;
+}
+
+message DeleteStrategyResp {
+  int64 Id = 1;
+}
+
+message UpdateStrategyReq {
+  int64 Id = 1;
+  StrategyInfo StrategyInfo = 2;
+}
+
+message UpdateStrategyResp {
+  int64 Id = 1;
+}
+
+message PatchStrategyReq {
+  int64 Id = 1;
+  StrategyInfo StrategyInfo = 2;
+}
+
+message PatchStrategyResp {
+  int64 Id = 1;
+}
+
+message AuthenticateReq {
+  string Subject = 1;
+  string Resource = 2;
+  string Operate = 3;
+}
+
+message AuthenticateResp {
+  bool Valid = 1;
+}
+
+// =============角色分配相关==================
+
+message UserRoleInfo {
+  int64 UserId = 1;
+  int64 RoleId = 2;
+}
+
+message UserRoleDetail {
+  int64 Id = 1;
+  int64 UserId = 2;
+  int64 RoleId = 3;
+  int64 CreateTime  = 4;
+}
+
+message CreateUserRoleReq {
+  UserRoleInfo UserRoleInfo = 1;
+}
+
+message CreateUserRoleResp {
+  int64 Id = 1;
+}
+
+message GetUserRoleByIdReq {
+  int64 Id = 1;
+}
+
+message GetUserRoleByIdResp {
+  UserRoleDetail UserRoleDetail = 1;
+}
+
+message ListUserRoleReq {
+  int64 Page = 1;
+  int64 PageSize = 2;
+}
+
+message ListUserRoleResp {
+  int64 Page = 1;
+  int64 PageSize = 2;
+  int64 Total = 3;
+  repeated UserRoleDetail UserRoleDetail = 4;
+}
+
+message DeleteUserRoleReq {
+  int64 Id = 1;
+}
+
+message DeleteUserRoleResp {
+  int64 Id = 1;
+}
+
+message UpdateUserRoleReq {
+  int64 Id = 1;
+  UserRoleInfo UserRoleInfo = 2;
+}
+
+message UpdateUserRoleResp {
+  int64 Id = 1;
+}
+
+message PatchUserRoleReq {
+  int64 Id = 1;
+  UserRoleInfo UserRoleInfo = 2;
+}
+
+message PatchUserRoleResp {
+  int64 Id = 1;
+}
+
+// ==============用户认证相关================
+
+// 用户登录
+message LoginReq {
+  string Account = 1;
+  string Password = 2;
+}
+message LoginResp {
+  string AccessToken = 1;
+  int64 AccessExpire = 2;
+  string RefreshToken = 3;
+}
+// 用户登录
+
+// 用户退出
+message LogoutReq {
+  string Token = 1;
+}
+
+message LogoutResp {
+}
+// 用户退出
+
+// 用户注册
+message RegisterReq {
+  string UserName = 1;
+  string Phone = 2;
+  string Password = 3;
+}
+message RegisterResp {
+  int64 Id = 1;
+  string UserName = 2;
+  string Phone = 3;
+}
+// 用户注册
+
+// 同步ldap用户
+
+message SyncOpenLdapUsersReq {
+  int64 Id = 1;
+}
+
+message SyncOpenLdapUsersResp {
+  string Res = 1;
+}
+
+// 鉴权相关
+message RefreshTokenReq {
+
+}
+
+message RefreshTokenResp {
+  string AccessToken = 1;
+  int64 AccessExpire = 2;
+}
+
+message BlackListTokenReq {
+  string Token = 1;
+}
+
+message BlackListTokenResp {
+  bool Invalid = 1;
+}
+
+// 鉴权相关
+
+service AuthService {
+
+  // 用户认证相关
+
+  rpc Login(LoginReq) returns(LoginResp);
+  rpc Logout(LogoutReq) returns(LogoutResp);
+  rpc Register(RegisterReq) returns(RegisterResp);
+  rpc FreshToken(RefreshTokenReq) returns(RefreshTokenResp);
+  rpc BlackListToken(BlackListTokenReq) returns(BlackListTokenResp);
+}
+
+  // 用户相关接口
+service UserService {
+  rpc GetUserById(GetUserByIdReq) returns(GetUserByIdResp);
+  rpc GetUserByNumber(GetUserByNumberReq) returns(GetUserByNumberResp);
+  rpc GetUserByName(GetUserByNameReq) returns(GetUserByNameResp);
+  rpc CreateUser(CreateUserReq) returns(CreateUserResp);
+  rpc DeleteUser(DeleteUserReq) returns(DeleteUserResp);
+  rpc UpdateUser(UpdateUserReq) returns(UpdateUserResp);
+  rpc PatchUser(PatchUserReq) returns(PatchUserResp);
+  rpc ListUser(ListUserReq) returns(ListUserResp);
+
+  rpc SyncOpenLdapUsers(SyncOpenLdapUsersReq) returns(SyncOpenLdapUsersResp);
+}
+  // 角色相关接口
+service RoleService {
+  rpc GetRoleById(GetRoleByIdReq) returns(GetRoleByIdResp);
+  rpc CreateRole(CreateRoleReq) returns(CreateRoleResp);
+  rpc DeleteRole(DeleteRoleReq) returns(DeleteRoleResp);
+  rpc UpdateRole(UpdateRoleReq) returns(UpdateRoleResp);
+  rpc PatchRole(PatchRoleReq) returns(PatchRoleResp);
+  rpc ListRole(ListRoleReq) returns(ListRoleResp);
+  rpc ListAllRoleUsers(ListAllRoleUsersReq) returns(ListAllRoleUsersResp);
+  rpc ListRoleUser(ListRoleForUserReq) returns(ListRoleForUserResp);
+  rpc AddRoleForUser(AddRoleForUserReq) returns(AddRoleForUserResp);
+  rpc RemoveRoleForUser(RemoveRoleForUserReq) returns(RemoveRoleForUserResp);
+  rpc UpdateRoleForUser(UpdateRoleForUserReq) returns(UpdateRoleForUserResp);
+}
+
+  // 权限相关接口
+service PermService {
+  rpc GetPermById(GetPermByIdReq) returns(GetPermByIdResp);
+  rpc CreatePerm(CreatePermReq) returns(CreatePermResp);
+  rpc DeletePerm(DeletePermReq) returns(DeletePermResp);
+  rpc UpdatePerm(UpdatePermReq) returns(UpdatePermResp);
+  rpc PatchPerm(PatchPermReq) returns(PatchPermResp);
+  rpc ListPerm(ListPermReq) returns(ListPermResp);
+}
+
+  // 策略相关接口
+service StrategyService {
+  rpc GetStrategyById(GetStrategyByIdReq) returns(GetStrategyByIdResp);
+  rpc CreateStrategy(CreateStrategyReq) returns(CreateStrategyResp);
+  rpc DeleteStrategy(DeleteStrategyReq) returns(DeleteStrategyResp);
+  rpc UpdateStrategy(UpdateStrategyReq) returns(UpdateStrategyResp);
+  rpc PatchStrategy(PatchStrategyReq) returns(PatchStrategyResp);
+  rpc ListStrategy(ListStrategyReq) returns(ListStrategyResp);
+
+  // 查询是否有响应操作权限
+  rpc Authenticate(AuthenticateReq) returns(AuthenticateResp);
+
+}
+
+  // 角色分配接口
+service UserRoleService {
+  rpc GetUserRoleById(GetUserRoleByIdReq) returns(GetUserRoleByIdResp);
+  rpc CreateUserRole(CreateUserRoleReq) returns(CreateUserRoleResp);
+  rpc DeleteUserRole(DeleteUserRoleReq) returns(DeleteUserRoleResp);
+  rpc UpdateUserRole(UpdateUserRoleReq) returns(UpdateUserRoleResp);
+  rpc PatchUserRole(PatchUserRoleReq) returns(PatchUserRoleResp);
+  rpc ListUserRole(ListUserRoleReq) returns(ListUserRoleResp);
+}
+
