@@ -2,17 +2,16 @@ package redislock
 
 import (
 	"context"
-	"github.com/go-redis/redis/v8"
-	"time"
+	"github.com/zeromicro/go-zero/core/stores/redis"
 )
 
 type RedisLock struct {
-	client     *redis.Client
+	client     *redis.Redis
 	key        string
-	expiration time.Duration
+	expiration int
 }
 
-func NewLock(client *redis.Client, key string, expiration time.Duration) *RedisLock {
+func NewLock(client *redis.Redis, key string, expiration int) *RedisLock {
 	return &RedisLock{
 		client:     client,
 		key:        key,
@@ -21,7 +20,8 @@ func NewLock(client *redis.Client, key string, expiration time.Duration) *RedisL
 }
 
 func (r *RedisLock) Lock(id string) (bool, error) {
-	return r.client.SetNX(context.TODO(), r.key, id, r.expiration).Result()
+	return r.client.SetnxEx(r.key, id, r.expiration)
+	// return r.client.SetNX(context.TODO(), r.key, id, r.expiration).Result()
 }
 
 const unLockScript = `
@@ -33,7 +33,7 @@ return false
 `
 
 func (r *RedisLock) UnLock(id string) error {
-	_, err := r.client.Eval(context.TODO(), unLockScript, []string{r.key, id}).Result()
+	_, err := r.client.EvalCtx(context.TODO(), unLockScript, []string{r.key, id})
 	if err != nil && err != redis.Nil {
 		return err
 	}
