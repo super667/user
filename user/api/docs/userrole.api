@@ -1,99 +1,97 @@
-
-import "docs/common.api"
+import "common.api"
 
 info(
-    title: "角色分配接口"
-    author: "wangxianchao"
-    email: "995166545@qq.com"
+	title: "角色分配接口"
+	author: "wangxianchao"
+	email: "995166545@qq.com"
 )
 
 type (
-    UserRoleInfo {
-        UserId int64 `json:"userId"`
-        RoleId int64 `json:"roleId"`
-    }
+	UserRoleInfo {
+		UserId int64 `json:"userId"`
+		RoleId int64 `json:"roleId"`
+	}
 
-    UserRoleDetail {
-        Id int64 `json:"id"`
-        CreateAt int64 `json:"createAt"`
-        UserRoleInfo
-    }
+	UserRoleDetail {
+		Id       int64 `json:"id"`
+		CreateAt int64 `json:"createAt"`
+		UserRoleInfo
+	}
 
-    CreateUserRoleReq {
-        UserRoleInfo
-    }
+	CreateUserRoleReq {
+		UserRoleInfo
+	}
 
-    CreateUserRoleResp {
-        Id int64 `json:"id"`
-    }
+	CreateUserRoleResp {
+		Id int64 `json:"id"`
+	}
 
-    DeleteUserRoleReq {
-        Id int64 `path:"id"`
-    }
+	DeleteUserRoleReq {
+		Id int64 `path:"id"`
+	}
 
-    DeleteUserRoleResp {
-        Id int64 `json:"id"`
-    }
+	DeleteUserRoleResp {
+		Id int64 `json:"id"`
+	}
 
-    UpdateUserRoleReq {
-        Id int64 `path:"id"`
-        UserRoleInfo
-    }
+	UpdateUserRoleReq {
+		Id int64 `path:"id"`
+		UserRoleInfo
+	}
 
-    UpdateUserRoleResp {
-        Id int64 `json:"id"`
-    }
+	UpdateUserRoleResp {
+		Id int64 `json:"id"`
+	}
 
-    PatchUserRoleReq {
-        Id int64 `path:"id"`
-        UserRoleInfo
-    }
+	PatchUserRoleReq {
+		Id int64 `path:"id"`
+		UserRoleInfo
+	}
 
-    PatchUserRoleResp {
-        Id int64 `json:"id"`
-    }
+	PatchUserRoleResp {
+		Id int64 `json:"id"`
+	}
 
-    GetUserRoleReq {
-        Id int64 `path:"id"`
-    }
+	GetUserRoleReq {
+		Id int64 `path:"id"`
+	}
 
-    GetUserRoleResp {
-        UserRoleDetail
-    }
+	GetUserRoleResp {
+		UserRoleDetail
+	}
 
-    ListUserRoleReq {
-        ListReq
-    }
+	ListUserRoleReq {
+		ListReq
+	}
 
-    ListUserRoleResp {
-        ListResp
-        UserRoles []UserRoleDetail `json:"list"`
-    }
+	ListUserRoleResp {
+		ListResp
+		UserRoles []UserRoleDetail `json:"list"`
+	}
 )
-
 
 @server (
-    group: userrole
-    jwt: Auth
+	group: userrole
+	jwt: Auth
 )
 service User {
-    @doc "获取角色分配信息"
-    @handler GetUserRole
-    get /user_role/:id(GetUserRoleReq) returns (GetUserRoleResp)
-
-    @doc "分配角色"
-    @handler CreateUserRole
-    post /user_role(CreateUserRoleReq) returns (CreateUserRoleResp)
-
-    @doc "获取角色分配列表"
-    @handler ListUserRole
-    get /user_role(ListUserRoleReq) returns (ListUserRoleResp)
-
-    @doc "删除角色"
-    @handler DeleteUserRole
-    delete /user_role/:id(DeleteUserRoleReq) returns (DeleteUserRoleResp)
-
-    @doc "全量更新角色"
-    @handler UpdateUserRole
-    put /user_role/:id (UpdateUserRoleReq) returns (UpdateUserRoleResp)
+	@doc "获取角色分配信息"
+	@handler GetUserRole
+	get /user_role/:id(GetUserRoleReq) returns (GetUserRoleResp)
+	
+	@doc "分配角色"
+	@handler CreateUserRole
+	post /user_role(CreateUserRoleReq) returns (CreateUserRoleResp)
+	
+	@doc "获取角色分配列表"
+	@handler ListUserRole
+	get /user_role(ListUserRoleReq) returns (ListUserRoleResp)
+	
+	@doc "删除角色"
+	@handler DeleteUserRole
+	delete /user_role/:id(DeleteUserRoleReq) returns (DeleteUserRoleResp)
+	
+	@doc "全量更新角色"
+	@handler UpdateUserRole
+	put /user_role/:id (UpdateUserRoleReq) returns (UpdateUserRoleResp)
 }

@@ -1,104 +1,102 @@
-
-import "docs/common.api"
+import "common.api"
 
 info(
-    title: "权限相关接口"
-    author: "wangxianchao"
-    email: "995166545@qq.com"
+	title: "权限相关接口"
+	author: "wangxianchao"
+	email: "995166545@qq.com"
 )
 
 type (
-    PermInfo {
-        Resource string `json:"resource"`
-        Perm string `json:"perm"`
-        Desc string `json:"desc"`
-    }
+	PermInfo {
+		Resource string `json:"resource"`
+		Perm     string `json:"perm"`
+		Desc     string `json:"desc"`
+	}
 
-    PermDetail {
-        Id int64 `json:"id"`
-        CreateAt int64 `json:"createAt"`
-        PermInfo
-    }
+	PermDetail {
+		Id       int64 `json:"id"`
+		CreateAt int64 `json:"createAt"`
+		PermInfo
+	}
 
-    CreatePermReq {
-        PermInfo
-    }
+	CreatePermReq {
+		PermInfo
+	}
 
-    CreatePermResp {
-        Id int64 `json:"id"`
-    }
+	CreatePermResp {
+		Id int64 `json:"id"`
+	}
 
-    DeletePermReq {
-        Id int64 `path:"id"`
-    }
+	DeletePermReq {
+		Id int64 `path:"id"`
+	}
 
-    DeletePermResp {
-        Id int64 `json:"id"`
-    }
+	DeletePermResp {
+		Id int64 `json:"id"`
+	}
 
-    UpdatePermReq {
-        Id int64 `path:"id"`
-        PermInfo
-    }
+	UpdatePermReq {
+		Id int64 `path:"id"`
+		PermInfo
+	}
 
-    UpdatePermResp {
-        Id int64 `json:"id"`
-    }
+	UpdatePermResp {
+		Id int64 `json:"id"`
+	}
 
-    PatchPermReq {
-        Id int64 `path:"id"`
-        PermInfo
-    }
+	PatchPermReq {
+		Id int64 `path:"id"`
+		PermInfo
+	}
 
-    PatchPermResp {
-        Id int64 `json:"id"`
-    }
+	PatchPermResp {
+		Id int64 `json:"id"`
+	}
 
-    GetPermReq {
-        Id int64 `path:"id"`
-    }
+	GetPermReq {
+		Id int64 `path:"id"`
+	}
 
-    GetPermResp {
-        PermDetail
-    }
+	GetPermResp {
+		PermDetail
+	}
 
-    ListPermReq {
-        ListReq
-    }
+	ListPermReq {
+		ListReq
+	}
 
-    ListPermResp {
-        ListResp
-        Perms []PermDetail `json:"list"`
-    }
+	ListPermResp {
+		ListResp
+		Perms []PermDetail `json:"list"`
+	}
 )
-
 
 @server (
-    group: perm
-    jwt: Auth
+	group: perm
+	jwt: Auth
 )
 service User {
-    @doc "获取角色信息"
-    @handler GetPerm
-    get /perm/:id(GetPermReq) returns (GetPermResp)
-
-    @doc "创建角色"
-    @handler CreatePerm
-    post /perm(CreatePermReq) returns (CreatePermResp)
-
-    @doc "角色列表"
-    @handler ListPerm
-    get /perm(ListPermReq) returns (ListPermResp)
-
-    @doc "删除角色"
-    @handler DeletePerm
-    delete /perm/:id(DeletePermReq) returns (DeletePermResp)
-
-    @doc "全量更新角色"
-    @handler UpdatePerm
-    put /perm/:id (UpdatePermReq) returns (UpdatePermResp)
-
-    @doc "更新角色部分信息"
-    @handler PatchPerm
-    patch /perm/:id (PatchPermReq) returns (PatchPermResp)
+	@doc "获取角色信息"
+	@handler GetPerm
+	get /perm/:id(GetPermReq) returns (GetPermResp)
+	
+	@doc "创建角色"
+	@handler CreatePerm
+	post /perm(CreatePermReq) returns (CreatePermResp)
+	
+	@doc "角色列表"
+	@handler ListPerm
+	get /perm(ListPermReq) returns (ListPermResp)
+	
+	@doc "删除角色"
+	@handler DeletePerm
+	delete /perm/:id(DeletePermReq) returns (DeletePermResp)
+	
+	@doc "全量更新角色"
+	@handler UpdatePerm
+	put /perm/:id (UpdatePermReq) returns (UpdatePermResp)
+	
+	@doc "更新角色部分信息"
+	@handler PatchPerm
+	patch /perm/:id (PatchPermReq) returns (PatchPermResp)
 }

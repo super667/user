@@ -1,19 +1,19 @@
 info(
-    title: "角色相关接口"
-    author: "wangxianchao"
-    email: "995166545@qq.com"
+	title: "角色相关接口"
+	author: "wangxianchao"
+	email: "995166545@qq.com"
 )
 
 type (
-    ListReq {
-        Search string `form:"search,optional"`
-        Page int64 `form:"page,optional,default=1"`
-        PageSize int64 `form:"pageSize,optional,default=10"`
-    }
+	ListReq {
+		Search   string `form:"search,optional"`
+		Page     int64  `form:"page,optional,default=1"`
+		PageSize int64  `form:"pageSize,optional,default=10"`
+	}
 
-    ListResp {
-        Page int64 `json:"page"`
-        PageSize int64 `json:"pageSize"`
-        Total int64 `json:"total"`
-    }
+	ListResp {
+		Page     int64 `json:"page"`
+		PageSize int64 `json:"pageSize"`
+		Total    int64 `json:"total"`
+	}
 )

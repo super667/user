@@ -1,109 +1,107 @@
-
-import "docs/common.api"
+import "common.api"
 
 info(
-    title: "策略相关接口"
-    author: "wangxianchao"
-    email: "995166545@qq.com"
+	title: "策略相关接口"
+	author: "wangxianchao"
+	email: "995166545@qq.com"
 )
 
 type (
-    StrategyInfo {
-        Subject []string `json:"subject"`
-        SubjectType string `json:"subjectType"`
-        Resource []string `json:"resource"`
-        Perm string `json:"perm"`
-    }
+	StrategyInfo {
+		Subject     []string `json:"subject"`
+		SubjectType string   `json:"subjectType"`
+		Resource    []string `json:"resource"`
+		Perm        string   `json:"perm"`
+	}
 
-    StrategyDetail {
-        Id int64 `json:"id"`
-        StrategyInfo
-        SubjectName string `json:"subjectName"`
-        SubjectTypeName string `json:"subjectTypeName"`
-        ResourceName string `json:"resourceName"`
-        PermName string `json:"permName"`
-        CreateAt int64 `json:"createAt"`
-    }
+	StrategyDetail {
+		Id int64 `json:"id"`
+		StrategyInfo
+		SubjectName     string `json:"subjectName"`
+		SubjectTypeName string `json:"subjectTypeName"`
+		ResourceName    string `json:"resourceName"`
+		PermName        string `json:"permName"`
+		CreateAt        int64  `json:"createAt"`
+	}
 
-    CreateStrategyReq {
-        StrategyInfo
-    }
+	CreateStrategyReq {
+		StrategyInfo
+	}
 
-    CreateStrategyResp {
-        Id int64 `json:"id"`
-    }
+	CreateStrategyResp {
+		Id int64 `json:"id"`
+	}
 
-    DeleteStrategyReq {
-        Id int64 `path:"id"`
-    }
+	DeleteStrategyReq {
+		Id int64 `path:"id"`
+	}
 
-    DeleteStrategyResp {
-        Id int64 `json:"id"`
-    }
+	DeleteStrategyResp {
+		Id int64 `json:"id"`
+	}
 
-    UpdateStrategyReq {
-        Id int64 `path:"id"`
-        StrategyInfo
-    }
+	UpdateStrategyReq {
+		Id int64 `path:"id"`
+		StrategyInfo
+	}
 
-    UpdateStrategyResp {
-        Id int64 `json:"id"`
-    }
+	UpdateStrategyResp {
+		Id int64 `json:"id"`
+	}
 
-    PatchStrategyReq {
-        Id int64 `path:"id"`
-        StrategyInfo
-    }
+	PatchStrategyReq {
+		Id int64 `path:"id"`
+		StrategyInfo
+	}
 
-    PatchStrategyResp {
-        Id int64 `json:"id"`
-    }
+	PatchStrategyResp {
+		Id int64 `json:"id"`
+	}
 
-    GetStrategyReq {
-        Id int64 `path:"id"`
-    }
+	GetStrategyReq {
+		Id int64 `path:"id"`
+	}
 
-    GetStrategyResp {
-        StrategyDetail
-    }
+	GetStrategyResp {
+		StrategyDetail
+	}
 
-    ListStrategyReq {
-        ListReq
-    }
+	ListStrategyReq {
+		ListReq
+	}
 
-    ListStrategyResp {
-        ListResp
-        Strategys []StrategyDetail `json:"list"`
-    }
+	ListStrategyResp {
+		ListResp
+		Strategys []StrategyDetail `json:"list"`
+	}
 )
-
 
 @server (
-    group: strategy
-    jwt: Auth
+	group: strategy
+	jwt: Auth
 )
 service User {
-    @doc "获取角色信息"
-    @handler GetStrategy
-    get /strategy/:id(GetStrategyReq) returns (GetStrategyResp)
-
-    @doc "创建角色"
-    @handler CreateStrategy
-    post /strategy(CreateStrategyReq) returns (CreateStrategyResp)
-
-    @doc "角色列表"
-    @handler ListStrategy
-    get /strategy(ListStrategyReq) returns (ListStrategyResp)
-
-    @doc "删除角色"
-    @handler DeleteStrategy
-    delete /strategy/:id(DeleteStrategyReq) returns (DeleteStrategyResp)
-
-    @doc "全量更新角色"
-    @handler UpdateStrategy
-    put /strategy/:id (UpdateStrategyReq) returns (UpdateStrategyResp)
-
-    @doc "更新角色部分信息"
-    @handler PatchStrategy
-    patch /strategy/:id (PatchStrategyReq) returns (PatchStrategyResp)
+	@doc "获取角色信息"
+	@handler GetStrategy
+	get /strategy/:id(GetStrategyReq) returns (GetStrategyResp)
+	
+	@doc "创建角色"
+	@handler CreateStrategy
+	post /strategy(CreateStrategyReq) returns (CreateStrategyResp)
+	
+	@doc "角色列表"
+	@handler ListStrategy
+	get /strategy(ListStrategyReq) returns (ListStrategyResp)
+	
+	@doc "删除角色"
+	@handler DeleteStrategy
+	delete /strategy/:id(DeleteStrategyReq) returns (DeleteStrategyResp)
+	
+	@doc "全量更新角色"
+	@handler UpdateStrategy
+	put /strategy/:id (UpdateStrategyReq) returns (UpdateStrategyResp)
+	
+	@doc "更新角色部分信息"
+	@handler PatchStrategy
+	patch /strategy/:id (PatchStrategyReq) returns (PatchStrategyResp)
 }
