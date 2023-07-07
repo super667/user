@@ -7,9 +7,11 @@ import (
 	"github.com/super667/user/user/api/internal/handler"
 	"github.com/super667/user/user/api/internal/middleware"
 	"github.com/super667/user/user/api/internal/svc"
-
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/rest"
+	"log"
+	"net/http"
+	_ "net/http/pprof"
 )
 
 var configFile = flag.String("f", "user/api/etc/user.yaml", "the config file")
@@ -28,5 +30,10 @@ func main() {
 	server.Use(middleware.TokenBlackList(ctx.AuthRpc))
 
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
+
+	go func() {
+		log.Println(http.ListenAndServe("0.0.0.0:6068", nil))
+	}()
+
 	server.Start()
 }

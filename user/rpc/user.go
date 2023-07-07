@@ -5,6 +5,9 @@ import (
 	"flag"
 	"fmt"
 	"github.com/super667/user/user/rpc/internal/mqs"
+	"log"
+	"net/http"
+	_ "net/http/pprof"
 
 	"github.com/super667/user/user/rpc/internal/config"
 	authserviceServer "github.com/super667/user/user/rpc/internal/server/authservice"
@@ -52,6 +55,10 @@ func main() {
 		serviceGroup.Add(mq)
 	}
 	go serviceGroup.Start()
+
+	go func() {
+		log.Println(http.ListenAndServe("0.0.0.0:6060", nil))
+	}()
 
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)
 	s.Start()
